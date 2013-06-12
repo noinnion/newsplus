@@ -1,4 +1,4 @@
-Reader Api for News+
+News+
 ====================
 
 About News+
