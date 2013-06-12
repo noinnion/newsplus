@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:padding="10dp" android:gravity="center_vertical"
+	android:background="@drawable/bg_account_row">
+
+	<TextView android:id="@+id/name" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_centerVertical="true"
+		android:textColor="@color/darker_gray" />
+
+	<ImageView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:src="@drawable/ic_arrow_right_pressed"
+		android:layout_alignParentRight="true" />
+
+</RelativeLayout>
