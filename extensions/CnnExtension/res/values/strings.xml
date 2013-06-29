@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    
+    <string name="app_name">CNN Extension for News+</string>
+    
+    
+    
+    <!-- Extension -->
+    <string name="extention_name">CNN</string>
+    <string name="extension_description">Description for Extension Engadget</string>
+    <string name="extension_settings_title">Settings</string>
+    <string name="extension_login_title">Login</string>
+    
+    <string name="msg_login_running">Login…</string>
+    <string name="msg_login_fail">Login failure</string>
+    
+	<string name="login_welcome">This is an example extension for News+. It shows you how to use News+ API to create an extension for News+. It retrieves contents from CNN feeds.</string>
+    
+    <!-- err -->
+    <string name="err_io">Network error</string>
+    
+</resources>
+    
