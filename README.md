@@ -16,14 +16,15 @@ Usage
 You need to install News+ first to use the extensions. You can the extensions on the Dropdown in the action bar.
 
 News+ APK: Download and install it on you Android device.
-https://github.com/noinnion/newsplus/raw/master/apk/NewsPlus_v100.apk
+https://github.com/noinnion/newsplus/raw/master/apk/NewsPlus_beta.apk
 
 Extensions
 ----------
-Example Extension: https://github.com/noinnion/newsplus/raw/master/apk/CnnExtension_v100.apk
-Google Reader: https://github.com/noinnion/newsplus/raw/master/apk/GoogleReaderExtension_v100.apk
-Bazqux: https://github.com/noinnion/newsplus/raw/master/apk/BazquxExtension_v100.apk
-TT-Rss: https://github.com/noinnion/newsplus/raw/master/apk/TtRssExtension_v100.apk
+
+Example Extension: https://github.com/noinnion/newsplus/raw/master/apk/CnnExtension_beta.apk
+Google Reader: https://github.com/noinnion/newsplus/raw/master/apk/GoogleReaderExtension_beta.apk
+Bazqux: https://github.com/noinnion/newsplus/raw/master/apk/BazquxExtension_beta.apk
+TT-Rss: https://github.com/noinnion/newsplus/raw/master/apk/TtRssExtension_beta.apk
 
 We are trying to publish more :)
 
