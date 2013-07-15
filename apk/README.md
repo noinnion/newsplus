@@ -1,6 +1,9 @@
 Beta
 ====================
 
+v0.0.6beta
+* Fixed: Add subscription error
+
 v0.0.5beta
 * Fixed: Force closes
 * TT-RSS: Fixed starred items
