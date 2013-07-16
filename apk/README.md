@@ -1,6 +1,11 @@
 Beta
 ====================
 
+v0.0.7beta
+* Note: All extensions has to be at least 0.0.7beta
+* Changed: Small API changes
+* Fixed: Html-Characters in Item List view
+
 v0.0.6beta
 * Fixed: Add subscription error
 
