@@ -25,6 +25,7 @@ Example Extension: https://github.com/noinnion/newsplus/raw/master/apk/CnnExtens
 Google Reader: https://github.com/noinnion/newsplus/raw/master/apk/GoogleReaderExtension_beta.apk
 Bazqux: https://github.com/noinnion/newsplus/raw/master/apk/BazquxExtension_beta.apk
 TT-Rss: https://github.com/noinnion/newsplus/raw/master/apk/TtRssExtension_beta.apk
+NewsBlur: https://github.com/asafge/NewsBlurPlus
 
 We are trying to publish more :)
 
