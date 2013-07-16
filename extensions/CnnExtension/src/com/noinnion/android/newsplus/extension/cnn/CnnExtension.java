@@ -142,7 +142,7 @@ public class CnnExtension extends ReaderExtension {
 						eventType = xpp.next();
 					}
 
-					handler.items(items);
+					handler.items(items, INSERT_STRATEGY_DEFAULT);
 				} catch (Exception e) {
 					AQUtility.report(e);
 				}
