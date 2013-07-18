@@ -21,15 +21,11 @@ https://github.com/noinnion/newsplus/raw/master/apk/NewsPlus_beta.apk
 Extensions
 ----------
 
-Example Extension: https://github.com/noinnion/newsplus/raw/master/apk/CnnExtension_beta.apk
-
-Google Reader (api clone): https://github.com/noinnion/newsplus/raw/master/apk/GoogleReader_beta.apk
-
-Bazqux: https://github.com/noinnion/newsplus/raw/master/apk/BazquxExtension_beta.apk
-
-TT-Rss: https://github.com/noinnion/newsplus/raw/master/apk/TtRssExtension_beta.apk
-
-NewsBlur: https://github.com/asafge/NewsBlurPlus
+* Example Extension: https://github.com/noinnion/newsplus/raw/master/apk/CnnExtension_beta.apk
+* Google Reader (api clone): https://github.com/noinnion/newsplus/raw/master/apk/GoogleReader_beta.apk
+* Bazqux: https://github.com/noinnion/newsplus/raw/master/apk/BazquxExtension_beta.apk
+* TT-Rss: https://github.com/noinnion/newsplus/raw/master/apk/TtRssExtension_beta.apk
+* NewsBlur: https://github.com/asafge/NewsBlurPlus
 
 We are trying to publish more :)
 
