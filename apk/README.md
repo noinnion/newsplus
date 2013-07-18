@@ -1,6 +1,10 @@
 Beta
 ====================
 
+v0.0.8beta
+* Added: Extension for service with api like Google Reader (GoogleReader_beta.apk)
+* Fixed: Force closes
+
 v0.0.7beta
 * Note: All extensions has to be at least 0.0.7beta
 * Changed: Small API changes
