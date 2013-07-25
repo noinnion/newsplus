@@ -1,6 +1,7 @@
 package com.noinnion.android.newsplus.extension.google_reader.util;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
@@ -92,5 +93,15 @@ public class Utils {
 		return url;
 	}
 	
+	public static String dec2Hex(String dec) {
+		if (dec == null) return null;
+		long n = new BigInteger(dec).longValue();
+		String hex = Long.toHexString(n);
+		// leading zeros for 16 digit
+		while (hex.length() < 16) {
+			hex = "0" + hex;
+		}
+		return hex;
+	}
 	
 }

@@ -19,6 +19,10 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 
 	protected ProgressDialog	mBusy;
 
+	private TextView			mServerText;
+	private TextView			mLoginIdText;
+	private TextView			mPasswordText;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,27 +40,10 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 		setContentView(R.layout.login_google_reader);
 		setTitle(R.string.txt_login);
 
-		initViews();
-	}
-
-	private void logout() {
-		final Context c = getApplicationContext();
-		Prefs.setLoggedIn(c, false);
-		Prefs.setLastSyncTime(c, 0);
-		setResult(ReaderExtension.RESULT_LOGOUT);
-		finish();
-	}
-
-	private TextView	mServerText;
-	private TextView	mLoginIdText;
-	private TextView	mPasswordText;
-
-	private void initViews() {
 		mServerText = (TextView) findViewById(R.id.edit_server);
 		mLoginIdText = (TextView) findViewById(R.id.edit_login_id);
 		mPasswordText = (TextView) findViewById(R.id.edit_password);
 
-		final Context c = getApplicationContext();
 		String server = Prefs.getServer(c);
 		if (server != null) mServerText.setText(server);
 		
@@ -65,6 +52,19 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 
 		findViewById(R.id.btn_login).setOnClickListener(this);
 		findViewById(R.id.btn_cancel).setOnClickListener(this);
+	}
+
+	private void startHome(boolean login) {
+		setResult(login ? ReaderExtension.RESULT_LOGIN : RESULT_OK);
+		finish();
+	}
+
+	private void logout() {
+		final Context c = getApplicationContext();
+		Prefs.setLoggedIn(c, false);
+		Prefs.removeLoginData(c);
+		setResult(ReaderExtension.RESULT_LOGOUT);
+		finish();
 	}
 
 	@Override
@@ -86,16 +86,10 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 		}
 	}
 
-	private void startHome(boolean login) {
-		setResult(login ? ReaderExtension.RESULT_LOGIN : RESULT_OK);
-		finish();
-	}
-
 	private void processLogin() {	
 		final Context c = getApplicationContext();
-		Prefs.removeUserId(c);
-		Prefs.setLastSyncTime(c, 0);
 		Prefs.setLoggedIn(c, true);
+		Prefs.removeLoginData(c);
 		startHome(true);
 	}
 

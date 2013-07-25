@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +22,7 @@ import org.apache.http.protocol.HTTP;
 
 import android.content.Context;
 import android.os.RemoteException;
+import android.text.TextUtils;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -131,23 +131,11 @@ public class GoogleReaderClient extends ReaderExtension {
 		if (id == null) return "";
 		return id.startsWith("tag") ? id : "tag:google.com,2005:reader/item/" + id;
 	}
-	
-	public static String dec2Hex(String dec) {
-		if (dec == null) return null;
-		long n = new BigInteger(dec).longValue();
-		String hex = Long.toHexString(n);
-		// leading zeros for 16 digit
-		while (hex.length() < 16) {
-			hex = "0" + hex;
-		}
-		return hex;
-	}
-	
+		
 	public static String getTagUIdPath(String uid) {
 		int pos = uid.indexOf("/label/");
 		return uid.substring(0, pos + "/label/".length());
 	}
-	
 	
 	public java.io.Reader doPostReader(String url, List<NameValuePair> params) throws IOException, ReaderException {
 		return new InputStreamReader(doPostInputStream(url, params), HTTP.UTF_8);
@@ -252,7 +240,9 @@ public class GoogleReaderClient extends ReaderExtension {
 			long diff = System.currentTimeMillis() - authTime;
 			if (diff < AUTH_EXPIRE_TIME) return this.auth;
 		}
-
+		
+		if (TextUtils.isEmpty(this.mLoginId)) this.mLoginId = Prefs.getGoogleId(context);
+		if (TextUtils.isEmpty(this.mPassword)) this.mPassword = Prefs.getGooglePasswd(context);		
 		if (this.mLoginId == null || this.mPassword == null) {
 			throw new ReaderLoginException("No Login Data");
 		}
@@ -378,7 +368,7 @@ public class GoogleReaderClient extends ReaderExtension {
 		buff.append(getApiUrl(URL_API_TAG_LIST));
 		buff.append("?client=scroll&output=json&ck=").append(syncTime);
 
-		return doGetReader(new String(buff));
+		return doGetReader(buff.toString());
 	}
 
 	private void parseTagList(Reader in, ITagListHandler handler) throws JsonParseException, IOException, RemoteException {
@@ -441,7 +431,7 @@ public class GoogleReaderClient extends ReaderExtension {
 		buff.append(getApiUrl(URL_API_SUB_LIST));
 		buff.append("?client=scroll&output=json&ck=").append(syncTime);
 
-		return doGetReader(new String(buff));
+		return doGetReader(buff.toString());
 	}
 
 	private void parseSubList(Reader in, ISubscriptionListHandler handler) throws JsonParseException, IOException, RemoteException {
@@ -512,7 +502,7 @@ public class GoogleReaderClient extends ReaderExtension {
 //		buff.append(URL_API_UNREAD_COUNT);
 //		buff.append("?client=scroll&output=json&ck=").append(syncTime);
 //
-//		return doGetReader(new String(buff));
+//		return doGetReader(buff.toString());
 //	}
 //
 //	private void parseUnreadCountList(Reader in, UnreadCountHandler handler) throws JsonParseException, IOException {
@@ -619,7 +609,7 @@ public class GoogleReaderClient extends ReaderExtension {
 		}
 		buff.append("&r=").append(handler.newestFirst() ? "n" : "o");
 		
-		return doGetReader(new String(buff));
+		return doGetReader(buff.toString());
 	}
 
 	private String parseItemList(Reader in, IItemListHandler handler) throws JsonParseException, IOException, RemoteException {
@@ -767,6 +757,7 @@ public class GoogleReaderClient extends ReaderExtension {
 			in = readStreamItemIds(syncTime, handler);
 			parseItemIdList(in, handler);
 		} catch (JsonParseException e) {
+			e.printStackTrace();
 			throw new ReaderException("data parse error", e);
 		} catch (RemoteException e) {
 			throw new ReaderException("remote connection error", e);			
@@ -790,10 +781,6 @@ public class GoogleReaderClient extends ReaderExtension {
 		}
 		if (handler.excludeRead()) {
 			buff.append("&xt=").append(STATE_READ);
-		}
-		long startTime = handler.startTime();
-		if (startTime > 0) {
-			buff.append("&ot=").append(startTime);
 		}
 		int limit = handler.limit();
 		if (limit > 0) {
@@ -822,8 +809,7 @@ public class GoogleReaderClient extends ReaderExtension {
 					if (currName == null) continue;
 					jp.nextToken();
 					if (currName.equals("id")) {
-//						idList.add(dec2Hex(jp.getText())); // convert dec to hex
-						idList.add(jp.getText());
+						idList.add(Utils.dec2Hex(jp.getText())); // convert dec to hex
 					} else {
 						jp.skipChildren();
 					}

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
     
-    <string name="app_name">Google Reader Extension for News+</string>
+    <string name="app_name">Google Reader Clone | News+</string>
         
     <!-- Extension -->
-    <string name="extension_name">Google Reader</string>
-    <string name="extension_description">Description for Extension Engadget</string>
+    <string name="extension_name">Google Reader Clone</string>
+    <string name="extension_description">Description for Google Reader Clone</string>
     <string name="extension_settings_title">Settings</string>
     <string name="extension_login_title">Login</string>
     

@@ -17,8 +17,6 @@ public class Prefs extends ExtensionPrefs {
 	public static final String	KEY_GOOGLE_AUTH				= "google_auth";
 	public static final String	KEY_GOOGLE_AUTH_TIME		= "google_auth_time";
 
-	public static final String	KEY_LAST_SYNC_TIME			= "last_sync_time";
-
 	public static final String	KEY_LOGGED_IN				= "logged_in";
 
 	public static boolean isLoggedIn(Context c) {
@@ -27,6 +25,15 @@ public class Prefs extends ExtensionPrefs {
 
 	public static void setLoggedIn(Context c, boolean value) {
 		putBoolean(c, KEY_LOGGED_IN, value);
+	}	
+	
+	public static void removeLoginData(Context c) {
+		SharedPreferences sp = getPrefs(c);
+		SharedPreferences.Editor editor = sp.edit();
+		editor.remove(KEY_USER_ID);
+		editor.remove(KEY_GOOGLE_AUTH);
+		editor.remove(KEY_GOOGLE_AUTH_TIME);
+		editor.commit();
 	}	
 	
 	public static String getServer(Context c) {
@@ -43,10 +50,6 @@ public class Prefs extends ExtensionPrefs {
 
 	public static void setUserId(Context c, String userId) {
 		putString(c, KEY_USER_ID, userId);
-	}
-
-	public static void removeUserId(Context c) {
-		removeKey(c, KEY_USER_ID);
 	}
 
 	public static String getGoogleId(Context c) {
@@ -82,14 +85,5 @@ public class Prefs extends ExtensionPrefs {
 	public static long getGoogleAuthTime(Context c) {
 		return getLong(c, KEY_GOOGLE_AUTH_TIME, 0);
 	}
-
-	public static void setLastSyncTime(Context c, long value) {
-		putLong(c, KEY_LAST_SYNC_TIME, value); // in millisecs
-	}
-
-	public static long getLastSyncTime(Context c) {
-		return getLong(c, KEY_LAST_SYNC_TIME, 0); // in millisecs
-	}
-
 	
 }
