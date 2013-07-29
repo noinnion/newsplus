@@ -13,7 +13,7 @@ Right now the app is still in Beta status. We will try to improve it with the ti
 
 Usage
 ------
-You need to install News+ first to use the extensions. You can the extensions on the Dropdown in the action bar.
+You need to install News+ first to use the extensions. You can find the extensions on the Dropdown in the action bar.
 
 News+ APK: Download and install it on you Android device.
 https://github.com/noinnion/newsplus/raw/master/apk/NewsPlus_beta.apk
@@ -32,9 +32,18 @@ We are trying to publish more :)
 
 API
 ---
-For the Example extension and Google Reader extension there are 2 projects on github. With the examples you can see how to implement an extension. (for Google Reader you need to set up Client_id + Client_secret in GoogleReaderAPI.java). To use the API you need to import reader-api-r1.0.jar into the projects. Documentation will come soon.
+For the Example extension and Google Reader extension there are 2 projects on Github. With the examples you can see how to implement an extension. (for Google Reader you need to set up Client_id + Client_secret in GoogleReaderAPI.java). To use the API you need to import reader-api-r1.0.jar into the projects. Documentation will come soon.
 
-We hope you like it.
+Getting Started
+---------------
+The News+ API is pretty easy to get started with:
+
+1. Add the API JAR to your Android project.
+2. Create a new service that extends the ReaderExtension class.
+3. Add the corresponding <service> tag to your AndroidManifest.xml file and add the required <intent-filter> and <meta-data> elements.
+
+Once you have both News+ and your custom extension installed, you should be able to see your extension in the News+ extension list (press the title in actionbar).
+
 
 
 
