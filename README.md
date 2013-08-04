@@ -23,7 +23,7 @@ Extensions
 
 * Example Extension: https://github.com/noinnion/newsplus/raw/master/apk/CnnExtension_beta.apk
 * Google Reader Clone (api clone): https://github.com/noinnion/newsplus/raw/master/apk/GoogleReaderClone_beta.apk
-* InoReader (http://inoreader.com): https://github.com/noinnion/newsplus/raw/master/apk/GoogleReaderClone_beta.apk 
+* InoReader (https://inoreader.com): https://github.com/noinnion/newsplus/raw/master/apk/GoogleReaderClone_beta.apk 
 * Bazqux: https://github.com/noinnion/newsplus/raw/master/apk/BazquxExtension_beta.apk
 * TT-Rss: https://github.com/noinnion/newsplus/raw/master/apk/TtRssExtension_beta.apk
 * NewsBlur: https://github.com/asafge/NewsBlurPlus
