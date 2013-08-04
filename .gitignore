@@ -23,6 +23,5 @@ local.properties
 .project
 .settings/
 proguard.cfg
-build.cradle
-build.properties
 lint.xml
+build.*

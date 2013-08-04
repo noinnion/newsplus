@@ -13,34 +13,22 @@
     <string name="msg_login_fail">Login failure</string>
     
     <!-- login -->
-    <string name="login_account">Choose which account you want to login to sync with Google Reader.</string>
-    <string name="login_no_accounts">You don\'t have any accounts associated with this phone or your phone doesn\'t support Account Manager. Use the method below to login.</string>
-    <string name="login_another">Sign in with another account</string>
-    <string name="login_another_info">You can login with another Google Account. Either enter your username and password or use OAuth for authentication.</string>
     <string name="login_welcome">Enter your login data (server, username and password)</string>
     <string name="login_server">Server (http://google.com)</string>
     <string name="login_id">Username</string>
     <string name="login_password">Password</string>
-    <string name="login_authentication">Authentication</string>
-    <string name="login_google_authentication">Google Authentication (OAuth)</string>
-    <string name="login_oauth">Authenticate your account with OAuth. You will be directed to Google for authentication.</string>
-    <string name="login_getting_started_text">gReader is an unofficial Google Reader client for Android. Want to know how to use gReader. Just click on Getting Started.</string>
-    <string name="login_getting_started">Getting Started</string>
                 
     <string name="txt_login">Login</string>
+    <string name="txt_start_app">Start News+</string>
+    <string name="txt_download_app">Download News+</string>
     
     <!-- err -->
     <string name="err_io">Network error</string>
-
-    <string name="time_today">Today</string>
-    <string name="time_yesterday">Yesterday</string>
     
     <!-- client -->
     <string name="client_google_reader">Google Reader Clone</string>
     
-    <string name="google_reader_login_welcome">Google Reader was the most popular service for reading feeds. This extension allows you to use services that has the same API as Google Reader. </string>
-    <string name="google_reader_android_accounts">Android accounts</string>
-    
+    <string name="google_reader_login_welcome">Google Reader was the most popular service for reading feeds. This extension allows you to use services that has the same API as Google Reader. It requires <b>News+</b> to work with.</string>
     
 </resources>
     

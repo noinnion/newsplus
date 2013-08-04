@@ -1,6 +1,10 @@
 Beta
 ====================
 
+v0.0.10beta
+* Added: Launcher activity
+* Fixed: Force closes, bug fixes
+
 v0.0.9beta
 * Improved: all extensions updated
 * Fixed: Force closes, bug fixes
