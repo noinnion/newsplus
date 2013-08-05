@@ -7,7 +7,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -341,7 +343,7 @@ public class GoogleReaderClient extends ReaderExtension {
 
 		try {
 			in = readSubList(syncTime);
-			parseSubList(in, subHandler);
+			parseSubList(in, subHandler, parseUnreadCountList(readUnreadCount(syncTime)));
 		} catch (JsonParseException e) {
 			throw new ReaderException("data parse error", e);
 		} catch (RemoteException e) {
@@ -349,15 +351,6 @@ public class GoogleReaderClient extends ReaderExtension {
 		} finally {
 			if (in != null) in.close();
 		}
-
-//		in = readUnreadCount(syncTime);
-//		try {
-//			parseUnreadCountList(in, unreadHandler);
-//		} catch (JsonParseException e) {
-//			throw new ReaderException("data parse error", e);
-//		} finally {
-//			in.close();
-//		}		
 	}
 
 	// NOTE: /api/0/tag/list
@@ -434,7 +427,7 @@ public class GoogleReaderClient extends ReaderExtension {
 		return doGetReader(buff.toString());
 	}
 
-	private void parseSubList(Reader in, ISubscriptionListHandler handler) throws JsonParseException, IOException, RemoteException {
+	private void parseSubList(Reader in, ISubscriptionListHandler handler, Map<String, Long> updatedTimes) throws JsonParseException, IOException, RemoteException {
 		JsonFactory f = new JsonFactory();
 		JsonParser jp = f.createJsonParser(in);
 
@@ -454,6 +447,7 @@ public class GoogleReaderClient extends ReaderExtension {
 					if (jp.getCurrentToken() == JsonToken.START_OBJECT) {
 						feed = new ISubscription();
 					} else if (jp.getCurrentToken() == JsonToken.END_OBJECT) {
+						if (updatedTimes != null && updatedTimes.containsKey(feed.uid)) feed.newestItemTime = updatedTimes.get(feed.uid);
 						feedList.add(feed);
 						feed = null;
 					}
@@ -495,61 +489,64 @@ public class GoogleReaderClient extends ReaderExtension {
 	}
 
 	// NOTE: /api/0/unread-count
-//	private Reader readUnreadCount(long syncTime) throws IOException, ReaderException {
-//		initAuth();
-//
-//		StringBuilder buff = new StringBuilder(URL_API_UNREAD_COUNT.length() + 48);
-//		buff.append(URL_API_UNREAD_COUNT);
-//		buff.append("?client=scroll&output=json&ck=").append(syncTime);
-//
-//		return doGetReader(buff.toString());
-//	}
-//
-//	private void parseUnreadCountList(Reader in, UnreadCountHandler handler) throws JsonParseException, IOException {
-//		JsonFactory f = new JsonFactory();
-//		JsonParser jp = f.createJsonParser(in);
-//
-//		String currName;
-//
-//		Unread unread = null;
-//		List<Unread> unreadList = new ArrayList<Unread>();
-//
-//		jp.nextToken(); // will return JsonToken.START_OBJECT (verify?)
-//		while (jp.nextToken() != JsonToken.END_OBJECT) {
-//			currName = jp.getCurrentName();
-//			jp.nextToken(); // move to value, or START_OBJECT/START_ARRAY
-//			if (currName.equals("unreadcounts")) { // contains an object
-//				// start items
-//				while (jp.nextToken() != JsonToken.END_ARRAY) {
-//					if (jp.getCurrentToken() == JsonToken.START_OBJECT) {
-//						unread = new Unread();
-//					} else if (jp.getCurrentToken() == JsonToken.END_OBJECT) {
-//						unreadList.add(unread);
-//						unread = null;
-//					}
-//
-//					currName = jp.getCurrentName();
-//					if (currName == null) continue;
-//					jp.nextToken();
-//					if (currName.equals("id")) {
-//						unread.id = jp.getText();
-//					} else if (currName.equals("newestItemTimestampUsec")) {
-//						unread.newestTime = Utils.asLong(jp.getText().substring(0, jp.getText().length() - 6)); // millis -> unixtime
-//					} else {
-//						jp.skipChildren();
-//					}
-//				}
-//
-//				try {
-//					handler.unreadCounts(unreadList);
-//				} catch (ReaderException e) {
-//				}
-//
-//			} else {
-//				jp.skipChildren();
-//			}
-//		}
-//	}
+	private Reader readUnreadCount(long syncTime) throws IOException, ReaderException {
+		initAuth();
+
+		StringBuilder buff = new StringBuilder(URL_API_UNREAD_COUNT.length() + 48);
+		buff.append(getApiUrl(URL_API_UNREAD_COUNT));
+		buff.append("?client=scroll&output=json&ck=").append(syncTime);
+
+		return doGetReader(buff.toString());
+	}
+
+	private Map<String, Long> parseUnreadCountList(Reader in) throws JsonParseException, IOException {
+		JsonFactory f = new JsonFactory();
+		JsonParser jp = f.createJsonParser(in);
+
+		String currName;
+
+		String uid = null;
+		Long timestamp = null;
+		int len;
+		String text = null;
+		Map<String, Long> unreadList = new HashMap<String, Long>();
+
+		jp.nextToken(); // will return JsonToken.START_OBJECT (verify?)
+		while (jp.nextToken() != JsonToken.END_OBJECT) {
+			currName = jp.getCurrentName();
+			jp.nextToken(); // move to value, or START_OBJECT/START_ARRAY
+			if (currName.equals("unreadcounts")) { // contains an object
+				// start items
+				while (jp.nextToken() != JsonToken.END_ARRAY) {
+					if (jp.getCurrentToken() == JsonToken.START_OBJECT) {
+						// do nothing
+					} else if (jp.getCurrentToken() == JsonToken.END_OBJECT) {
+						if (!unreadList.containsKey(uid)) unreadList.put(uid, timestamp);
+					}
+
+					currName = jp.getCurrentName();
+					if (currName == null) continue;
+					
+					jp.nextToken();
+					if (currName.equals("id")) {
+						uid = jp.getText();
+					} else if (currName.equals("newestItemTimestampUsec")) {
+						text = jp.getText();
+						len = text.length();
+						if (len > 13) text = jp.getText().substring(0, jp.getText().length() - 6);
+						else if (len > 10) text = jp.getText().substring(0, jp.getText().length() - 3);
+						timestamp = Utils.asLong(text); // millis -> unixtime
+					} else {
+						jp.skipChildren();
+					}
+				}
+			} else {
+				jp.skipChildren();
+			}
+		}
+		
+		return unreadList;
+	}
 
 	@Override
 	public void handleItemList(IItemListHandler handler, long syncTime) throws IOException, ReaderException {

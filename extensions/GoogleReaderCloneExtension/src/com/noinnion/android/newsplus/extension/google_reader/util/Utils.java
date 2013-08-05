@@ -104,4 +104,19 @@ public class Utils {
 		return hex;
 	}
 	
+	public static long asLong(Object value) {
+		return asLong(value, 0);
+	}
+
+	public static long asLong(Object value, long defaultValue) {
+		if (value == null) {
+			return defaultValue;
+		}
+		try {
+			return Long.parseLong(String.valueOf(value));
+		} catch (NumberFormatException e) {
+			return defaultValue;
+		}
+	}
+	
 }
