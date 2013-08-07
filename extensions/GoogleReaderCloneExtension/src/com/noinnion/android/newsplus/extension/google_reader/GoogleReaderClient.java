@@ -104,7 +104,7 @@ public class GoogleReaderClient extends ReaderExtension {
 	private String getServer() {
 		if (mServer == null) {
 			mServer = Prefs.getServer(getContext());
-		}
+		}		
 		return mServer;
 	}
 
@@ -113,7 +113,14 @@ public class GoogleReaderClient extends ReaderExtension {
 	}
 	
 	private String getLoginUrl() {
-		return getServer() + URL_LOGIN;
+		String server = getServer();
+		
+//		// inoreader
+//		if (server != null && server.contains("inoreader.com") && server.startsWith("http://")) {
+//			server = server.replace("http://", "https://");
+//		}
+		
+		return server + URL_LOGIN;
 	}
 		
 	public String unEscapeEntities(String text) {
