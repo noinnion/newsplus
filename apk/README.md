@@ -1,6 +1,10 @@
 Beta
 ====================
 
+v0.0.11beta
+* Note: All extensions has to be at least 0.0.11beta
+* Added: Excluded streams for Mark all as read 
+
 v0.0.10beta
 * Added: Launcher activity
 * Fixed: Force closes, bug fixes

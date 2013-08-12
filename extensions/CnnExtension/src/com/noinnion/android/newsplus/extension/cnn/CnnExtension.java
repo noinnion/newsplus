@@ -28,26 +28,26 @@ public class CnnExtension extends ReaderExtension {
 
 //	private final String	TAG	= CnnExtension.class.getSimpleName();
 
-	public String[][] CATEGORIES = new String [][] { 
+	public String[][] CATEGORIES = new String [][] {
 		 {"CAT:Politics", "Politics"},
 		 {"CAT:Sport", "Sport"},
          {"LABEL:Favorites", "Favorites"},
      };
-	
-	public String[][] FEEDS = new String [][] { 
+
+	public String[][] FEEDS = new String [][] {
 		 {"FEED:http://www.engadget.com/rss.xml", "Top Stories", "http://edition.cnn.com/", ""},
 		 {"FEED:http://rss.cnn.com/rss/edition_world.rss", "World", "http://edition.cnn.com/WORLD/", "CAT:Politics"},
 		 {"FEED:http://rss.cnn.com/rss/edition_europe.rss", "Europe", "http://edition.cnn.com/EUROPE/", "CAT:Politics"},
 		 {"FEED:http://rss.cnn.com/rss/edition_sport.rss", "Football", "http://edition.cnn.com/FOOTBALL/", "CAT:Sport"},
          {"FEED:http://rss.cnn.com/rss/edition_tennis.rss", "Tennis", "http://edition.cnn.com/TENNIS/", "CAT:Sport"},
      };
-	
+
 
 	@Override
 	public void handleReaderList(ITagListHandler tagHandler, ISubscriptionListHandler subHandler, long syncTime) throws IOException, ReaderException {
 		List<ITag> tags = new ArrayList<ITag>();
 		List<ISubscription> feeds = new ArrayList<ISubscription>();
-		
+
 		try {
 			for (String[] cat : CATEGORIES) {
 				ITag tag = new ITag();
@@ -57,7 +57,7 @@ public class CnnExtension extends ReaderExtension {
 				else if (tag.uid.startsWith("CAT")) tag.type = ITag.TYPE_FOLDER;
 				tags.add(tag);
 			}
-			
+
 			for (String[] feed : FEEDS) {
 				ISubscription sub = new ISubscription();
 				sub.uid = feed[0];
@@ -68,18 +68,18 @@ public class CnnExtension extends ReaderExtension {
 				}
 				feeds.add(sub);
 			}
-			
+
 			tagHandler.tags(tags);
 			subHandler.subscriptions(feeds);
 		} catch (RemoteException e) {
-			throw new ReaderException("remote connection error", e);			
+			throw new ReaderException("remote connection error", e);
 		}
-	}	
-	
+	}
+
 	@Override
 	public void handleItemList(final IItemListHandler handler, long syncTime) throws IOException, ReaderException {
 		try {
-			String uid = handler.stream(); 
+			String uid = handler.stream();
 			if (uid.equals(ReaderExtension.STATE_READING_LIST)) {
 				for (String[] f : FEEDS) {
 					String url = f[0].replace("FEED:", "");
@@ -89,7 +89,7 @@ public class CnnExtension extends ReaderExtension {
 				for (String[] f : FEEDS) {
 					if (f[2].equals(uid)) {
 						String url = f[0].replace("FEED:", "");
-						parseItemList(url, handler, f[0]);						
+						parseItemList(url, handler, f[0]);
 					}
 				}
 			} else if (uid.startsWith("FEED:")) {
@@ -107,6 +107,7 @@ public class CnnExtension extends ReaderExtension {
 		AQuery aq = new AQuery(this);
 		aq.ajax(url, XmlPullParser.class, new AjaxCallback<XmlPullParser>() {
 
+			@Override
 			public void callback(String url, XmlPullParser xpp, AjaxStatus status) {
 				List<IItem> items = new ArrayList<IItem>();
 				IItem item = null;
@@ -151,8 +152,8 @@ public class CnnExtension extends ReaderExtension {
 
 		});
 
-	}	
-	
+	}
+
 	@Override
 	public void handleItemIdList(IItemIdListHandler handler, long syncTime) throws IOException, ReaderException {
 		// TODO Auto-generated method stub
@@ -171,7 +172,7 @@ public class CnnExtension extends ReaderExtension {
 	}
 
 	@Override
-	public boolean markAllAsRead(String s, String t, long syncTime) throws IOException, ReaderException {
+	public boolean markAllAsRead(String stream, String title, String[] excludedStreams, long syncTime) throws IOException, ReaderException {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -199,6 +200,6 @@ public class CnnExtension extends ReaderExtension {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 
 }

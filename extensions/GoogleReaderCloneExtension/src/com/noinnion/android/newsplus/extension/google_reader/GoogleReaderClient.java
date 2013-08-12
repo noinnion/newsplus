@@ -45,7 +45,7 @@ import com.noinnion.android.reader.api.provider.ITag;
 public class GoogleReaderClient extends ReaderExtension {
 
 	public static final String	TAG								= "GoogleReaderClient";
-	
+
 	public static final String	URL_LOGIN						= "/accounts/ClientLogin";
 	public static final String	URL_API_						= "/api/0";
 	public static final String	URL_ATOM_						= "/atom";
@@ -81,19 +81,19 @@ public class GoogleReaderClient extends ReaderExtension {
 	private String				token;
 	private long				tokenExpiredTime;
 
-	public Context mContext; 
-	
+	public Context mContext;
+
 	public GoogleReaderClient() {
 	}
-	
+
 	public GoogleReaderClient(Context c) {
 		mContext = c;
 	}
-	
+
 	private Context getContext() {
 		return mContext == null ? getApplicationContext() : mContext;
 	}
-	
+
 	protected DefaultHttpClient	client;
 
 	public DefaultHttpClient getClient() {
@@ -104,31 +104,31 @@ public class GoogleReaderClient extends ReaderExtension {
 	private String getServer() {
 		if (mServer == null) {
 			mServer = Prefs.getServer(getContext());
-		}		
+		}
 		return mServer;
 	}
 
 	private String getApiUrl(String api) {
 		return getServer() + "/reader" + api;
 	}
-	
+
 	private String getLoginUrl() {
 		String server = getServer();
-		
+
 //		// inoreader
 //		if (server != null && server.contains("inoreader.com") && server.startsWith("http://")) {
 //			server = server.replace("http://", "https://");
 //		}
-		
+
 		return server + URL_LOGIN;
 	}
-		
+
 	public String unEscapeEntities(String text) {
 		if (text == null) return "";
 		return text.replace("&amp;", "&").replace("&#39;", "'").replace("&quot;", "\"");
 		//		return text.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&").replace("&#39;", "'").replace("&quot;", "\"");
-	}		
-	
+	}
+
 	// tag:google.com,2005:reader/item/ac2817bda074995e => ac2817bda074995e
 	public static String stripItemUid(String uid) {
 		if (uid == null) return "";
@@ -140,12 +140,12 @@ public class GoogleReaderClient extends ReaderExtension {
 		if (id == null) return "";
 		return id.startsWith("tag") ? id : "tag:google.com,2005:reader/item/" + id;
 	}
-		
+
 	public static String getTagUIdPath(String uid) {
 		int pos = uid.indexOf("/label/");
 		return uid.substring(0, pos + "/label/".length());
 	}
-	
+
 	public java.io.Reader doPostReader(String url, List<NameValuePair> params) throws IOException, ReaderException {
 		return new InputStreamReader(doPostInputStream(url, params), HTTP.UTF_8);
 	}
@@ -249,9 +249,9 @@ public class GoogleReaderClient extends ReaderExtension {
 			long diff = System.currentTimeMillis() - authTime;
 			if (diff < AUTH_EXPIRE_TIME) return this.auth;
 		}
-		
+
 		if (TextUtils.isEmpty(this.mLoginId)) this.mLoginId = Prefs.getGoogleId(context);
-		if (TextUtils.isEmpty(this.mPassword)) this.mPassword = Prefs.getGooglePasswd(context);		
+		if (TextUtils.isEmpty(this.mPassword)) this.mPassword = Prefs.getGooglePasswd(context);
 		if (this.mLoginId == null || this.mPassword == null) {
 			throw new ReaderLoginException("No Login Data");
 		}
@@ -320,7 +320,7 @@ public class GoogleReaderClient extends ReaderExtension {
 //		}
 //		return mTagLabelSet;
 //	}
-	
+
 	public boolean addUserLabel(String category, IItem entry) {
 		if (category.contains("/label/") && category.startsWith("user/")) {
 			return true;
@@ -332,8 +332,8 @@ public class GoogleReaderClient extends ReaderExtension {
 			return true;
 		}
 		return false;
-	}	
-	
+	}
+
 	@Override
 	public void handleReaderList(ITagListHandler tagHandler, ISubscriptionListHandler subHandler, long syncTime) throws IOException, ReaderException {
 		Reader in = null;
@@ -343,7 +343,7 @@ public class GoogleReaderClient extends ReaderExtension {
 		} catch (JsonParseException e) {
 			throw new ReaderException("data parse error", e);
 		} catch (RemoteException e) {
-			throw new ReaderException("remote connection error", e);			
+			throw new ReaderException("remote connection error", e);
 		} finally {
 			if (in != null) in.close();
 		}
@@ -354,7 +354,7 @@ public class GoogleReaderClient extends ReaderExtension {
 		} catch (JsonParseException e) {
 			throw new ReaderException("data parse error", e);
 		} catch (RemoteException e) {
-			throw new ReaderException("remote connection error", e);			
+			throw new ReaderException("remote connection error", e);
 		} finally {
 			if (in != null) in.close();
 		}
@@ -363,7 +363,7 @@ public class GoogleReaderClient extends ReaderExtension {
 	// NOTE: /api/0/tag/list
 	private Reader readTagList(long syncTime) throws IOException, ReaderException {
 		initAuth();
-		
+
 		StringBuilder buff = new StringBuilder();
 		buff.append(getApiUrl(URL_API_TAG_LIST));
 		buff.append("?client=scroll&output=json&ck=").append(syncTime);
@@ -421,7 +421,7 @@ public class GoogleReaderClient extends ReaderExtension {
 				jp.skipChildren();
 			}
 		}
-	}	
+	}
 
 	// NOTE: /api/0/subscription/list
 	private Reader readSubList(long syncTime) throws IOException, ReaderException {
@@ -444,7 +444,7 @@ public class GoogleReaderClient extends ReaderExtension {
 		List<ISubscription> feedList = new ArrayList<ISubscription>();
 
 		jp.nextToken(); // will return JsonToken.START_OBJECT (verify?)
-		while (jp.nextToken() != JsonToken.END_OBJECT) {			
+		while (jp.nextToken() != JsonToken.END_OBJECT) {
 			currName = jp.getCurrentName();
 
 			jp.nextToken(); // move to value, or START_OBJECT/START_ARRAY
@@ -533,7 +533,7 @@ public class GoogleReaderClient extends ReaderExtension {
 
 					currName = jp.getCurrentName();
 					if (currName == null) continue;
-					
+
 					jp.nextToken();
 					if (currName.equals("id")) {
 						uid = jp.getText();
@@ -551,7 +551,7 @@ public class GoogleReaderClient extends ReaderExtension {
 				jp.skipChildren();
 			}
 		}
-		
+
 		return unreadList;
 	}
 
@@ -562,7 +562,7 @@ public class GoogleReaderClient extends ReaderExtension {
 		try {
 			long startTime = handler.startTime();
 			in = readStreamContents(syncTime, startTime, handler, null);
-			
+
 			String continuation = parseItemList(in, handler);
 
 			int limit = handler.limit();
@@ -579,7 +579,7 @@ public class GoogleReaderClient extends ReaderExtension {
 			throw new ReaderException("data parse error", e);
 		} catch (RemoteException e) {
 			e.printStackTrace();
-			throw new ReaderException("remote connection error", e);			
+			throw new ReaderException("remote connection error", e);
 		} finally {
 			if (in != null) in.close(); // ensure resources get cleaned up timely
 		}
@@ -612,13 +612,13 @@ public class GoogleReaderClient extends ReaderExtension {
 			buff.append("&n=").append(limit > SYNC_MAX_ITEMS ? SYNC_MAX_ITEMS : limit);
 		}
 		buff.append("&r=").append(handler.newestFirst() ? "n" : "o");
-		
+
 		return doGetReader(buff.toString());
 	}
 
 	private String parseItemList(Reader in, IItemListHandler handler) throws JsonParseException, IOException, RemoteException {
 		long length = 0;
-		
+
 		JsonFactory f = new JsonFactory();
 		JsonParser jp = f.createJsonParser(in);
 
@@ -752,7 +752,7 @@ public class GoogleReaderClient extends ReaderExtension {
 
 		return continuation;
 	}
-	
+
 	@Override
 	public void handleItemIdList(IItemIdListHandler handler, long syncTime) throws IOException, ReaderException {
 		// http://www.google.com/reader/api/0/stream/contents/user%2F-%2Fstate%2Fcom.google%2Fread?client=scroll&output=json&ck=1276066665822&n=20&r=n
@@ -764,7 +764,7 @@ public class GoogleReaderClient extends ReaderExtension {
 			e.printStackTrace();
 			throw new ReaderException("data parse error", e);
 		} catch (RemoteException e) {
-			throw new ReaderException("remote connection error", e);			
+			throw new ReaderException("remote connection error", e);
 		} finally {
 			if (in != null) in.close();
 		}
@@ -825,8 +825,8 @@ public class GoogleReaderClient extends ReaderExtension {
 				jp.skipChildren();
 			}
 		}
-	}	
-	
+	}
+
 	@Override
 	public boolean markAsRead(String[] itemUids, String[] subUids) throws IOException, ReaderException {
 		return editItemTag(itemUids, subUids, new String[] { STATE_READ }, null);
@@ -838,18 +838,18 @@ public class GoogleReaderClient extends ReaderExtension {
 	}
 
 	@Override
-	public boolean markAllAsRead(String s, String t, long syncTime) throws IOException, ReaderException {
-		if (s == null) {
-			s = STATE_READING_LIST;
-			t = "all";
+	public boolean markAllAsRead(String stream, String title, String[] excludedStreams, long syncTime) throws IOException, ReaderException {
+		if (stream == null) {
+			stream = STATE_READING_LIST;
+			title = "all";
 		}
 		String token = initToken();
 		List<NameValuePair> params = new ArrayList<NameValuePair>(5);
 		params.add(new BasicNameValuePair("T", token));
-		params.add(new BasicNameValuePair("s", s));
-		params.add(new BasicNameValuePair("t", t));
+		params.add(new BasicNameValuePair("s", stream));
+		params.add(new BasicNameValuePair("t", title));
 		params.add(new BasicNameValuePair("ts", syncTime + "999"));
-	
+
 		Reader in = doPostReader(getApiUrl(URL_API_MARK_ALL_AS_READ), params);
 		try {
 			char[] cbuf = new char[128];
@@ -869,28 +869,28 @@ public class GoogleReaderClient extends ReaderExtension {
 		String token = initToken();
 		List<NameValuePair> params = new ArrayList<NameValuePair>(5);
 		params.add(new BasicNameValuePair("T", token));
-	
+
 		if (addTags != null && addTags.length > 0) {
 			for (String tagUid : addTags) {
 				params.add(new BasicNameValuePair("a", tagUid));
 			}
 		}
-	
+
 		if (removeTags != null && removeTags.length > 0) {
 			for (String tagUid : removeTags) {
 				params.add(new BasicNameValuePair("r", tagUid));
 			}
 		}
-	
+
 		if (itemUids != null && itemUids.length > 0) {
 			for (int i = 0; i < itemUids.length; i++) {
 				params.add(new BasicNameValuePair("i", getItemUid(itemUids[i])));
 				params.add(new BasicNameValuePair("s", subUids[i]));
 			}
 		}
-	
+
 		params.add(new BasicNameValuePair("async", "true"));
-	
+
 		Reader in = doPostReader(getApiUrl(URL_API_EDIT_TAG), params);
 		try {
 			char[] cbuf = new char[128];
@@ -920,13 +920,13 @@ public class GoogleReaderClient extends ReaderExtension {
 			case ReaderExtension.SUBSCRIPTION_ACTION_ADD_LABEL:
 				params.add(new BasicNameValuePair("ac", "edit"));
 				for (String tag : tags) {
-					params.add(new BasicNameValuePair("a", tag));					
+					params.add(new BasicNameValuePair("a", tag));
 				}
 				break;
 			case ReaderExtension.SUBSCRIPTION_ACTION_REMOVE_LABEL:
 				params.add(new BasicNameValuePair("ac", "edit"));
 				for (String tag : tags) {
-					params.add(new BasicNameValuePair("r", tag));					
+					params.add(new BasicNameValuePair("r", tag));
 				}
 				break;
 			case ReaderExtension.SUBSCRIPTION_ACTION_SUBCRIBE:
@@ -937,7 +937,7 @@ public class GoogleReaderClient extends ReaderExtension {
 				break;
 		}
 		params.add(new BasicNameValuePair("s", "feed/" + url));
-	
+
 		Reader in = doPostReader(getApiUrl(URL_API_SUBSCIPTION), params);
 		try {
 			char[] cbuf = new char[128];
@@ -960,7 +960,7 @@ public class GoogleReaderClient extends ReaderExtension {
 		params.add(new BasicNameValuePair("s", tagUid));
 		params.add(new BasicNameValuePair("t", oldLabel));
 		params.add(new BasicNameValuePair("dest", getTagUIdPath(tagUid) + newLabel));
-	
+
 		Reader in = doPostReader(getApiUrl(URL_API_RENAME_TAG), params);
 		try {
 			char[] cbuf = new char[128];
@@ -982,7 +982,7 @@ public class GoogleReaderClient extends ReaderExtension {
 		params.add(new BasicNameValuePair("T", token));
 		params.add(new BasicNameValuePair("s", tagUid));
 		params.add(new BasicNameValuePair("t", label));
-	
+
 		Reader in = doPostReader(getApiUrl(URL_API_DISABLE_TAG), params);
 		try {
 			char[] cbuf = new char[128];
