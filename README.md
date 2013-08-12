@@ -13,7 +13,6 @@ https://github.com/noinnion/newsplus/raw/master/apk/NewsPlus_beta.apk
 
 ### Extensions
 
-* Example Extension: [Download](https://github.com/noinnion/newsplus/raw/master/apk/CnnExtension_beta.apk)
 * Google Reader Clone (api clone): [Download](https://github.com/noinnion/newsplus/raw/master/apk/GoogleReaderClone_beta.apk)
 * InoReader: [Download](https://github.com/noinnion/newsplus/raw/master/apk/GoogleReaderClone_beta.apk)
 * Bazqux: [Download](https://github.com/noinnion/newsplus/raw/master/apk/BazquxExtension_beta.apk)
