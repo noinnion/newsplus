@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.Inflater;
+import java.util.zip.InflaterInputStream;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -160,7 +163,7 @@ public class GoogleReaderClient extends ReaderExtension {
 
 		// gzip
 		post.setHeader("User-agent", "gzip");
-		// post.setHeader("Accept-Encoding", "gzip");
+		post.setHeader("Accept-Encoding", "gzip");
 
 		HttpResponse res = getClient().execute(post);
 		int resStatus = res.getStatusLine().getStatusCode();
@@ -178,11 +181,22 @@ public class GoogleReaderClient extends ReaderExtension {
 			throw new ReaderException("null response entity");
 		}
 
-		return new FilterInputStream(entity.getContent()) {
+		InputStream is = null;
+
+		// create the appropriate stream wrapper based on the encoding type
+		String encoding = Utils.getHeaderValue(entity.getContentEncoding());
+		if (encoding != null && encoding.equalsIgnoreCase("gzip")) {
+			is = new GZIPInputStream(entity.getContent());
+		} else if (encoding != null && encoding.equalsIgnoreCase("deflate")) {
+			is = new InflaterInputStream(entity.getContent(), new Inflater(true));
+		} else {
+			is = entity.getContent();
+		}
+
+		return new FilterInputStream(is) {
 			@Override
 			public void close() throws IOException {
 				super.close();
-				// entity.consumeContent();
 			}
 		};
 	}
@@ -201,7 +215,7 @@ public class GoogleReaderClient extends ReaderExtension {
 
 		// gzip
 		get.setHeader("User-agent", "gzip");
-		// get.setHeader("Accept-Encoding", "gzip");
+		get.setHeader("Accept-Encoding", "gzip");
 
 		HttpResponse res = getClient().execute(get);
 		int resStatus = res.getStatusLine().getStatusCode();
@@ -219,8 +233,24 @@ public class GoogleReaderClient extends ReaderExtension {
 			throw new ReaderException("null response entity");
 		}
 
-		InputStream in = entity.getContent();
-		return in;
+		InputStream is = null;
+
+		// create the appropriate stream wrapper based on the encoding type
+		String encoding = Utils.getHeaderValue(entity.getContentEncoding());
+		if (encoding != null && encoding.equalsIgnoreCase("gzip")) {
+			is = new GZIPInputStream(entity.getContent());
+		} else if (encoding != null && encoding.equalsIgnoreCase("deflate")) {
+			is = new InflaterInputStream(entity.getContent(), new Inflater(true));
+		} else {
+			is = entity.getContent();
+		}
+
+		return new FilterInputStream(is) {
+			@Override
+			public void close() throws IOException {
+				super.close();
+			}
+		};
 	}
 
 	public boolean login() throws IOException, ReaderException {
