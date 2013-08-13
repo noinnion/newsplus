@@ -118,10 +118,10 @@ public class GoogleReaderClient extends ReaderExtension {
 	private String getLoginUrl() {
 		String server = getServer();
 
-//		// inoreader
-//		if (server != null && server.contains("inoreader.com") && server.startsWith("http://")) {
-//			server = server.replace("http://", "https://");
-//		}
+		// inoreader
+		if (server != null && server.contains("inoreader.com") && server.startsWith("http://")) {
+			server = server.replace("http://", "https://");
+		}
 
 		return server + URL_LOGIN;
 	}
