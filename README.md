@@ -16,7 +16,7 @@ https://github.com/noinnion/newsplus/raw/master/apk/NewsPlus_beta.apk
 * Google Reader Clone (api clone): [Download](https://github.com/noinnion/newsplus/raw/master/apk/GoogleReaderClone_beta.apk)
 * InoReader: [Download](https://github.com/noinnion/newsplus/raw/master/apk/GoogleReaderClone_beta.apk)
 * Bazqux: [Download](https://github.com/noinnion/newsplus/raw/master/apk/BazquxExtension_beta.apk)
-* TT-Rss: [Download](https://github.com/noinnion/newsplus/raw/master/apk/TtRssExtension_beta.apk)
+* TT-Rss: [Download](https://github.com/noinnion/newsplus/raw/master/apk/TtRssExtension_beta.apk) (NOTE: api_newsplus: https://github.com/hrk/tt-rss-newsplus-plugin/)
 * NewsBlur: https://github.com/asafge/NewsBlurPlus
 * CommaFeed: https://github.com/Athou/commafeed-newsplus
 
