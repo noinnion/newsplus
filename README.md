@@ -19,6 +19,7 @@ https://github.com/noinnion/newsplus/raw/master/apk/NewsPlus_beta.apk
 * TT-Rss: [Download](https://github.com/noinnion/newsplus/raw/master/apk/TtRssExtension_beta.apk) (NOTE: api_newsplus: https://github.com/hrk/tt-rss-newsplus-plugin/)
 * NewsBlur: https://github.com/asafge/NewsBlurPlus
 * CommaFeed: https://github.com/Athou/commafeed-newsplus
+* SubReader: [Download](http://subreader.com/static/files/SubReaderExtension.apk)
 
 We are trying to publish more :)
 
