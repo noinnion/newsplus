@@ -1,9 +1,15 @@
 Beta
 ====================
 
+v0.0.12beta
+* Note: This beta has changed some internal structures. After installing it you should do a Clear Cache (Menu->Clear Cache) and sync again.
+* Fixed: Offline syncing
+* Fixed: Force closes
+
+
 v0.0.11beta
 * Note: All extensions has to be at least 0.0.11beta
-* Added: Excluded streams for Mark all as read 
+* Added: Excluded streams for Mark all as read
 
 v0.0.10beta
 * Added: Launcher activity
@@ -29,7 +35,7 @@ v0.0.6beta
 v0.0.5beta
 * Fixed: Force closes
 * TT-RSS: Fixed starred items
-* TT-RSS: fetch Podcasts 
+* TT-RSS: fetch Podcasts
 
 v0.0.4beta
 * Fixed: Backup/Restore issue
