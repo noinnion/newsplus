@@ -1,6 +1,10 @@
 Beta
 ====================
 
+v0.0.13beta
+* Note: All extensions has to be at least 0.0.13beta
+* Fixed: Caching operation on offline
+
 v0.0.12beta
 * Note: This beta has changed some internal structures. After installing it you should do a Clear Cache (Menu->Clear Cache) and sync again.
 * Improved: Tablet optimized

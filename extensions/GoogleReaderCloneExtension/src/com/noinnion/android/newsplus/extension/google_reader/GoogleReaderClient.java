@@ -61,12 +61,12 @@ public class GoogleReaderClient extends ReaderExtension {
 	public static final String	URL_API_STREAM_ITEM_IDS			= URL_API_ + "/stream/items/ids";
 	public static final String	URL_API_STREAM_ITEMS_CONTENTS	= URL_API_ + "/stream/items/contents";
 	public static final String	URL_API_FEED_FINDER				= URL_API_ + "/feed-finder?output=json";
-	public static final String	URL_API_EDIT_TAG				= URL_API_ + "/edit-tag?client=scroll";
-	public static final String	URL_API_EDIT_ITEM				= URL_API_ + "/item/edit?client=scroll";
-	public static final String	URL_API_RENAME_TAG				= URL_API_ + "/rename-tag?client=scroll";
-	public static final String	URL_API_DISABLE_TAG				= URL_API_ + "/disable-tag?client=scroll";
-	public static final String	URL_API_MARK_ALL_AS_READ		= URL_API_ + "/mark-all-as-read?client=scroll";
-	public static final String	URL_API_SUBSCIPTION				= URL_API_ + "/subscription/edit?client=scroll";
+	public static final String	URL_API_EDIT_TAG				= URL_API_ + "/edit-tag?client=newsplus";
+	public static final String	URL_API_EDIT_ITEM				= URL_API_ + "/item/edit?client=newsplus";
+	public static final String	URL_API_RENAME_TAG				= URL_API_ + "/rename-tag?client=newsplus";
+	public static final String	URL_API_DISABLE_TAG				= URL_API_ + "/disable-tag?client=newsplus";
+	public static final String	URL_API_MARK_ALL_AS_READ		= URL_API_ + "/mark-all-as-read?client=newsplus";
+	public static final String	URL_API_SUBSCIPTION				= URL_API_ + "/subscription/edit?client=newsplus";
 	public static final String	URL_API_BUNDLES					= URL_API_ + "/bundles?output=json";
 	public static final String	URL_API_PREFERENCE_LIST			= URL_API_ + "/preference/list?output=json";
 	public static final String	URL_API_PREFERENCE_STREAM_LIST	= URL_API_ + "/preference/stream/list?output=json";
@@ -154,8 +154,8 @@ public class GoogleReaderClient extends ReaderExtension {
 	}
 
 	public InputStream doPostInputStream(String url, List<NameValuePair> params) throws IOException, ReaderException {
-		// Log.d(TAG, "[DEBUG] POST: " + url);
-		// Log.d(TAG, "[DEBUG] PARAMS: " + params);
+//		Log.e(TAG, "[DEBUG] POST: " + url);
+// 		Log.d(TAG, "[DEBUG] PARAMS: " + params);
 		HttpPost post = new HttpPost(url);
 		post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
 
@@ -208,11 +208,11 @@ public class GoogleReaderClient extends ReaderExtension {
 	}
 
 	public InputStream doGetInputStream(String url) throws IOException, ReaderException {
-		// Log.d(TAG, "[DEBUG] GET: " + url);
+//		Log.e(TAG, "[DEBUG] GET: " + url);
 		HttpGet get = new HttpGet(url);
 
 		if (this.auth != null) get.setHeader("Authorization", "GoogleLogin auth=" + this.auth);
-
+		
 		// gzip
 		get.setHeader("User-agent", "gzip");
 		get.setHeader("Accept-Encoding", "gzip");
@@ -341,16 +341,6 @@ public class GoogleReaderClient extends ReaderExtension {
 		return (this.auth != null);
 	}
 
-// tag label set (sync only items from tags)
-//	public Set<String>	mTagLabelSet	= null;
-//
-//	public Set<String> getTagLabelSet(Context c) {
-//		if (mTagLabelSet == null) {
-//			mTagLabelSet = ReaderManager.newInstance(c).getTagLabelSet();
-//		}
-//		return mTagLabelSet;
-//	}
-
 	public boolean addUserLabel(String category, IItem entry) {
 		if (category.contains("/label/") && category.startsWith("user/")) {
 			return true;
@@ -371,8 +361,10 @@ public class GoogleReaderClient extends ReaderExtension {
 			in = readTagList(syncTime);
 			parseTagList(in, tagHandler);
 		} catch (JsonParseException e) {
+			e.printStackTrace();
 			throw new ReaderException("data parse error", e);
 		} catch (RemoteException e) {
+			e.printStackTrace();
 			throw new ReaderException("remote connection error", e);
 		} finally {
 			if (in != null) in.close();
@@ -380,10 +372,14 @@ public class GoogleReaderClient extends ReaderExtension {
 
 		try {
 			in = readSubList(syncTime);
-			parseSubList(in, subHandler, parseUnreadCountList(readUnreadCount(syncTime)));
+			// TODO: parse last update time
+//			parseSubList(in, subHandler, parseUnreadCountList(readUnreadCount(syncTime)));
+			parseSubList(in, subHandler, null);
 		} catch (JsonParseException e) {
+			e.printStackTrace();
 			throw new ReaderException("data parse error", e);
 		} catch (RemoteException e) {
+			e.printStackTrace();
 			throw new ReaderException("remote connection error", e);
 		} finally {
 			if (in != null) in.close();
@@ -396,14 +392,14 @@ public class GoogleReaderClient extends ReaderExtension {
 
 		StringBuilder buff = new StringBuilder();
 		buff.append(getApiUrl(URL_API_TAG_LIST));
-		buff.append("?client=scroll&output=json&ck=").append(syncTime);
+		buff.append("?client=newsplus&output=json&ck=").append(syncTime);
 
 		return doGetReader(buff.toString());
 	}
 
 	private void parseTagList(Reader in, ITagListHandler handler) throws JsonParseException, IOException, RemoteException {
 		JsonFactory f = new JsonFactory();
-		JsonParser jp = f.createJsonParser(in);
+		JsonParser jp = f.createParser(in);
 
 		String currName;
 
@@ -459,14 +455,14 @@ public class GoogleReaderClient extends ReaderExtension {
 
 		StringBuilder buff = new StringBuilder();
 		buff.append(getApiUrl(URL_API_SUB_LIST));
-		buff.append("?client=scroll&output=json&ck=").append(syncTime);
+		buff.append("?client=newsplus&output=json&ck=").append(syncTime);
 
 		return doGetReader(buff.toString());
 	}
 
 	private void parseSubList(Reader in, ISubscriptionListHandler handler, Map<String, Long> updatedTimes) throws JsonParseException, IOException, RemoteException {
 		JsonFactory f = new JsonFactory();
-		JsonParser jp = f.createJsonParser(in);
+		JsonParser jp = f.createParser(in);
 
 		String currName;
 
@@ -531,14 +527,14 @@ public class GoogleReaderClient extends ReaderExtension {
 
 		StringBuilder buff = new StringBuilder(URL_API_UNREAD_COUNT.length() + 48);
 		buff.append(getApiUrl(URL_API_UNREAD_COUNT));
-		buff.append("?client=scroll&output=json&ck=").append(syncTime);
+		buff.append("?client=newsplus&output=json&ck=").append(syncTime);
 
 		return doGetReader(buff.toString());
 	}
 
 	private Map<String, Long> parseUnreadCountList(Reader in) throws JsonParseException, IOException {
 		JsonFactory f = new JsonFactory();
-		JsonParser jp = f.createJsonParser(in);
+		JsonParser jp = f.createParser(in);
 
 		String currName;
 
@@ -548,6 +544,7 @@ public class GoogleReaderClient extends ReaderExtension {
 		String text = null;
 		Map<String, Long> unreadList = new HashMap<String, Long>();
 
+		
 		jp.nextToken(); // will return JsonToken.START_OBJECT (verify?)
 		while (jp.nextToken() != JsonToken.END_OBJECT) {
 			currName = jp.getCurrentName();
@@ -581,13 +578,13 @@ public class GoogleReaderClient extends ReaderExtension {
 				jp.skipChildren();
 			}
 		}
-
+		
 		return unreadList;
 	}
 
 	@Override
 	public void handleItemList(IItemListHandler handler, long syncTime) throws IOException, ReaderException {
-		// http://www.google.com/reader/api/0/stream/contents/user%2F-%2Fstate%2Fcom.google%2Fread?client=scroll&output=json&ck=1276066665822&n=20&r=n
+		// http://www.google.com/reader/api/0/stream/contents/user%2F-%2Fstate%2Fcom.google%2Fread?client=newsplus&output=json&ck=1276066665822&n=20&r=n
 		Reader in = null;
 		try {
 			long startTime = handler.startTime();
@@ -625,7 +622,7 @@ public class GoogleReaderClient extends ReaderExtension {
 		if (subUid != null) {
 			buff.append("/").append(Utils.encode(subUid));
 		}
-		buff.append("?client=scroll&ck=").append(syncTime);
+		buff.append("?client=newsplus&ck=").append(syncTime);
 		if (handler.excludeRead()) {
 			buff.append("&xt=").append(STATE_READ);
 		}
@@ -650,7 +647,7 @@ public class GoogleReaderClient extends ReaderExtension {
 		long length = 0;
 
 		JsonFactory f = new JsonFactory();
-		JsonParser jp = f.createJsonParser(in);
+		JsonParser jp = f.createParser(in);
 
 		String currName;
 
@@ -785,7 +782,7 @@ public class GoogleReaderClient extends ReaderExtension {
 
 	@Override
 	public void handleItemIdList(IItemIdListHandler handler, long syncTime) throws IOException, ReaderException {
-		// http://www.google.com/reader/api/0/stream/contents/user%2F-%2Fstate%2Fcom.google%2Fread?client=scroll&output=json&ck=1276066665822&n=20&r=n
+		// http://www.google.com/reader/api/0/stream/contents/user%2F-%2Fstate%2Fcom.google%2Fread?client=newsplus&output=json&ck=1276066665822&n=20&r=n
 		Reader in = null;
 		try {
 			in = readStreamItemIds(syncTime, handler);
@@ -794,6 +791,7 @@ public class GoogleReaderClient extends ReaderExtension {
 			e.printStackTrace();
 			throw new ReaderException("data parse error", e);
 		} catch (RemoteException e) {
+			e.printStackTrace();
 			throw new ReaderException("remote connection error", e);
 		} finally {
 			if (in != null) in.close();
@@ -826,7 +824,7 @@ public class GoogleReaderClient extends ReaderExtension {
 
 	private void parseItemIdList(Reader in, IItemIdListHandler handler) throws JsonParseException, IOException, RemoteException {
 		JsonFactory f = new JsonFactory();
-		JsonParser jp = f.createJsonParser(in);
+		JsonParser jp = f.createParser(in);
 
 		String currName;
 
