@@ -3,6 +3,7 @@ Beta
 
 v0.0.12beta
 * Note: This beta has changed some internal structures. After installing it you should do a Clear Cache (Menu->Clear Cache) and sync again.
+* Improved: Tablet optimized
 * Fixed: Offline syncing
 * Fixed: Force closes
 
