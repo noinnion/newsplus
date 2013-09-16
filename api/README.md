@@ -78,7 +78,7 @@ Subclasses must implement following methods:
  * @param syncTime 		Time of synchronization
  * @return boolean 	true if success else false
 
-** public abstract boolean renameTag(String uid, String oldLabel, String newLabel) throws IOException, ReaderException **
+**public abstract boolean renameTag(String uid, String oldLabel, String newLabel) throws IOException, ReaderException**
 * Rename a tag/folder
  *
  * @param uid 			Tag id
@@ -86,7 +86,7 @@ Subclasses must implement following methods:
  * @param newLabel 		New Label
  * @return boolean 	true if success else false
 
-**	public abstract boolean disableTag(String uid, String label) throws IOException, ReaderException **
+**public abstract boolean disableTag(String uid, String label) throws IOException, ReaderException**
 * Remove a tag/folder
  * @param uid 			Tag id
  * @param label 		Tag label
