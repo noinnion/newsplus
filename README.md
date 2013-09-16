@@ -22,3 +22,6 @@ https://github.com/noinnion/newsplus/raw/master/apk/NewsPlus_beta.apk
 * SubReader: [Download](http://subreader.com/static/files/SubReaderExtension.apk)
 
 We are trying to publish more :)
+
+### API
+https://github.com/noinnion/newsplus/tree/master/api
