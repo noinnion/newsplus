@@ -20,4 +20,51 @@ The main News+ app discovers available extensions using Android's Intent mechani
 * description (required): should be a one- or two-sentence description of the extension, as a string.
 * loginActivity (required): should be the qualified component name for a login activity in the extension's package that News+ can start when the user choose the extension
 
+### Subclassing ReaderExtension
+Subclasses must implement following methods:
 
+**public abstract void handleReaderList(ITagListHandler tagHandler, ISubscriptionListHandler subHandler, long syncTime) throws IOException, ReaderException**
+* Called to retrieve feeds, tags or folders from the service. It will initialize the feeds and folder structure for the displaying them in the app.
+  * @param tagHandler 	Handles tag and folder entries from the service.
+  * @param subHandler 	Handles feed entries from the service.
+  * @param syncTime 		Time of synchronization
+
+**public abstract void handleItemList(IItemListHandler handler, long syncTime) throws IOException, ReaderException**
+* Called to retrieve items from the service. Sync parameters can be retrieved from IItemListHandler
+  * @param handler 	Handles item entries from the service.
+  * @param syncTime 	Time of synchronization
+
+**public abstract void handleItemIdList(IItemIdListHandler handler, long syncTime) throws IOException, ReaderException**
+* Is useful for 2-way synchronization. Retrieving items ids from the server to know the changes on the server.
+  * @param handler 	Handles item id entries from the service.
+  * @param syncTime 		Time of synchronization
+
+**public abstract boolean markAsRead(String[] itemUids, String[] subUids) throws IOException, ReaderException**
+* Mark items as read.
+  * @param itemUids 	Item ids which has to be marked as read
+  * @param subUids 	Some services need to have corresponding subscription ids
+  * @return boolean 	true if success else false
+
+**public abstract boolean markAsUnread(String[] itemUids, String[] subUids, boolean keepUnread) throws IOException, ReaderException**
+* Mark items as unread.
+  * @param itemUids 		Item ids which has to be marked as unread
+  * @param subUids 		Some services need to have corresponding subscription ids
+  * @param keepUnread 	Set keep unread status
+  * @return boolean 	true if success else false
+
+**public abstract boolean markAllAsRead(String stream, String title, String[] excludedStreams, long syncTime) throws IOException, ReaderException**
+* Mark all items as read for a specific stream.
+  * @param stream 		Stream(subscriptions, tags or folders) that has to be marked as read. If stream == null then mark all as read
+  * @param label 		Some services need to have stream label
+  * @param excludedStreams Streams which are excluded from sync
+  * @param syncTime 		Time of synchronization
+  * @return boolean 	true if success else false
+
+**public abstract boolean editItemTag(String[] itemUids, String[] subUids, String[] addTags, String[] removeTags) throws IOException, ReaderException**
+* Modify tags for items.
+	 * @param itemUids 		Item ids
+	 * @param subUids 		Corresponding subscription ids
+	 * @param addTags 		Tags to be added to items
+	 * @param removeTags 	Tags to be removed from items
+	 *
+	 * @return boolean 	true if success else false
