@@ -22,7 +22,7 @@ The main News+ app discovers available extensions using Android's Intent mechani
 * loginActivity (required): should be the qualified component name for a login activity in the extension's package that News+ can start when the user choose the extension
 
 ### Subclassing ReaderExtension
-Subclasses must implement following methods:
+Subclasses must implement following methods. The methods are used by News+ to get the information from the extension (service). 
 
 **public abstract void handleReaderList(ITagListHandler tagHandler, ISubscriptionListHandler subHandler, long syncTime) throws IOException, ReaderException**
 * Called to retrieve feeds, tags or folders from the service. It will initialize the feeds and folder structure for the displaying them in the app.
