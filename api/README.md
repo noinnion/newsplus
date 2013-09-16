@@ -1,6 +1,5 @@
 API
 ---
-With the GoogleReaderClone extenion you can see how to implement an extension. To use the API you need to import reader-api-r1.jar into the projects. Documentation will come soon.
 
 ### Getting Started
 The News+ API is pretty easy to get started with:
@@ -11,6 +10,8 @@ The News+ API is pretty easy to get started with:
 
 Once you have both News+ and your custom extension installed, you should be able to see your extension in the News+ extension list (press the title in actionbar).
 
+### Sample code
+With the GoogleReaderClone extenion you can see how to implement an extension. To use the API you need to import reader-api-r1.jar into the projects. Documentation will come soon.
 
 ### Registering extensions
 An extension is simply a service that the News+ process binds to. Subclasses of this base ReaderExtension class should thus be declared as <service> components in the application's AndroidManifest.xml file.
