@@ -67,3 +67,27 @@ Subclasses must implement following methods:
  * @param addTags 		Tags to be added to items
  * @param removeTags 	Tags to be removed from items
  * @return boolean 	true if success else false
+
+**public abstract boolean editSubscription(String uid, String title, String url, String[] tags, int action, long syncTime) throws IOException, ReaderException**
+* Modify subscriptions.
+ * @param uid 			Subscription id which has to be modified
+ * @param title 		Subscription title
+ * @param url 			Subscription url
+ * @param tags 			Tags to be added/removed from subscription
+ * @param action 		{SUBSCRIPTION_ACTION_EDIT, SUBSCRIPTION_ACTION_SUBSCRIBE, SUBSCRIPTION_ACTION_UNSUBSCRIBE, SUBSCRIPTION_ACTION_ADD_LABEL, SUBSCRIPTION_ACTION_REMOVE_LABEL}
+ * @param syncTime 		Time of synchronization
+ * @return boolean 	true if success else false
+
+** public abstract boolean renameTag(String uid, String oldLabel, String newLabel) throws IOException, ReaderException **
+* Rename a tag/folder
+ *
+ * @param uid 			Tag id
+ * @param oldLabel 		Old label
+ * @param newLabel 		New Label
+ * @return boolean 	true if success else false
+
+**	public abstract boolean disableTag(String uid, String label) throws IOException, ReaderException **
+* Remove a tag/folder
+ * @param uid 			Tag id
+ * @param label 		Tag label
+ * @return boolean 	true if success else false
