@@ -25,7 +25,7 @@ The main News+ app discovers available extensions using Android's Intent mechani
 Subclasses must implement following methods. The methods are used by News+ to get the information from the extension (service). 
 
 **public abstract void handleReaderList(ITagListHandler tagHandler, ISubscriptionListHandler subHandler, long syncTime) throws IOException, ReaderException**
-* Called to retrieve feeds, tags or folders from the service. It will initialize the feeds and folder structure for the displaying them in the app.
+* Called to retrieve feeds, tags or folders from the service. It will initialize the feeds and folder structure for displaying them in the app.
  * @param tagHandler 	Handles tag and folder entries from the service.
  * @param subHandler 	Handles feed entries from the service.
  * @param syncTime 		Time of synchronization
