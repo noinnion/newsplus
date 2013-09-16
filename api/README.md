@@ -28,16 +28,36 @@ Subclasses must implement following methods:
  * @param tagHandler 	Handles tag and folder entries from the service.
  * @param subHandler 	Handles feed entries from the service.
  * @param syncTime 		Time of synchronization
+* ITagListHandler tagHandler: 
+  * void tagHandler.tags(List<ITag> tags): import new tags
+* ISubscriptionListHandler subHandler: handle subscriptions
+  * void subscriptions(List<ISubscription> subscriptions): import new subscriptions
 
 **public abstract void handleItemList(IItemListHandler handler, long syncTime) throws IOException, ReaderException**
 * Called to retrieve items from the service. Sync parameters can be retrieved from IItemListHandler
  * @param handler 	Handles item entries from the service.
  * @param syncTime 	Time of synchronization
+* IItemListHandler handler:
+ * String stream(): stream id of the syncing stream
+ * int limit(): number of items to be fetched
+ * boolean newestFirst(): sorting of the list (true: newest first, false: oldest first)
+ * long startTime(): time where items start
+ * boolean excludeRead(): unread only
+ * boolean continuation(): if a request does not get all items, should it use continue requesting for more items
+ * List<String> excludedStreams(): stream ids which are excluded from synchronizing
+ * void items(in List<IItem> items, int strategy): import new items
 
 **public abstract void handleItemIdList(IItemIdListHandler handler, long syncTime) throws IOException, ReaderException**
 * Is useful for 2-way synchronization. Retrieving items ids from the server to know the changes on the server.
  * @param handler 	Handles item id entries from the service.
  * @param syncTime 		Time of synchronization
+* IItemIdListHandler handler: 
+ * String stream(): stream id of the syncing stream
+ * int limit(): number of items to be fetched
+ * boolean newestFirst(): sorting of the list (true: newest first, false: oldest first)
+ * long startTime(): time where items start
+ * boolean excludeRead(): unread only
+ * void items(in List<IItem> items): import new items
 
 **public abstract boolean markAsRead(String[] itemUids, String[] subUids) throws IOException, ReaderException**
 * Mark items as read.
