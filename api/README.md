@@ -61,7 +61,7 @@ Subclasses must implement following methods. The methods are used by News+ to ge
  * void items(in List<IItem> items): import new items
 
 **public abstract boolean markAsRead(String[] itemUids, String[] subUids) throws IOException, ReaderException**
-* Mark items as read.
+* Mark items as read. This method won't be triggered immediately. After changing to a new feed/folder it will be triggered for a batch of read items.
  * @param itemUids 	Item ids which has to be marked as read
  * @param subUids 	Some services need to have corresponding subscription ids
  * @return boolean 	true if success else false
@@ -101,7 +101,6 @@ Subclasses must implement following methods. The methods are used by News+ to ge
 
 **public abstract boolean renameTag(String uid, String oldLabel, String newLabel) throws IOException, ReaderException**
 * Rename a tag/folder
- *
  * @param uid 			Tag id
  * @param oldLabel 		Old label
  * @param newLabel 		New Label
