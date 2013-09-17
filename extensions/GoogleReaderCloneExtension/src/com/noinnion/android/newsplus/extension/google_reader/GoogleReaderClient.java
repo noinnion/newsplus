@@ -676,11 +676,18 @@ public class GoogleReaderClient extends ReaderExtension {
 						entry = new IItem();
 					} else if (jp.getCurrentToken() == JsonToken.END_OBJECT) {
 						if (entry != null && entry.uid.length() > 0) {
+							if (length + entry.getLength() > MAX_TRANSACTION_LENGTH) {
+								handler.items(itemList, INSERT_STRATEGY_DEFAULT);
+								itemList.clear();
+								length = 0;						
+							}
+
 							// add additional category to item
 							if (additionalCategory != null) entry.addCategory(additionalCategory);
-							length += entry.getLength();
 							itemList.add(entry);
+							length += entry.getLength();
 						}
+						
 						if (itemList.size() % 200 == 0 || length > MAX_TRANSACTION_LENGTH) {	// avoid TransactionTooLargeException, android only allows 1mb
 							length = 0;
 							handler.items(itemList, INSERT_STRATEGY_DEFAULT);
