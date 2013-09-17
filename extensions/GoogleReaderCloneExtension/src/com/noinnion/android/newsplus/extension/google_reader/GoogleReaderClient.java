@@ -681,7 +681,7 @@ public class GoogleReaderClient extends ReaderExtension {
 							length += entry.getLength();
 							itemList.add(entry);
 						}
-						if (itemList.size() % 200 == 0 || length > 300000) {	// avoid TransactionTooLargeException, android only allows 1mb
+						if (itemList.size() % 200 == 0 || length > MAX_TRANSACTION_LENGTH) {	// avoid TransactionTooLargeException, android only allows 1mb
 							length = 0;
 							handler.items(itemList, INSERT_STRATEGY_DEFAULT);
 							itemList.clear();
