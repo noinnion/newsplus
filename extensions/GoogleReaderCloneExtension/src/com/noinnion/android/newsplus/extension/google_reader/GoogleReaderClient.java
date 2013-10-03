@@ -503,7 +503,7 @@ public class GoogleReaderClient extends ReaderExtension {
 							if (currName == null) continue;
 							jp.nextToken();
 							if (currName.equals("id")) {
-								feed.addCategory(jp.getText());
+								feed.addTag(jp.getText());
 							} else {
 								jp.skipChildren();
 							}
@@ -644,12 +644,13 @@ public class GoogleReaderClient extends ReaderExtension {
 	}
 
 	private String parseItemList(Reader in, IItemListHandler handler) throws JsonParseException, IOException, RemoteException {
-		long length = 0;
-
 		JsonFactory f = new JsonFactory();
 		JsonParser jp = f.createParser(in);
 
+		long length = 0;
 		String currName;
+		String mediaUrl = null;
+		String mediaType = null;
 
 		IItem entry = null;
 		String continuation = null;
@@ -677,20 +678,20 @@ public class GoogleReaderClient extends ReaderExtension {
 					} else if (jp.getCurrentToken() == JsonToken.END_OBJECT) {
 						if (entry != null && entry.uid.length() > 0) {
 							if (length + entry.getLength() > MAX_TRANSACTION_LENGTH) {
-								handler.items(itemList, INSERT_STRATEGY_DEFAULT);
+								handler.items(itemList, STRATEGY_INSERT_DEFAULT);
 								itemList.clear();
 								length = 0;						
 							}
 
 							// add additional category to item
-							if (additionalCategory != null) entry.addCategory(additionalCategory);
+							if (additionalCategory != null) entry.addTag(additionalCategory);
 							itemList.add(entry);
 							length += entry.getLength();
 						}
 						
 						if (itemList.size() % 200 == 0 || length > MAX_TRANSACTION_LENGTH) {	// avoid TransactionTooLargeException, android only allows 1mb
 							length = 0;
-							handler.items(itemList, INSERT_STRATEGY_DEFAULT);
+							handler.items(itemList, STRATEGY_INSERT_DEFAULT);
 							itemList.clear();
 						}
 						entry = null;
@@ -710,7 +711,7 @@ public class GoogleReaderClient extends ReaderExtension {
 						while (jp.nextToken() != JsonToken.END_ARRAY) {
 							String category = jp.getText();
 							if (category != null && addUserLabel(category, entry)) {
-								entry.addCategory(category);
+								entry.addTag(category);
 							}
 							if (category != null && category.endsWith("/state/com.google/read")) {
 								entry.read = true;
@@ -735,11 +736,19 @@ public class GoogleReaderClient extends ReaderExtension {
 							if (currName == null) continue;
 							jp.nextToken();
 							if (currName.equals("href")) {
-								entry.media = jp.getText();
+								mediaUrl = jp.getText();
 							} else if (currName.equals("type")) {
-								String type = jp.getText();
-								if (!type.startsWith("application")) entry.mediaType = type;
-								else entry.media = null;
+								mediaType = jp.getText();
+								if (mediaType.startsWith("image")) {
+									entry.addImage(mediaUrl, mediaType);
+								} else if (mediaType.startsWith("video")) {
+									entry.addVideo(mediaUrl, mediaType);									
+								} else if (mediaType.startsWith("audio")) {
+									entry.addAudio(mediaUrl, mediaType);									
+								}
+								
+								mediaUrl = null;
+								mediaType = null;
 							} else {
 								jp.skipChildren();
 							}
@@ -776,7 +785,7 @@ public class GoogleReaderClient extends ReaderExtension {
 					}
 				}
 
-				handler.items(itemList, INSERT_STRATEGY_DEFAULT);
+				handler.items(itemList, STRATEGY_INSERT_DEFAULT);
 				itemList.clear();
 
 			} else {

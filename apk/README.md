@@ -1,6 +1,11 @@
 Beta
 ====================
 
+v0.0.14beta
+* Note: Older versions should be removed first. Install the new version.
+* Note: All extensions has to be at least 0.0.14beta
+* New: new api for images, videos and audios
+
 v0.0.13beta
 * Note: All extensions has to be at least 0.0.13beta
 * Fixed: Caching operation on offline

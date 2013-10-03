@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.noinnion.android.newsplus.extension.google_reader"
-	android:installLocation="auto" android:versionCode="13"
-	android:versionName="0.0.13beta">
+	android:installLocation="auto" android:versionCode="14"
+	android:versionName="0.0.14beta">
 
 	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="16" />
 
@@ -39,9 +39,9 @@
 		</service>
 
 		<activity android:name=".LoginActivity" android:label="@string/extension_login_title"
-			android:exported="true" android:theme="@style/Theme.Sherlock.Light.Dialog" />
+			android:exported="true" android:theme="@style/Theme.Dialog" />
 
-		<activity android:name=".SendLogActivity" android:theme="@style/Theme.Sherlock.Light.Dialog" />
+		<activity android:name=".SendLogActivity" android:theme="@style/Theme.Dialog" />
 		
 	</application>
 
