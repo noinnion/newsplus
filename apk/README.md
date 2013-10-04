@@ -1,6 +1,11 @@
 Beta
 ====================
 
+v0.0.15beta
+* Note: Older versions should be removed first. Install the new version.
+* Note: All extensions has to be at least 0.0.15beta
+* New: new api for addeding tags
+
 v0.0.14beta
 * Note: Older versions should be removed first. Install the new version.
 * Note: All extensions has to be at least 0.0.14beta
