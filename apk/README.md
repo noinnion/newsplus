@@ -1,6 +1,10 @@
 Beta
 ====================
 
+v0.0.16beta
+* Note: All extensions has to be at least 0.0.15beta
+* Fixed: Sync starred status
+
 v0.0.15beta
 * Note: Older versions should be removed first. Install the new version.
 * Note: All extensions has to be at least 0.0.15beta
