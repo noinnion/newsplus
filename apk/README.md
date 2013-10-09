@@ -1,6 +1,12 @@
 Beta
 ====================
 
+v0.0.17beta
+* Note: All extensions has to be at least 0.0.15beta
+* New: Manage extensions
+* New: User agent per subscription preference
+* Fixed: Clear cache
+
 v0.0.16beta
 * Note: All extensions has to be at least 0.0.15beta
 * Fixed: Sync starred status

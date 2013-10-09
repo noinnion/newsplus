@@ -372,9 +372,8 @@ public class GoogleReaderClient extends ReaderExtension {
 
 		try {
 			in = readSubList(syncTime);
-			// TODO: parse last update time
-//			parseSubList(in, subHandler, parseUnreadCountList(readUnreadCount(syncTime)));
-			parseSubList(in, subHandler, null);
+			// TODO: test parseUnreadCountList
+			parseSubList(in, subHandler, parseUnreadCountList(readUnreadCount(syncTime)));
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 			throw new ReaderException("data parse error", e);
