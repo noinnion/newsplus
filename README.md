@@ -20,6 +20,7 @@ https://github.com/noinnion/newsplus/raw/master/apk/NewsPlus_beta.apk
 * NewsBlur: https://github.com/asafge/NewsBlurPlus
 * CommaFeed: https://github.com/Athou/commafeed-newsplus
 * SubReader: [Download](http://subreader.com/static/files/SubReaderExtension.apk)
+* Reedah: [Download](http://www.reedah.com/ReedahExtension.apk)
 
 We are trying to publish more :)
 
