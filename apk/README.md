@@ -1,6 +1,9 @@
 Beta
 ====================
 
+v0.0.18beta
+* Fixed: Synchronization issue
+
 v0.0.17beta
 * Note: All extensions has to be at least 0.0.15beta
 * New: Manage extensions
