@@ -155,7 +155,7 @@ public class GoogleReaderClient extends ReaderExtension {
 
 	public InputStream doPostInputStream(String url, List<NameValuePair> params) throws IOException, ReaderException {
 //		Log.e(TAG, "[DEBUG] POST: " + url);
-// 		Log.d(TAG, "[DEBUG] PARAMS: " + params);
+// 		Log.e(TAG, "[DEBUG] PARAMS: " + params);
 		HttpPost post = new HttpPost(url);
 		post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
 
@@ -209,6 +209,7 @@ public class GoogleReaderClient extends ReaderExtension {
 
 	public InputStream doGetInputStream(String url) throws IOException, ReaderException {
 //		Log.e(TAG, "[DEBUG] GET: " + url);
+//		Log.e(TAG, "[DEBUG] Authorization: " + "GoogleLogin auth=" + this.auth);
 		HttpGet get = new HttpGet(url);
 
 		if (this.auth != null) get.setHeader("Authorization", "GoogleLogin auth=" + this.auth);
@@ -689,9 +690,9 @@ public class GoogleReaderClient extends ReaderExtension {
 						}
 						
 						if (itemList.size() % 200 == 0 || length > MAX_TRANSACTION_LENGTH) {	// avoid TransactionTooLargeException, android only allows 1mb
-							length = 0;
 							handler.items(itemList, STRATEGY_INSERT_DEFAULT);
 							itemList.clear();
+							length = 0;
 						}
 						entry = null;
 					}

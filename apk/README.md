@@ -1,6 +1,9 @@
 Beta
 ====================
 
+v0.0.19beta
+* Fixed: Synchronization issue
+
 v0.0.18beta
 * Fixed: Synchronization issue
 
