@@ -1,10 +1,12 @@
 Beta
 ====================
 
-v0.0.19beta
-* Fixed: Synchronization issue
+v0.0.20beta
+* Note: All extensions has to be at least 0.0.20beta
+* News: Api for images, videos and audios
+* Fixed: Displaying images
 
-v0.0.18beta
+v0.0.19beta
 * Fixed: Synchronization issue
 
 v0.0.17beta
