@@ -197,6 +197,7 @@ public class GoogleReaderClient extends ReaderExtension {
 			@Override
 			public void close() throws IOException {
 				super.close();
+				entity.consumeContent();
 			}
 		};
 	}
@@ -250,6 +251,7 @@ public class GoogleReaderClient extends ReaderExtension {
 			@Override
 			public void close() throws IOException {
 				super.close();
+				entity.consumeContent();
 			}
 		};
 	}
