@@ -1,9 +1,12 @@
 Beta
 ====================
 
+v0.0.21beta
+* Fixed: updating items without subscription
+
 v0.0.20beta
 * Note: All extensions has to be at least 0.0.20beta
-* News: Api for images, videos and audios
+* New: Api for images, videos and audios
 * Fixed: Displaying images
 
 v0.0.19beta
