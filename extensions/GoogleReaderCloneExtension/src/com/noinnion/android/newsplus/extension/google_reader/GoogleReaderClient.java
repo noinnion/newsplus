@@ -356,7 +356,7 @@ public class GoogleReaderClient extends ReaderExtension {
 		}
 		return false;
 	}
-
+	
 	@Override
 	public void handleReaderList(ITagListHandler tagHandler, ISubscriptionListHandler subHandler, long syncTime) throws IOException, ReaderException {
 		Reader in = null;
@@ -375,8 +375,8 @@ public class GoogleReaderClient extends ReaderExtension {
 
 		try {
 			in = readSubList(syncTime);
-			// TODO: test parseUnreadCountList
-			parseSubList(in, subHandler, parseUnreadCountList(readUnreadCount(syncTime)));
+//			parseSubList(in, subHandler, getUnreadList(syncTime));
+			parseSubList(in, subHandler, null);
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 			throw new ReaderException("data parse error", e);
@@ -532,6 +532,23 @@ public class GoogleReaderClient extends ReaderExtension {
 		buff.append("?client=newsplus&output=json&ck=").append(syncTime);
 
 		return doGetReader(buff.toString());
+	}
+
+	// not needed anymore, main app updates subscription newest times from items
+	private Map<String, Long> getUnreadList(long syncTime) {
+		Reader in = null;
+		try {
+			in = readUnreadCount(syncTime);
+			Map<String, Long> unreads = parseUnreadCountList(in);
+			return unreads;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (in != null) in.close();
+			} catch (IOException e) {}
+		}
+		return null;
 	}
 
 	private Map<String, Long> parseUnreadCountList(Reader in) throws JsonParseException, IOException {
