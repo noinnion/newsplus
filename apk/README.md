@@ -1,6 +1,9 @@
 Beta
 ====================
 
+v0.0.22beta
+* New: View Youtube directly in app
+
 v0.0.21beta
 * Fixed: updating items without subscription
 
