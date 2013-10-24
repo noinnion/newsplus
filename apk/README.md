@@ -1,6 +1,10 @@
 Beta
 ====================
 
+v0.0.30beta
+* Note: Due to API changes all extensions have to be at least 0.0.30beta
+* Fixed: Tagging items, Changing folder
+
 v0.0.22beta
 * New: View Youtube directly in app
 
