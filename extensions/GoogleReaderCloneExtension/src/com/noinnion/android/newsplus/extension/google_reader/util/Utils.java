@@ -3,6 +3,8 @@ package com.noinnion.android.newsplus.extension.google_reader.util;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URLDecoder;
@@ -149,4 +151,19 @@ public class Utils {
 		return true;
 	}
 
+	public static String convertStreamToString(InputStream is) throws IOException {
+		String encoding = HTTP.UTF_8;
+
+		StringBuilder sb = new StringBuilder(Math.max(16, is.available()));
+		char[] tmp = new char[4096];
+
+		try {
+			InputStreamReader reader = new InputStreamReader(is, encoding);
+			for (int cnt; (cnt = reader.read(tmp)) > 0;)
+				sb.append(tmp, 0, cnt);
+		} finally {
+			is.close();
+		}
+		return sb.toString().trim();
+	}
 }
