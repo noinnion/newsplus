@@ -81,12 +81,12 @@ Subclasses must implement following methods. The methods are used by News+ to ge
  * @param syncTime 		Time of synchronization
  * @return boolean 	true if success else false
 
-**public abstract boolean editItemTag(String[] itemUids, String[] subUids, String[] addTags, String[] removeTags) throws IOException, ReaderException**
+**public abstract boolean editItemTag(String[] itemUids, String[] subUids, String[] tags, int action) throws IOException, ReaderException**
 * Modify tags for items.
  * @param itemUids 		Item ids
  * @param subUids 		Corresponding subscription ids
- * @param addTags 		Tags to be added to items
- * @param removeTags 	Tags to be removed from items
+ * @param tags 		  Tags to be added, removed or created for the items
+ * @param action  Which action to take on the given tags
  * @return boolean 	true if success else false
 
 **public abstract boolean editSubscription(String uid, String title, String url, String[] tags, int action) throws IOException, ReaderException**
