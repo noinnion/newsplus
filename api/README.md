@@ -89,7 +89,7 @@ Subclasses must implement following methods. The methods are used by News+ to ge
  * @param removeTags 	Tags to be removed from items
  * @return boolean 	true if success else false
 
-**public abstract boolean editSubscription(String uid, String title, String url, String[] tags, int action, long syncTime) throws IOException, ReaderException**
+**public abstract boolean editSubscription(String uid, String title, String url, String[] tags, int action) throws IOException, ReaderException**
 * Modify subscriptions.
  * @param uid 			Subscription id which has to be modified
  * @param title 		Subscription title
