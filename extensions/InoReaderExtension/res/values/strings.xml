@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    
+    <string name="app_name">InoReader | News+</string>
+        
+    <!-- Extension -->
+    <string name="extension_name">InoReader</string>
+    <string name="extension_description">InoReader is light and fast RSS/Atom Reader inspired by Google Reader.</string>
+    <string name="extension_settings_title">Settings</string>
+    <string name="extension_login_title">Login</string>
+    
+    <string name="msg_login_running">Login…</string>
+    <string name="msg_login_fail">Login failure</string>
+    
+    <!-- login -->
+    <string name="login_no_accounts">You don\'t have any accounts associated with this phone or your phone doesn\'t support Account Manager. Use the method below to login.</string>
+    <string name="login_another">Sign in</string>
+    <string name="login_welcome">You can login with your mobile username and password which you set for mobile clients. Enter your InoReader Mobile Account username and password.</string>
+    <string name="login_id">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_getting_started_text">InoReader is light and fast RSS/Atom Reader inspired by Google Reader.</string>
+    <string name="login_welcome">Read Smart and Share. Keep track of your favorite sites. Anytime. Anywhere</string>
+                
+    <string name="txt_login">Login</string>
+    <string name="txt_start_app">Start News+</string>
+    <string name="txt_download_app">Download News+</string>
+    
+    <!-- err -->
+    <string name="err_io">Network error</string>
+
+    <string name="time_today">Today</string>
+    <string name="time_yesterday">Yesterday</string>
+    
+    
+</resources>
+    

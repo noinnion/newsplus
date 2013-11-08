@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    
+    <string name="app_name">Tiny Tiny Rss | News+</string>
+    
+    <!-- Extension -->
+    <string name="extension_name">Tiny Tiny Rss</string>
+    <string name="extension_description">Tiny Tiny RSS is an open source web-based news feed (RSS/Atom) reader and aggregator.</string>
+    <string name="extension_settings_title">Settings</string>
+    <string name="extension_login_title">Login</string>
+    
+    <string name="msg_login_running">Login…</string>
+    <string name="msg_login_fail">Login failure</string>
+    
+    <string name="login_id">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_running">Login ...</string>
+    <string name="login_error_data">Check your login data</string>
+    <string name="login_error_failed">Could not login</string>
+    
+    <string name="txt_login">Login</string>
+    <string name="txt_start_app">Start News+</string>
+    <string name="txt_download_app">Download News+</string>
+    <string name="txt_feedback">Feedback</string>
+    
+        <!-- err -->
+    <string name="err_io">Network error</string>
+    
+    <string name="ttrss_error_unknown">Error: Unknown error (see log)</string>
+    <string name="ttrss_error_http_unauthorized">Error: 401 unauthorized</string>
+    <string name="ttrss_error_http_forbidden">Error: 403 forbidden</string>
+    <string name="ttrss_error_http_not_found">Error: 404 not found</string>
+    <string name="ttrss_error_http_server_error">Error: 500 server error</string>
+    <string name="ttrss_error_http_other_error">Error: other HTTP error (see log)</string>
+    <string name="ttrss_error_ssl_rejected">Error: SSL certificate rejected</string>
+    <string name="ttrss_error_ssl_hostname_rejected">Error: SSL hostname not verified</string>
+    <string name="ttrss_error_parse_error">Error: JSON parse failed</string>
+    <string name="ttrss_error_io_error">Error: I/O failure (server down?)</string>
+    <string name="ttrss_error_other_error">Error: unknown error (see log)</string>
+    <string name="ttrss_error_api_disabled">Error: Please enable external API access in tt-rss Settings - Advanced</string>
+    <string name="ttrss_error_api_unknown">Error: unknown API error (see log)</string>
+    <string name="ttrss_error_api_unknown_method">Error: unknown API method</string>
+    <string name="ttrss_error_api_incorrect_usage">Error: incorrect API usage</string>
+    <string name="ttrss_error_login_failed">Error: username or password incorrect</string>
+    <string name="ttrss_error_invalid_api_url">Error: invalid API URL</string>
+    <string name="ttrss_error_network_unavailable">Error: network unavailable</string>
+    
+    <string name="ttrss_welcome">Tiny Tiny RSS is an open source web-based news feed (RSS/Atom) reader and aggregator. You can install it on your own server. This is an extension that requires <b>News+</b> to work with.</string>
+    <string name="ttrss_welcome_short">Tiny Tiny RSS is an open source web-based news feed (RSS/Atom) reader and aggregator.</string>
+    <string name="ttrss_note">Note: Use api_newsplus to get additional apis. More information on <a href="https://github.com/hrk/tt-rss-newsplus-plugin/">github.com/hrk/tt-rss-newsplus-plugin</a></string>
+    <string name="ttrss_server">Server (http://example.dom/tt-rss/)</string>
+    <string name="ttrss_http_auth">Http authentication (optional)</string>
+    
+    <string name="ttrss_err_missing">Check your login data!</string>
+    <string name="ttrss_err_fail">Could not login!</string>
+    
+    
+</resources>
+    

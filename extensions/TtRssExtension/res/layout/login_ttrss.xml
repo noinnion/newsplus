@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:background="@color/light_gray">
+
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="vertical"
+		android:padding="20dp">
+
+		<ImageView android:layout_width="96dp"
+			android:layout_height="96dp" android:layout_gravity="center_horizontal"
+			android:src="@drawable/icon" />
+
+		<TextView android:layout_height="wrap_content"
+			android:layout_width="wrap_content" android:layout_gravity="center_horizontal"
+			android:layout_marginTop="20dp" android:text="@string/extension_name"
+			android:textStyle="bold" android:textColor="#333" android:textSize="18sp" />
+
+		<TextView android:layout_height="wrap_content"
+			android:layout_width="wrap_content" android:layout_gravity="center_horizontal"
+			android:text="@string/ttrss_welcome_short" android:textColor="#333"
+			android:layout_marginBottom="5dp" />
+		
+		<TextView android:layout_height="wrap_content"
+			android:layout_width="wrap_content" android:layout_gravity="center_horizontal"
+			android:text="@string/ttrss_note" android:textColor="#333" android:autoLink="web"
+			android:layout_marginBottom="5dp" />
+
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:orientation="vertical"
+			android:padding="5dp">
+
+			<EditText android:id="@+id/server" android:hint="@string/ttrss_server"
+				android:layout_height="wrap_content" android:layout_width="fill_parent"
+				android:inputType="textUri" android:singleLine="true" />
+
+			<EditText android:id="@+id/username" android:hint="@string/login_id"
+				android:layout_height="wrap_content" android:layout_width="fill_parent"
+				android:singleLine="true" />
+
+			<EditText android:id="@+id/password" android:hint="@string/login_password"
+				android:layout_height="wrap_content" android:layout_width="fill_parent"
+				android:inputType="textPassword" android:singleLine="true" />
+
+		</LinearLayout>
+
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:orientation="vertical"
+			android:padding="5dp">
+
+			<TextView android:layout_height="wrap_content"
+				android:layout_width="wrap_content" android:text="@string/ttrss_http_auth"
+				android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+				android:textStyle="bold" />
+
+			<EditText android:id="@+id/http_username" android:hint="@string/login_id"
+				android:layout_height="wrap_content" android:layout_width="fill_parent"
+				android:singleLine="true" />
+
+			<EditText android:id="@+id/http_password" android:hint="@string/login_password"
+				android:layout_height="wrap_content" android:layout_width="fill_parent"
+				android:inputType="textPassword" android:singleLine="true" />
+
+		</LinearLayout>
+
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:orientation="horizontal"
+			android:layout_marginTop="5dp" android:layout_marginBottom="5dp">
+
+			<Button android:id="@+id/btn_cancel" android:layout_height="wrap_content"
+				android:layout_width="0dp" android:layout_weight="1"
+				android:text="@android:string/cancel" />
+
+			<Button android:id="@+id/btn_login" android:layout_height="wrap_content"
+				android:layout_width="0dp" android:layout_weight="1" android:text="@string/txt_login" />
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+</ScrollView>
