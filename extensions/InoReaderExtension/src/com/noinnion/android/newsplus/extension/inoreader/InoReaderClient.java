@@ -600,9 +600,11 @@ public class InoReaderClient extends ReaderExtension {
 
 		StringBuilder buff = new StringBuilder(URL_API_STREAM_CONTENTS.length() + 128);
 		buff.append(URL_API_STREAM_CONTENTS);
-		String subUid = handler.stream();
-		if (subUid != null) {
-			buff.append("/").append(Utils.encode(subUid));
+		String stream = handler.stream();
+		if (stream != null) {
+			if (stream.equals(STATE_READING_LIST)) stream = STATE_GOOGLE_READING_LIST;
+			else if (stream.equals(STATE_STARRED)) stream = STATE_GOOGLE_STARRED;
+			buff.append("/").append(Utils.encode(stream));
 		}
 		buff.append("?client=newsplus&ck=").append(syncTime);
 		if (handler.excludeRead()) {
@@ -796,10 +798,11 @@ public class InoReaderClient extends ReaderExtension {
 		StringBuilder buff = new StringBuilder(URL_API_STREAM_ITEM_IDS.length() + 128);
 		buff.append(URL_API_STREAM_ITEM_IDS);
 		buff.append("?output=json"); // xml or json
-		String uid = handler.stream();
-		if (uid != null) {
-			buff.append("&s=");
-			buff.append(Utils.encode(uid));
+		String stream = handler.stream();
+		if (stream != null) {
+			if (stream.equals(STATE_READING_LIST)) stream = STATE_GOOGLE_READING_LIST;
+			else if (stream.equals(STATE_STARRED)) stream = STATE_GOOGLE_STARRED;
+			buff.append("&s=").append(Utils.encode(stream));
 		}
 		if (handler.excludeRead()) {
 			buff.append("&xt=").append(STATE_GOOGLE_READ);

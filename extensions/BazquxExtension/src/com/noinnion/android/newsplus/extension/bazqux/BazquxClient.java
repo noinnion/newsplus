@@ -135,8 +135,9 @@ public class BazquxClient extends ReaderExtension {
 	}
 
 	public InputStream doPostInputStream(String url, List<NameValuePair> params) throws IOException, ReaderException {
-		// Log.d(TAG, "[DEBUG] POST: " + url);
-		// Log.d(TAG, "[DEBUG] PARAMS: " + params);
+//		Log.d(TAG, "[DEBUG] POST: " + url);
+//		Log.d(TAG, "[DEBUG] PARAMS: " + params);
+//		Log.d(TAG, "[DEBUG] Authorization: " + "GoogleLogin auth=" + this.auth);
 		HttpPost post = new HttpPost(url);
 		post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
 
@@ -184,7 +185,8 @@ public class BazquxClient extends ReaderExtension {
 	}
 
 	public InputStream doGetInputStream(String url) throws IOException, ReaderException {
-		// Log.d(TAG, "[DEBUG] GET: " + url);
+//		Log.d(TAG, "[DEBUG] GET: " + url);
+//		Log.d(TAG, "[DEBUG] Authorization: " + "GoogleLogin auth=" + this.auth);
 		HttpGet get = new HttpGet(url);
 
 		if (this.auth != null) get.setHeader("Authorization", "GoogleLogin auth=" + this.auth);
@@ -245,10 +247,10 @@ public class BazquxClient extends ReaderExtension {
 		if (this.loginId == null || this.password == null) throw new ReaderLoginException("No Login Data");
 
 		List<NameValuePair> params = new ArrayList<NameValuePair>(4);
-//		params.add(new BasicNameValuePair("accountType", "GOOGLE"));
+		//		params.add(new BasicNameValuePair("accountType", "GOOGLE"));
 		params.add(new BasicNameValuePair("Email", this.loginId));
 		params.add(new BasicNameValuePair("Passwd", this.password));
-//		params.add(new BasicNameValuePair("service", "reader"));
+		//		params.add(new BasicNameValuePair("service", "reader"));
 
 		BufferedReader in = new BufferedReader(doPostReader(URL_LOGIN, params));
 		try {
@@ -279,10 +281,10 @@ public class BazquxClient extends ReaderExtension {
 		try {
 			char[] cbuf = new char[64];
 			int len = in.read(cbuf);
-//			if (len != 57) {
-//				Log.w(TAG, "unknown token length " + len + ", " + new String(cbuf, 0, len));
-// 				throw new ReaderException("invalid token length " + len + ", " + new String(cbuf, 0, len));
-//			}
+			//			if (len != 57) {
+			//				Log.w(TAG, "unknown token length " + len + ", " + new String(cbuf, 0, len));
+			// 				throw new ReaderException("invalid token length " + len + ", " + new String(cbuf, 0, len));
+			//			}
 			this.token = new String(cbuf, 0, len);
 			this.tokenExpiredTime = now + TOKEN_TIME;
 		} finally {
@@ -340,7 +342,7 @@ public class BazquxClient extends ReaderExtension {
 
 		try {
 			in = readSubList(syncTime);
-//			parseSubList(in, subHandler, getUnreadList(syncTime));
+			//			parseSubList(in, subHandler, getUnreadList(syncTime));
 			parseSubList(in, subHandler, null);
 		} catch (JsonParseException e) {
 			e.printStackTrace();
@@ -601,9 +603,11 @@ public class BazquxClient extends ReaderExtension {
 
 		StringBuilder buff = new StringBuilder(URL_API_STREAM_CONTENTS.length() + 128);
 		buff.append(URL_API_STREAM_CONTENTS);
-		String subUid = handler.stream();
-		if (subUid != null) {
-			buff.append("/").append(Utils.encode(subUid));
+		String stream = handler.stream();
+		if (stream != null) {
+			if (stream.equals(STATE_READING_LIST)) stream = STATE_GOOGLE_READING_LIST;
+			else if (stream.equals(STATE_STARRED)) stream = STATE_GOOGLE_STARRED;
+			buff.append("/").append(Utils.encode(stream));
 		}
 		buff.append("?client=newsplus&ck=").append(syncTime);
 		if (handler.excludeRead()) {
@@ -652,7 +656,7 @@ public class BazquxClient extends ReaderExtension {
 				// start items
 				while (jp.nextToken() != JsonToken.END_ARRAY) {
 					// request stop
-//					if (handler.requestStop()) throw new JsonParseException(null, null);
+					//					if (handler.requestStop()) throw new JsonParseException(null, null);
 
 					if (jp.getCurrentToken() == JsonToken.START_OBJECT) {
 						entry = new IItem();
@@ -667,7 +671,7 @@ public class BazquxClient extends ReaderExtension {
 							itemList.add(entry);
 							length += entry.getLength();
 						}
-						
+
 						if (itemList.size() % 200 == 0 || length > MAX_TRANSACTION_LENGTH) {	// avoid TransactionTooLargeException, android only allows 1mb
 							handler.items(itemList, STRATEGY_INSERT_DEFAULT);
 							itemList.clear();
@@ -725,7 +729,7 @@ public class BazquxClient extends ReaderExtension {
 								} else if (mediaType.startsWith("audio")) {
 									entry.addAudio(mediaUrl, mediaType);									
 								}
-								
+
 								mediaUrl = null;
 								mediaType = null;
 							} else {
@@ -800,10 +804,11 @@ public class BazquxClient extends ReaderExtension {
 		StringBuilder buff = new StringBuilder(URL_API_STREAM_ITEM_IDS.length() + 128);
 		buff.append(URL_API_STREAM_ITEM_IDS);
 		buff.append("?output=json"); // xml or json
-		String uid = handler.stream();
-		if (uid != null) {
-			buff.append("&s=");
-			buff.append(Utils.encode(uid));
+		String stream = handler.stream();
+		if (stream != null) {
+			if (stream.equals(STATE_READING_LIST)) stream = STATE_GOOGLE_READING_LIST;
+			else if (stream.equals(STATE_STARRED)) stream = STATE_GOOGLE_STARRED;
+			buff.append("&s=").append(Utils.encode(stream));
 		}
 		if (handler.excludeRead()) {
 			buff.append("&xt=").append(STATE_GOOGLE_READ);
@@ -906,16 +911,16 @@ public class BazquxClient extends ReaderExtension {
 				if (tags != null && tags.length > 0) {
 					for (String tag : tags) {
 						params.add(new BasicNameValuePair("r", tag));
-			}
-		}
+					}
+				}
 				break;
 			case ACTION_ITEM_TAG_NEW_LABEL:
 				if (tags != null && tags.length > 0) {
 					String userId = getUserId();
 					for (String tag : tags) {
 						params.add(new BasicNameValuePair("a", "user/" + userId + "/label/" + tag));
-			}
-		}
+					}
+				}
 				break;
 		}
 
@@ -980,7 +985,7 @@ public class BazquxClient extends ReaderExtension {
 				params.add(new BasicNameValuePair("ac", "unsubscribe"));
 				break;
 		}
-		
+
 		String s = uid != null ? uid : "feed/" + url;
 		params.add(new BasicNameValuePair("s", s));
 

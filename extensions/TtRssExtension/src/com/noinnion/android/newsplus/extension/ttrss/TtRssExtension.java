@@ -129,7 +129,7 @@ public class TtRssExtension extends ReaderExtension {
 	public static final int		SOCKET_OPERATION_TIMEOUT	= 20000;	// 20s
 
 	public DefaultHttpClient getClient() {
-		if (client == null) client = HttpUtils.createHttpClient();
+		if (client == null) client = createHttpClient();
 		return client;
 	}
 

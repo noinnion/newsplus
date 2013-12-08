@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.noinnion.android.newsplus.extension.bazqux"
-	android:installLocation="auto" android:versionCode="30"
-	android:versionName="0.0.30beta">
+	android:installLocation="auto" android:versionCode="31"
+	android:versionName="0.0.31beta">
 
 	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="16" />
 

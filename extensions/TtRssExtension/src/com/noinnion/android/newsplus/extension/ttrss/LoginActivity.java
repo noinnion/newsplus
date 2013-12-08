@@ -149,7 +149,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 				HttpEntity responseEntity = response.getEntity();
 				String content = Utils.convertStreamToString(responseEntity.getContent());
-
+				
 				JSONObject resJsonObject = new JSONObject(content);
 				if (resJsonObject != null) {
 					JSONObject contentObject = resJsonObject.getJSONObject("content");
