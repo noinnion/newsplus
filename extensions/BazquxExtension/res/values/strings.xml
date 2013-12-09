@@ -5,7 +5,7 @@
         
     <!-- Extension -->
     <string name="extension_name">BazQux Reader</string>
-    <string name="extension_description">Description for BazQux Reader</string>
+    <string name="extension_description">RSS reader that shows comments to posts.</string>
     <string name="extension_settings_title">Settings</string>
     <string name="extension_login_title">Login</string>
     
@@ -13,13 +13,10 @@
     <string name="msg_login_fail">Login failure</string>
     
     <!-- login -->
-    <string name="login_no_accounts">You don\'t have any accounts associated with this phone or your phone doesn\'t support Account Manager. Use the method below to login.</string>
-    <string name="login_another">Sign in</string>
-    <string name="login_welcome">You can login with your mobile username and password which you set for mobile clients. Enter your BazQux Mobile Account username and password.</string>
     <string name="login_id">Username</string>
     <string name="login_password">Password</string>
-    <string name="login_getting_started_text">BazQux Reader shows blog posts and comments in one seamless stream, tracks what was read and displays only new discussions next time.</string>
-    <string name="login_welcome">BazQux Reader shows blog posts and comments in one seamless stream, tracks what was read and displays only new discussions next time. This is an extension that requires <b>News+</b> to work with.</string>
+    <string name="login_getting_started_text">RSS reader that shows comments to posts. This is an extension that requires <b>News+</b> to work with.</string>
+    <string name="login_welcome">You need to create account and set your mobile login and password in the settings on <a href="https://bazqux.com">https://bazqux.com</a>.  Enter your BazQux Mobile Account username and password.</string>
                 
     <string name="txt_login">Login</string>
     <string name="txt_start_app">Start News+</string>

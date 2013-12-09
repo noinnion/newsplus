@@ -16,11 +16,6 @@
 			android:layout_marginTop="20dp" android:text="@string/extension_name"
 			android:textStyle="bold" android:textColor="#333" android:textSize="18sp" />
 
-		<TextView android:layout_height="wrap_content"
-			android:layout_width="wrap_content" android:layout_gravity="center_horizontal"
-			android:text="@string/login_getting_started_text" android:textColor="#333"
-			android:layout_marginBottom="5dp" />
-
 		<LinearLayout android:id="@+id/another_container" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:orientation="vertical">
 

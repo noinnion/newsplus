@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    
+    <string name="app_name">FeedBin</string>
+        
+    <!-- Extension -->
+    <string name="extension_name">FeedBin</string>
+    <string name="extension_description">A fast, simple RSS feed reader that delivers a great reading experience.</string>
+    <string name="extension_settings_title">Settings</string>
+    <string name="extension_login_title">Login</string>
+    
+    <string name="msg_login_running">Login…</string>
+    <string name="msg_login_fail">Login failure</string>
+    
+    <!-- login -->
+    <string name="login_welcome">Enter your login data (email and password)</string>
+    <string name="login_id">Username</string>
+    <string name="login_password">Password</string>
+                
+    <string name="txt_login">Login</string>
+    <string name="txt_start_app">Start News+</string>
+    <string name="txt_download_app">Download News+</string>
+    <string name="txt_feedback">Feedback</string>
+    
+    <!-- err -->
+    <string name="err_io">Network error</string>
+    
+    <!-- client -->
+    <string name="client_feedbin">FeedBin</string>
+    
+    <string name="feedbin_login_welcome">A fast, simple RSS feed reader that delivers a great reading experience. It requires <b>News+</b> to work with.</string>
+    
+</resources>
+    
