@@ -4,6 +4,7 @@ Beta
 v0.0.31beta
 * New: FeedBin extension
 * Fixed: TT-RSS SSL issue
+* Fixed: Bug fixes
 
 v0.0.30beta
 * Note: Due to API changes all extensions have to be at least 0.0.30beta

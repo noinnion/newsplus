@@ -17,6 +17,7 @@ https://github.com/noinnion/newsplus/raw/master/apk/NewsPlus_beta.apk
 * InoReader: [Download](https://github.com/noinnion/newsplus/raw/master/apk/InoReaderExtension_beta.apk?raw=true)
 * Bazqux: [Download](https://github.com/noinnion/newsplus/blob/master/apk/BazquxExtension_beta.apk?raw=true)
 * TT-Rss: [Download](https://github.com/noinnion/newsplus/raw/master/apk/TtRssExtension_beta.apk?raw=true) (NOTE: api_newsplus: https://github.com/hrk/tt-rss-newsplus-plugin/)
+* FeedBin: [Download](https://github.com/noinnion/newsplus/raw/master/apk/FeedBinExtension_beta.apk?raw=true)
 * NewsBlur: [Download](https://play.google.com/store/apps/details?id=com.asafge.newsblurplus)
 * CommaFeed: [Download](https://github.com/Athou/commafeed-newsplus)
 * SubReader: [Download](http://subreader.com/static/files/SubReaderExtension.apk)
