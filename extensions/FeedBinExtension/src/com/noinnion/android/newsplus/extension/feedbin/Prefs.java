@@ -26,7 +26,9 @@ public class Prefs extends ExtensionPrefs {
 	public static final String TAG_CREATE_URL="https://api.feedbin.me/v2/taggings.json";
 	public static final String UNREAD_ENTRIES_URL="https://api.feedbin.me/v2/unread_entries.json";
 	public static final String ENTRIES_URL="https://api.feedbin.me/v2/entries.json?ids=";
-	public static final String DELETE_UNREAD_ENTRY_URL="https://api.feedbin.me/v2/starred_entries/delete.json";
+	public static final String STARRED_URL="https://api.feedbin.me/v2/starred_entries.json";
+	public static final String STARRED_DELETE_URL="https://api.feedbin.me/v2/starred_entries/delete.json";
+//	public static final String DELETE_UNREAD_ENTRY_URL="https://api.feedbin.me/v2/starred_entries/delete.json";
 	
 
 	public static boolean isLoggedIn(Context c) 

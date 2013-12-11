@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.security.KeyStore;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.apache.http.auth.AuthenticationException;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpDeleteEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
@@ -68,8 +70,10 @@ public class FeedBinClient extends ReaderExtension {
 	
 	
 	public static final String TAG = "FeedBinClient"; // 20s
+	
 	private String user, password;
 	public Context mContext;
+	private static final String starredTag="Tag/starred";
 	
 	public final int LOGIN_OK=400;
 	
@@ -96,16 +100,58 @@ public class FeedBinClient extends ReaderExtension {
 	public boolean disableTag(String uid, String title) throws IOException,ReaderException 
 	{
 		try{
-			doDeleteInputStream(Prefs.TAG_DELETE_URL+uid+".json");
+			doDeleteInputStream(Prefs.TAG_DELETE_URL+uid+".json",null);
 			return true;
 		}catch(Exception e){}
 		return false;
 	}
 
 	@Override
-	public boolean editItemTag(String[] arg0, String[] arg1, String[] arg2,int arg3) throws IOException, ReaderException 
+	public boolean editItemTag(String[] itemUids, String[] subUids, String[] tags, int action) throws IOException, ReaderException 
 	{
-		Log.w(TAG,"editItemTag not supported");
+		loadUser();
+		if(action==ReaderExtension.ACTION_ITEM_TAG_ADD_LABEL)
+		{
+			for(String tag:tags)
+			{
+				if(tag.equals(starredTag))
+				{
+					JSONObject obj=new JSONObject();
+					JSONArray array=new JSONArray();
+					for(String id:itemUids)
+					{
+						array.put(id);
+					}
+					try {
+						obj.put("starred_entries",array);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					doPostInputStream(Prefs.STARRED_URL, obj);
+				}
+			}
+		}
+		if(action==ReaderExtension.ACTION_ITEM_TAG_REMOVE_LABEL)
+		{
+			for(String tag:tags)
+			{
+				if(tag.equals(starredTag))
+				{
+					JSONObject obj=new JSONObject();
+					JSONArray array=new JSONArray();
+					for(String id:itemUids)
+					{
+						array.put(id);
+					}
+					try {
+						obj.put("starred_entries",array);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					doPostInputStream(Prefs.STARRED_DELETE_URL, obj);
+				}
+			}
+		}
 		return false;
 	}
 
@@ -337,11 +383,21 @@ public class FeedBinClient extends ReaderExtension {
 				if (feedId != null) map.put(feedId, t.uid);
 				tagList.add(t);
 			}
-			tagHandler.tags(tagList);
+			
 		} catch (JSONException e1) {
 			e1.printStackTrace();
-		} catch (RemoteException e) {
-			e.printStackTrace();
+		} 
+		//Fake Starred Tag
+		ITag starredTag=new ITag();
+		starredTag.type=ITag.TYPE_TAG_STARRED;
+		starredTag.uid=FeedBinClient.starredTag;
+		starredTag.label="Starred";
+		tagList.add(starredTag);
+		try {
+			tagHandler.tags(tagList);
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		//Alle Subscritpions hinzufügen
 		try {
@@ -377,39 +433,68 @@ public class FeedBinClient extends ReaderExtension {
 	@Override
 	public boolean markAsRead(String[] uids, String[] arg1) throws IOException,ReaderException 
 	{
-		JSONObject obj=new JSONObject();
-		JSONArray array=new JSONArray();
-		for(String s:uids)
-		{
-			array.put(s);
-		}
-		loadUser();
-		try {
-			obj.put("unread_entries", array);
-			HttpResponse response=doPostInputStream(Prefs.DELETE_UNREAD_ENTRY_URL, obj);
-			if(response.getStatusLine().getStatusCode()==200)
-				return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		loadUser();
+//		
+//		JSONArray array=new JSONArray();
+//		//maximal 1000 mit einen request
+//		int counter=0;
+//		for(String s:uids)
+//		{
+//			counter++;
+//			array.put(s);
+//			if(counter<1000)
+//			{
+//				try {
+//					JSONObject obj=new JSONObject();
+//					obj.put("unread_entries", array);
+//					doDeleteInputStream(Prefs.UNREAD_ENTRIES_URL, obj);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//				counter=0;
+//				array=new JSONArray();
+//			}
+//		}
+//		
+//		try {
+//			JSONObject obj=new JSONObject();
+//			obj.put("unread_entries", array);
+//			HttpResponse response=doDeleteInputStream(Prefs.UNREAD_ENTRIES_URL, obj);
+//			if(response.getStatusLine().getStatusCode()==200)
+//				return true;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		return false;
 	}
 
 	@Override
 	public boolean markAsUnread(String[] itemUids, String[] subUids, boolean keepUnread)throws IOException, ReaderException 
 	{
-		Log.e("mark","as unread");
+		Log.w("mark","as unread");
 		String url=Prefs.UNREAD_ENTRIES_URL;
 		loadUser();
 		
 	        try {
-	            JSONObject jo = new JSONObject();
+	            
 	    		JSONArray array=new JSONArray();
+	    		int counter=0;//maximal 1000 pro request
 	    		for(String s:itemUids)
 	    		{
+	    			counter++;
 	    			array.put(s);
+	    			if(counter<1000)
+	    			{
+	    				JSONObject jo = new JSONObject();
+	    				jo.put("unread_entries", array);
+	    				doRequest(url,jo);
+	    				counter=0;
+	    				array=new JSONArray();
+	    			}
 	    		}
-	            jo.put("unread_entries", array);//nur wenn ids zahlen sind, wie zur zeit
+	    		
+	    		JSONObject jo = new JSONObject();
+	            jo.put("unread_entries", array);
 	
 	            return doRequest(url,jo);
 	
@@ -551,11 +636,17 @@ public class FeedBinClient extends ReaderExtension {
                     }
             }
     }
-    public HttpResponse doDeleteInputStream(String url)throws Exception
+    public HttpResponse doDeleteInputStream(String url,JSONObject jo)throws Exception
     {
-    	HttpDelete delete=new HttpDelete(url);
+    	HttpDeleteEntity delete=new HttpDeleteEntity(url);
     	httpAuthentication(delete);
     	delete.setHeader("Content-Type","application/json; charset=utf-8");
+		if(jo!=null)
+		{
+			StringEntity postEntity = new StringEntity(jo.toString());
+			postEntity.setContentType("application/json; charset=utf-8");
+			delete.setEntity(postEntity);
+		}
 		return getClient().execute(delete);
     }
     public HttpResponse doPatchInputStream(String url,JSONObject jo) throws Exception
