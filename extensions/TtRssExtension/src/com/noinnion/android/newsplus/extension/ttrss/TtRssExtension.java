@@ -371,9 +371,10 @@ public class TtRssExtension extends ReaderExtension {
 	@Override
 	public void handleReaderList(ITagListHandler tagHandler, ISubscriptionListHandler subHandler, long syncTime) throws IOException, ReaderException {
 		Reader in = null;
+		Map<String, ISubscription> feedList = getFeedList(syncTime);
 		try {
 			in = readReaderList(syncTime);
-			parseReaderList(in, tagHandler, subHandler, getFeedList(syncTime));
+			parseReaderList(in, tagHandler, subHandler, feedList);
 		} catch (ReaderLoginException e) {
 			if (hasReAuthenthicated) throw e;
 			try {
