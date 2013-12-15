@@ -371,8 +371,8 @@ public class TtRssExtension extends ReaderExtension {
 	@Override
 	public void handleReaderList(ITagListHandler tagHandler, ISubscriptionListHandler subHandler, long syncTime) throws IOException, ReaderException {
 		Reader in = null;
-		Map<String, ISubscription> feedList = getFeedList(syncTime);
 		try {
+			Map<String, ISubscription> feedList = getFeedList(syncTime);
 			in = readReaderList(syncTime);
 			parseReaderList(in, tagHandler, subHandler, feedList);
 		} catch (ReaderLoginException e) {
@@ -564,20 +564,16 @@ public class TtRssExtension extends ReaderExtension {
 	}
 
 	// update html url of feeds
-	private Map<String, ISubscription> getFeedList(long syncTime) {
+	private Map<String, ISubscription> getFeedList(long syncTime) throws IOException, ReaderException, JSONException {
+		Map<String, ISubscription> subs = null;
 		Reader in = null;
 		try {
 			in = readFeedList(syncTime);
-			Map<String, ISubscription> subs = parseFeedList(in);
-			return subs;
-		} catch (Exception e) {
-			e.printStackTrace();
+			subs = parseFeedList(in);
 		} finally {
-			try {
-				if (in != null) in.close();
-			} catch (IOException e) {}
+			if (in != null) in.close();
 		}
-		return null;
+		return subs;
 	}
 
 	private Reader readFeedList(long syncTime) throws IOException, ReaderException, JSONException {
