@@ -86,7 +86,7 @@ Subclasses must implement following methods. The methods are used by News+ to ge
  * @param itemUids 		Item ids
  * @param subUids 		Corresponding subscription ids
  * @param tags 		  Tags to be added, removed or created for the items
- * @param action  Which action to take on the given tags
+ * @param action  Which action to take on the given tags {ACTION_ITEM_TAG_ADD_LABEL, ACTION_ITEM_TAG_REMOVE_LABEL, ACTION_ITEM_TAG_NEW_LABEL}
  * @return boolean 	true if success else false
 
 **public abstract boolean editSubscription(String uid, String title, String url, String[] tags, int action) throws IOException, ReaderException**
