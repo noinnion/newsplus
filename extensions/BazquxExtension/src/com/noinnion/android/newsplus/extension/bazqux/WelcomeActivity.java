@@ -1,6 +1,7 @@
 package com.noinnion.android.newsplus.extension.bazqux;
 
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,6 +23,9 @@ public class WelcomeActivity extends Activity implements OnClickListener {
 
 		setContentView(R.layout.welcome);
 		initButton();
+		
+		PackageManager p = getPackageManager();
+		p.setComponentEnabledSetting(getComponentName(), PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);		
 	}
 
 	@Override

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.noinnion.android.newsplus.extension.bazqux"
-	android:installLocation="auto" android:versionCode="31"
-	android:versionName="0.0.31beta">
+	android:installLocation="auto" android:versionCode="100"
+	android:versionName="1.0.0">
 
-	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="16" />
+	<uses-sdk android:minSdkVersion="9" android:targetSdkVersion="16" />
 
 	<supports-screens android:xlargeScreens="true"
 		android:largeScreens="true" android:normalScreens="true"
