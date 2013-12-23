@@ -1,6 +1,10 @@
 Beta
 ====================
 
+v1.0.1beta
+* Fixed: Readability issue
+* Fixed: Bugs and Crashes
+
 v0.0.31beta
 * New: FeedBin extension
 * Fixed: TT-RSS SSL issue
