@@ -1,6 +1,6 @@
 News+
 -----------
-Since Google has decided to shutdown Google Reader. We are trying hard to find alternative services. There are a lot of great services that many of you would like to use. That's why we have decided to support them as well. I want to introduce you a new app which is called News+. News+ is developed based on gReader great functional features. It also has an Extension system so that services could be integrated into News+. The extension api will be published and the documentation will be updated soon. You can find it under Github https://github.com/noinnion/newsplus. We hope that many of you could create great Extension for News+.
+Since Google has decided to shutdown Google Reader, lots of new and innovative RSS services have arisen to light. Many of those services appeared as worthy replacements, and even an upgrade. We couldn’t choose just one or two, and we also had to make some decisions about how our work will continue. We decided not to pick! We created a new app that is the successor of gReader, taking it’s features and functionality but supports as many reading services as possible: News+.
 
 Right now the app is still in Beta status. We will try to improve it with the time. There are still many bugs ;)
 
