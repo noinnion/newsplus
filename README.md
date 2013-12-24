@@ -8,9 +8,8 @@ Right now the app is still in Beta status. We will try to improve it with the ti
 
 You need to install News+ first to use the extensions. You can find the extensions on the Dropdown in the action bar.
 
-News+ APK: Download and install it on you Android device.
-Play Store: https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus
-Beta: https://github.com/noinnion/newsplus/raw/master/beta/NewsPlus_beta.apk
+* Play Store: https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus
+* Beta: https://github.com/noinnion/newsplus/raw/master/beta/NewsPlus_beta.apk
 
 ### Extensions
 
