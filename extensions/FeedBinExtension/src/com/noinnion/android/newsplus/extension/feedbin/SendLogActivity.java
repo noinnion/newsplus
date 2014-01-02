@@ -29,7 +29,7 @@ public class SendLogActivity extends Activity {
 	
 	public final static String	TAG						= "SendLogActivity";												//$NON-NLS-1$
 
-	public static final String	APP_PACKAGE				= "com.noinnion.android.newsplus.extension.google_reader";			//$NON-NLS-1$
+	public static final String	APP_PACKAGE				= "com.noinnion.android.newsplus.extension.feedbin";			//$NON-NLS-1$
 	public static final String	APP_EMAIL				= "noinnion@gmail.com";												//$NON-NLS-1$
 
 	// directories

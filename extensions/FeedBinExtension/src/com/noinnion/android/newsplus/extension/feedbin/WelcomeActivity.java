@@ -18,7 +18,6 @@ public class WelcomeActivity extends SherlockActivity implements OnClickListener
 	public static final String	TAG						= "WelcomeActivity";
 
 	public static final String	NEWSPLUS_PACKAGE		= "com.noinnion.android.newsplus";
-	public static final String	NEWSPLUS_PRO_PACKAGE	= "com.noinnion.android.newspluspro";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +46,6 @@ public class WelcomeActivity extends SherlockActivity implements OnClickListener
 	public void initButton() {
 		boolean installed = Utils.appInstalledOrNot(this, NEWSPLUS_PACKAGE);
 		if (installed) mAppPackage = NEWSPLUS_PACKAGE;
-		else {
-			installed = Utils.appInstalledOrNot(this, NEWSPLUS_PRO_PACKAGE);
-			if (installed) mAppPackage = NEWSPLUS_PRO_PACKAGE;
-		}
 
 		Button button = (Button) findViewById(R.id.btn_ok);
 		button.setText(installed ? R.string.txt_start_app : R.string.txt_download_app);
