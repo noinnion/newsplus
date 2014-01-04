@@ -2,6 +2,8 @@ Beta
 ====================
 
 v1.0.1beta
+* New: Feedly extension beta (github)
+* Fixed: Change folder issue
 * Fixed: Readability issue
 * Fixed: Bugs and Crashes
 
