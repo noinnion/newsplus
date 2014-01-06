@@ -7,7 +7,8 @@ Since Google has decided to shutdown Google Reader, lots of new and innovative R
 You need to install News+ first to use the extensions. You can find the extensions on the Dropdown in the action bar.
 
 * Play Store: https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus
-* Beta: https://github.com/noinnion/newsplus/raw/master/beta/NewsPlus_beta.apk
+* Premium: https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus.premium
+* Beta: https://github.com/noinnion/newsplus/raw/master/beta/
 
 ### Extensions
 
