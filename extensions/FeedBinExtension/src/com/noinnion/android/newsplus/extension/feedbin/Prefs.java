@@ -13,6 +13,7 @@ public class Prefs extends ExtensionPrefs {
 	public static final String	PASSWORD			= "password";
 	public static final String	LAST_UPDATE			= "lastupdate";
 	public static final String	LAST_UNREAD_ID		= "lastunreadid";
+	public static final String  LAST_STARRED_ID		= "laststarredid";
 
 	public static final String	LOGGED_IN			= "logged_in";
 
@@ -42,11 +43,11 @@ public class Prefs extends ExtensionPrefs {
 	}
 
 	public static int getLastUnreadId(Context c) {
-		return getInt(c, LAST_UNREAD_ID, 0);
+		return getInt(c, LAST_UNREAD_ID, -1);
 	}
 
 	public static void removeLastUnreadId(Context c) {
-		putInt(c, LAST_UNREAD_ID, 0);
+		putInt(c, LAST_UNREAD_ID, -1);
 	}
 
 	public static void removeLoginData(Context c) {
@@ -96,5 +97,18 @@ public class Prefs extends ExtensionPrefs {
 
 	public static String getAuthURL() {
 		return SUBSCRIPTION_URL;
+	}
+
+	public static int getLastStarredId(Context context)
+	{
+		return getInt(context, LAST_STARRED_ID,-1);
+	}
+	public static void setLastStarredId(Context c,int id)
+	{
+		putInt(c, LAST_STARRED_ID, id);
+	}
+	public static void removeLastStarredId(Context c)
+	{
+		putInt(c, LAST_STARRED_ID, -1);
 	}
 }

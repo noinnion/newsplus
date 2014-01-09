@@ -105,7 +105,7 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 			FeedBinClient client=new FeedBinClient(c);
 			try  
 			{
-				if(client.login(user,password))
+				if(client.login(user,password,true))
 				{
 					Prefs.setUserPasswd(c, user, password);
 					return true;
