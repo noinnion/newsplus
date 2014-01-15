@@ -7,20 +7,21 @@ Since Google has decided to shutdown Google Reader, lots of new and innovative R
 You need to install News+ first to use the extensions. You can find the extensions on the Dropdown in the action bar.
 
 * Play Store: https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus
-* Beta: https://github.com/noinnion/newsplus/raw/master/beta/NewsPlus_beta.apk
+* Premium: https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus.premium
+* Beta: https://github.com/noinnion/newsplus/raw/master/beta/
 
 ### Extensions
 
-* Google Reader Clone (api clone): [Download](https://github.com/noinnion/newsplus/raw/master/beta/GoogleReaderClone_beta.apk?raw=true)
+* Feedly: [Download](https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus.extension.feedly)
 * InoReader: [Download](https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus.extension.inoreader)
 * BazQux: [Download](https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus.extension.bazqux)
 * Tiny Tiny RSS: [Download](https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus.extension.ttrss) (NOTE: api_newsplus: https://github.com/hrk/tt-rss-newsplus-plugin/)
 * FeedBin: [Download](https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus.extension.feedbin)
-* NewsBlur: [Download](https://play.google.com/store/apps/details?id=com.asafge.newsblurplus)
+* NewsBlur+: [Download](https://play.google.com/store/apps/details?id=com.asafge.newsblurplus)
 * CommaFeed: [Download](https://github.com/Athou/commafeed-newsplus)
 * SubReader: [Download](http://subreader.com/static/files/SubReaderExtension.apk)
 * Reedah: [Download](http://www.reedah.com/ReedahExtension.apk)
-* Pocket (beta): [Download](https://play.google.com/store/apps/details?id=com.asafge.pocketplus)
+* Pocket+: [Download](https://play.google.com/store/apps/details?id=com.asafge.pocketplus)
 
 We are trying to publish more :)
 
