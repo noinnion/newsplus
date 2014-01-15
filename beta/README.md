@@ -3,6 +3,7 @@ Beta
 
 v1.0.2beta
 * Fixed: Apply changes immediately
+* Fixed: Unescape html for sharing content
 
 v1.0.1beta
 * New: Feedly extension beta (github)
