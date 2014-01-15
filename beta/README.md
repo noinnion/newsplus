@@ -1,6 +1,9 @@
 Beta
 ====================
 
+v1.0.2beta
+* Fixed: Apply changes immediately
+
 v1.0.1beta
 * New: Feedly extension beta (github)
 * Fixed: Change folder issue
