@@ -2,6 +2,7 @@ Beta
 ====================
 
 v1.0.2beta
+* News: Manage Sources for Google News
 * Fixed: Send to Pocket
 * Fixed: Apply changes immediately
 * Fixed: Unescape html for sharing content
