@@ -3,6 +3,7 @@ Beta
 
 v1.0.2beta
 * News: Manage Sources for Google News
+* Fixed: Showing images issue on tablet
 * Fixed: Share button
 * Fixed: Send to Pocket
 * Fixed: Apply changes immediately
