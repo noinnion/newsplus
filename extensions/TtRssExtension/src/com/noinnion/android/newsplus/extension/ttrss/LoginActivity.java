@@ -8,6 +8,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
@@ -127,6 +128,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		protected LoginData doInBackground(Void... args) {
 			try {
 				HttpPost post = new HttpPost(server + TtRssExtension.URL_API_);
+				post.getParams().setParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, Boolean.FALSE);	// 417 - expectation failed
 
 				if (!TextUtils.isEmpty(httpUsername) && !TextUtils.isEmpty(httpPassword)) {
 					UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(httpUsername, httpPassword);
@@ -220,7 +222,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		Prefs.setHttpUsername(c, data.httpUsername);
 		Prefs.setHttpPassword(c, data.httpPassword);
 
-		Prefs.removeLoginData(c);
+		Prefs.resetData(c);
 
 		Prefs.setLoggedIn(c, true);
 		startHome(true);

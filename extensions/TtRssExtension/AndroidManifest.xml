@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.noinnion.android.newsplus.extension.ttrss"
-	android:installLocation="auto" android:versionCode="100"
-	android:versionName="1.0.0">
+	android:installLocation="auto" android:versionCode="101"
+	android:versionName="1.0.1">
 
 	<uses-sdk android:minSdkVersion="9" android:targetSdkVersion="16" />
 

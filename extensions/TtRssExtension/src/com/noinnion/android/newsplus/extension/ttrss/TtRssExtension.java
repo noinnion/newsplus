@@ -34,6 +34,7 @@ import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
@@ -179,6 +180,8 @@ public class TtRssExtension extends ReaderExtension {
 	public InputStream doPostInputStream(JSONObject jo) throws IOException, ReaderException {
 		HttpPost post = new HttpPost(getServer());
 		httpAuthentication(post);
+		
+		post.getParams().setParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, Boolean.FALSE);	// 417 - expectation failed
 		
 		StringEntity postEntity = new StringEntity(jo.toString(), HTTP.UTF_8);
 		postEntity.setContentType("application/json");
