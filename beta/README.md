@@ -1,6 +1,10 @@
 Beta
 ====================
 
+v1.0.3beta
+* Improved: Option for disabling In-app youtube player
+* Fixed: Enable Manage Sources for Google News on tablet
+
 v1.0.2beta
 * News: Manage Sources for Google News
 * Fixed: Showing images issue on tablet
