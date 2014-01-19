@@ -1,16 +1,18 @@
 package com.noinnion.android.newsplus.extension.bazqux;
 
-import android.app.Activity;
-import android.content.pm.PackageManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.noinnion.android.reader.api.util.Utils;
 
-public class WelcomeActivity extends Activity implements OnClickListener {
+public class WelcomeActivity extends SherlockActivity implements OnClickListener {
 
 	public static final String	TAG						= "WelcomeActivity";
 
@@ -24,8 +26,8 @@ public class WelcomeActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.welcome);
 		initButton();
 		
-		PackageManager p = getPackageManager();
-		p.setComponentEnabledSetting(getComponentName(), PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);		
+//		PackageManager p = getPackageManager();
+//		p.setComponentEnabledSetting(getComponentName(), PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);		
 	}
 
 	@Override
@@ -56,6 +58,24 @@ public class WelcomeActivity extends Activity implements OnClickListener {
 		button.setText(installed ? R.string.txt_start_app : R.string.txt_download_app);
 		button.setEnabled(true);
 		button.setOnClickListener(this);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.welcome, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_feedback:
+				Intent intent = new Intent(this, SendLogActivity.class);
+				intent.putExtra(SendLogActivity.EXTRA_SEND_LOG, true);
+				startActivity(intent);
+				return true;
+		}
+		return false;
 	}
 
 }

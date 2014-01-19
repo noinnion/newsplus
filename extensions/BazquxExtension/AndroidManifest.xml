@@ -39,6 +39,8 @@
 		<activity android:name=".LoginActivity" android:label="@string/extension_login_title"
 			android:exported="true" android:theme="@style/Theme.Dialog" />
 		
+		<activity android:name=".SendLogActivity" android:theme="@style/Theme.Dialog" />
+		
 	</application>
 
 </manifest>
