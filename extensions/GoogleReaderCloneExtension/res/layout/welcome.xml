@@ -7,9 +7,9 @@
 		android:layout_height="wrap_content" android:orientation="vertical"
 		android:padding="20dp">
 
-		<ImageView android:layout_width="96dp"
-			android:layout_height="96dp" android:layout_gravity="center_horizontal"
-			android:src="@drawable/icon" />
+		<ImageView android:layout_width="144dp"
+			android:layout_height="144dp" android:layout_gravity="center_horizontal"
+			android:src="@drawable/icon_large" />
 
 		<TextView android:layout_height="wrap_content"
 			android:layout_width="wrap_content" android:layout_gravity="center_horizontal"
@@ -18,17 +18,34 @@
 
 		<TextView android:layout_height="wrap_content"
 			android:layout_width="wrap_content" android:layout_gravity="center_horizontal"
-			android:text="@string/google_reader_login_welcome" android:textColor="#333" android:autoLink="web"
-			android:layout_marginBottom="5dp" />
-		
+			android:text="@string/google_reader_login_welcome" android:textColor="#333"
+			android:autoLink="web" android:layout_marginBottom="5dp" />
+
 		<LinearLayout android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:orientation="horizontal"
 			android:layout_marginTop="5dp" android:layout_marginBottom="5dp">
 
 			<Button android:id="@+id/btn_ok" android:layout_height="wrap_content"
-				android:layout_width="0dp" android:layout_weight="1" android:enabled="false" />
+				android:layout_width="0dp" android:layout_weight="1"
+				android:enabled="false" />
 
 		</LinearLayout>
+
+		<CheckBox android:id="@+id/hide_icon" android:layout_height="wrap_content"
+			android:layout_width="wrap_content" android:layout_gravity="center_horizontal" 
+			android:text="@string/txt_hide_icon" />
+		
+		<TextView android:id="@+id/changelog" android:layout_height="wrap_content"
+			android:layout_width="wrap_content" android:layout_gravity="center_horizontal"
+			android:layout_marginTop="20dp" android:text="@string/txt_changelog"
+			android:textStyle="bold" android:textColor="@color/main"
+			android:textSize="18sp" />
+
+		<TextView android:id="@+id/rate" android:layout_height="wrap_content"
+			android:layout_width="wrap_content" android:layout_gravity="center_horizontal"
+			android:layout_marginTop="20dp" android:text="@string/txt_rate"
+			android:textStyle="bold" android:textColor="@color/main"
+			android:textSize="18sp" />
 
 	</LinearLayout>
 

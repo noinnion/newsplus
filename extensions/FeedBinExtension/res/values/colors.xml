@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <resources>
     
+    <color name="main">#003f57</color>
+    
     <color name="transparent">#00000000</color>
     <color name="transparent_light">#77000000</color>
     <color name="transparent_half">#aa000000</color>
