@@ -22,6 +22,7 @@ You need to install News+ first to use the extensions. You can find the extensio
 * SubReader: [Download](http://subreader.com/static/files/SubReaderExtension.apk)
 * Reedah: [Download](http://www.reedah.com/ReedahExtension.apk)
 * Pocket+: [Download](https://play.google.com/store/apps/details?id=com.asafge.pocketplus)
+* Google Reader Clone (api clone): [Download](https://github.com/noinnion/newsplus/raw/master/beta/GoogleReaderClone_beta.apk?raw=true)
 
 We are trying to publish more :)
 
