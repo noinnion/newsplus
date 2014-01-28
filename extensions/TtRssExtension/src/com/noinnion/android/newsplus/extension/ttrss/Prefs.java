@@ -31,6 +31,20 @@ public class Prefs extends ExtensionPrefs {
 	public static void removeLoginData(Context c) {
 		SharedPreferences sp = getPrefs(c);
 		SharedPreferences.Editor editor = sp.edit();
+		editor.remove(KEY_USERNAME);
+		editor.remove(KEY_PASSWORD);
+		editor.remove(KEY_HTTP_USERNAME);
+		editor.remove(KEY_HTTP_PASSWORD);
+		editor.remove(KEY_USERNAME);
+		editor.remove(KEY_SESSION_ID);
+		editor.remove(KEY_API_LEVEL);
+		editor.remove(KEY_SINCE_ID);
+		editor.commit();
+	}
+	
+	public static void resetData(Context c) {
+		SharedPreferences sp = getPrefs(c);
+		SharedPreferences.Editor editor = sp.edit();
 		editor.remove(KEY_SINCE_ID);
 		editor.commit();
 	}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
     
-    <string name="app_name">FeedBin</string>
+    <string name="app_name">FeedBin | News+</string>
         
     <!-- Extension -->
     <string name="extension_name">FeedBin</string>
@@ -21,6 +21,9 @@
     <string name="txt_start_app">Start News+</string>
     <string name="txt_download_app">Download News+</string>
     <string name="txt_feedback">Feedback</string>
+    <string name="txt_changelog">Change log</string>
+    <string name="txt_rate">Rate the extension</string>
+    <string name="txt_hide_icon">Hide icon from launcher drawer </string>
     
     <!-- err -->
     <string name="err_io">Network error</string>

@@ -1,5 +1,7 @@
 package com.noinnion.android.newsplus.extension.bazqux.util;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -25,6 +27,8 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 
 import android.net.SSLCertificateSocketFactory;
+import android.os.Environment;
+import android.text.TextUtils;
 
 
 public class Utils {
@@ -126,6 +130,25 @@ public class Utils {
 	public static String getHeaderValue(Header header) {
 		if (header != null) return header.getValue();
 		return null;
+	}
+
+	// writeFileToSD("/", "filename.txt", "content");
+	public static boolean writeContentToSD(String path, String filename, String content) throws IOException {
+		if (TextUtils.isEmpty(content)) return false;
+
+		File dir = new File(Environment.getExternalStorageDirectory(), path);
+		if (!dir.exists()) dir.mkdirs();
+
+		File file = new File(dir, filename);
+		FileWriter out = new FileWriter(file);
+		try {
+			out.write(content);
+		} finally {
+			out.flush();
+			out.close();
+		}
+
+		return true;
 	}
 
 	public static String convertStreamToString(InputStream is) throws IOException {

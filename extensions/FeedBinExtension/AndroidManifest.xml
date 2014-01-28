@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.noinnion.android.newsplus.extension.feedbin"
-	android:installLocation="auto" android:versionCode="100"
-	android:versionName="1.0.1beta">
+	android:installLocation="auto" android:versionCode="101"
+	android:versionName="1.0.1">
 
 	<uses-sdk android:minSdkVersion="9" android:targetSdkVersion="16" />
 
@@ -36,11 +36,14 @@
 			<meta-data android:name="protocolVersion" android:value="1" />
 			<meta-data android:name="description" android:value="@string/extension_description" />
 			<meta-data android:name="loginActivity" android:value=".LoginActivity" />
+			<meta-data android:name="settingsActivity" android:value=".SettingsActivity" />
 		</service>
 
 		<activity android:name=".LoginActivity" android:label="@string/extension_login_title"
 			android:exported="true" android:theme="@style/Theme.Dialog" />
 
+		<activity android:name=".SettingsActivity" android:exported="true" />
+				
 		<activity android:name=".SendLogActivity" android:theme="@style/Theme.Dialog" />
 		
 	</application>

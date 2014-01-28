@@ -1,7 +1,27 @@
 Beta
 ====================
 
+v1.0.3beta
+* Improved: Load websites faster
+* Improved: Option for disabling In-app youtube player
+* Improved: Preference backup includes Search filters
+* Improved: Time format same as system setting
+* Fixed: Enable Manage Sources for Google News on tablet
+* Fixed: Offline sync
+* Fixed: Search view text color
+* Fixed: Save article position
+
+v1.0.2beta
+* New: Manage Sources for Google News
+* Fixed: Showing images issue on tablet
+* Fixed: Share button
+* Fixed: Send to Pocket
+* Fixed: Apply changes immediately
+* Fixed: Unescape html for sharing content
+
 v1.0.1beta
+* New: Feedly extension beta (github)
+* Fixed: Change folder issue
 * Fixed: Readability issue
 * Fixed: Bugs and Crashes
 

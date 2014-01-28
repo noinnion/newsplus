@@ -22,6 +22,9 @@
     <string name="txt_start_app">Start News+</string>
     <string name="txt_download_app">Download News+</string>
     <string name="txt_feedback">Feedback</string>
+    <string name="txt_changelog">Change log</string>
+    <string name="txt_rate">Rate the extension</string>
+    <string name="txt_hide_icon">Hide icon from launcher drawer </string>
     
         <!-- err -->
     <string name="err_io">Network error</string>

@@ -37,7 +37,7 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 			setResult(RESULT_OK);
 			finish();
 		}
-		setContentView(R.layout.login_google_reader);
+		setContentView(R.layout.login);
 		setTitle(R.string.txt_login);
 
 		mServerText = (TextView) findViewById(R.id.edit_server);

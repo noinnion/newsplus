@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    
+    <!-- log -->
+    <string name="log_feedback_subject">Feedback for</string>
+    <string name="log_send_feedback">Send feedback</string>
+    
+    <string name="log_device_info_fmt">News+ version: {0}\nDevice model: {1}\nFirmware version: {2}\nKernel version: {3}\nBuild number: {4}\n</string>
+    <string name="log_acquiring_log_progress_dialog_message">Acquiring log from the system…</string>
+    <string name="log_chooser_title">Select an application</string>
+    <string name="log_failed_to_get_log_message">Failed to get the log from the system.</string>
+    <string name="log_main_dialog_text">To solve issues, logs are required. This application will attempt to collect the device log. The collected log will be sent using an application of your choice. You also will have an opportunity to see and modify the data being sent.</string>
+    
+</resources>
+    
