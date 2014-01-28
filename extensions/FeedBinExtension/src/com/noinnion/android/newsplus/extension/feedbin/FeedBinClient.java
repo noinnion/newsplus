@@ -445,44 +445,13 @@ public class FeedBinClient extends ReaderExtension {
 
 	@Override
 	public boolean markAsRead(String[] uids, String[] arg1) throws IOException, ReaderException {
-		// loadUser();
-		//
-		// JSONArray array=new JSONArray();
-		// //maximal 1000 mit einen request
-		// int counter=0;
-		// for(String s:uids)
-		// {
-		// counter++;
-		// array.put(s);
-		// if(counter<1000)
-		// {
-		// try {
-		// JSONObject obj=new JSONObject();
-		// obj.put("unread_entries", array);
-		// doDeleteInputStream(Prefs.UNREAD_ENTRIES_URL, obj);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// counter=0;
-		// array=new JSONArray();
-		// }
-		// }
-		//
-		// try {
-		// JSONObject obj=new JSONObject();
-		// obj.put("unread_entries", array);
-		// HttpResponse response=doDeleteInputStream(Prefs.UNREAD_ENTRIES_URL, obj);
-		// if(response.getStatusLine().getStatusCode()==200)
-		// return true;
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
+
 		return false;
 	}
 
 	@Override
 	public boolean markAsUnread(String[] itemUids, String[] subUids, boolean keepUnread) throws IOException, ReaderException {
-		Log.w("mark", "as unread");
+		
 		String url = Prefs.UNREAD_ENTRIES_URL;
 		try{loadUser();}catch(LoginException e)
 		{
@@ -567,18 +536,6 @@ public class FeedBinClient extends ReaderExtension {
 		mContext=getApplicationContext();
 		user=Prefs.getUser(mContext);
 		password=Prefs.getPassword(mContext);
-		
-//		try
-//		{
-//			boolean login=login(user, password,false);
-//			if(!login)
-//			{
-//				Prefs.setLoggedIn(mContext, false);
-//				Prefs.removeLoginData(mContext);
-//				throw new LoginException("Loggin Failed!");
-//			}
-//		}
-//		catch(JSONException e){}
 	}
 
 	public DefaultHttpClient getClient() {
