@@ -1,6 +1,9 @@
 Beta
 ====================
 
+v1.0.4beta
+* Improved: Text wrap on KitKat
+
 v1.0.3beta
 * Improved: Load websites faster
 * Improved: Option for disabling In-app youtube player
