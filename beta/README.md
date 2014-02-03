@@ -2,6 +2,7 @@ Beta
 ====================
 
 v1.0.4beta
+* Improved: Widgets PREMIUM: Support background color and opacity, new layouts
 * Improved: Text wrap on KitKat
 
 v1.0.3beta
