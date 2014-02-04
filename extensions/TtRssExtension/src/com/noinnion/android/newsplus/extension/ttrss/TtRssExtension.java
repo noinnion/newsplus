@@ -127,7 +127,7 @@ public class TtRssExtension extends ReaderExtension {
 
 	protected DefaultHttpClient	client;
 
-	public static final int		SOCKET_OPERATION_TIMEOUT	= 20000;	// 20s
+	public static final int		SOCKET_OPERATION_TIMEOUT	= 30000;	// 30s
 
 	public DefaultHttpClient getClient() {
 		if (client == null) client = createHttpClient();
