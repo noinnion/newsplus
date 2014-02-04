@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    
+    <string name="app_name">HackerNews</string>
+        
+    <!-- Extension -->
+    <string name="extension_name">HackerNews</string>
+    <string name="extension_description">Description for HackerNews</string>
+    <string name="extension_settings_title">Settings</string>
+    <string name="extension_login_title">Login</string>
+    
+    <string name="msg_login_running">Login…</string>
+    <string name="msg_login_fail">Login failure</string>
+    
+    <!-- login -->
+    <string name="login_welcome">Enter your login data (username and password)</string>
+    <string name="login_server">Server (http://google.com)</string>
+    <string name="login_id">Username</string>
+    <string name="login_password">Password</string>
+                
+    <string name="txt_login">Login</string>
+    <string name="txt_start_app">Start News+</string>
+    <string name="txt_download_app">Download News+</string>
+    <string name="txt_feedback">Feedback</string>
+    
+    <!-- err -->
+    <string name="err_io">Network error</string>
+    
+    <!-- client -->
+    <string name="client_hackernews">HackerNews</string>
+    
+    <string name="hackernews_login_welcome">Google Reader was the most popular service for reading feeds. This extension allows you to use services that has the same API as Google Reader. It requires <b>News+</b> to work with.</string>
+    
+</resources>
+    
