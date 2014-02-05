@@ -117,3 +117,8 @@ v0.0.4beta
 * Fixed: Backup/Restore issue
 * Fixed: Crash on auto update
 
+Feedly Extension
+====================
+v1.0.2beta
+* Fixed: New Folder
+
