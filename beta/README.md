@@ -2,7 +2,7 @@ Beta
 ====================
 
 v1.0.4beta
-* Improved: Widgets PREMIUM: Support background color and opacity, new layouts
+* Improved: Widgets (Premium): Support background color and opacity, text size, new layout (http://newsplus.co/widgets)
 * Improved: Text wrap on KitKat
 
 v1.0.3beta
