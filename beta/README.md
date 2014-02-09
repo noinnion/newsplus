@@ -1,10 +1,15 @@
 Beta
 ====================
 
+v1.0.5beta
+* Fixed: Text-To-Speech issue
+
 v1.0.4beta
-* Improved: Widgets (Premium): Support background color and opacity, text size, new layout (http://newsplus.co/feature/widgets)
+* New: Widgets (Premium): Support background color and opacity, text size, new layout (http://newsplus.co/feature/widgets)
+* New: Text-To-Speech (Premium) on Google News
 * Improved: Text wrap on KitKat
-* Improved: Simplified offline cache
+* Improved: Simplified offline cache (slower sync speed but more accurate)
+* Fixed: Many many bug fixes
 
 v1.0.3beta
 * Improved: Load websites faster
