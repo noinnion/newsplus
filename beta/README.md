@@ -5,6 +5,7 @@ v1.0.5beta
 * New: Article font size, font type, text alignment (Article View: Menu->Fonts)
 * Improved: Widget 4x1 added and other improvements
 * Fixed: Text-To-Speech issue
+* Fixed: Twitter sharing
 
 v1.0.4beta
 * New: Widgets (Premium): Support background color and opacity, text size, new layout (http://newsplus.co/feature/widgets)
