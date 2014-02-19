@@ -2,6 +2,8 @@ Beta
 ====================
 
 v1.0.5beta
+* New: Article font size, font type, text alignment (Article View: Menu->Fonts)
+* Improved: Widget 4x1 added and other improvements
 * Fixed: Text-To-Speech issue
 
 v1.0.4beta
