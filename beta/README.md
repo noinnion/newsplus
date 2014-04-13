@@ -1,6 +1,9 @@
 Beta
 ====================
 
+v1.0.7beta
+* Fixed: Bug fixes
+
 v1.0.6beta
 * Fixed: Read/Unread issue with Pocket+
 
