@@ -3,6 +3,7 @@ Beta
 
 v1.0.7beta
 * Fixed: Bug fixes
+* Feedly v1.0.3beta: fix sync server read items
 
 v1.0.6beta
 * Fixed: Read/Unread issue with Pocket+
