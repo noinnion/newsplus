@@ -3,6 +3,7 @@ Beta
 
 v1.0.7beta
 * Feedly v1.0.3beta: fix sync server read items
+* New: Create ShortCut
 * Fixed: Auto sync for Google News
 * Fixed: Fonts dialog on tablet
 * Fixed: Bug fixes
