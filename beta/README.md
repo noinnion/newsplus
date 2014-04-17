@@ -1,7 +1,7 @@
 Beta
 ====================
 
-v1.0.7beta
+v1.0.8beta
 * Feedly v1.0.3beta: fix sync server read items
 * New: Create ShortCut
 * Fixed: Auto sync for Google News
