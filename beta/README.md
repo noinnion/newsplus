@@ -5,6 +5,7 @@ v1.0.9beta
 * New: 2 new beatiful themes: Blue and Green
 * New: Custom notification for feeds (Pro)
 * Improved: Sort by feed now sorts like Manage sources
+* Fixed: Display issue on some websites
 
 v1.0.8beta
 * Feedly v1.0.3beta: fix sync server read items
