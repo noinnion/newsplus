@@ -524,28 +524,33 @@ public class InoReaderClient extends ReaderExtension {
 
 		StringBuilder buff = new StringBuilder(URL_API_STREAM_CONTENTS.length() + 128);
 		buff.append(URL_API_STREAM_CONTENTS);
+
 		String stream = handler.stream();
-		if (stream != null) {
-			if (stream.equals(STATE_READING_LIST)) stream = STATE_GOOGLE_READING_LIST;
-			else if (stream.equals(STATE_STARRED)) stream = STATE_GOOGLE_STARRED;
-			buff.append("/").append(Utils.encode(stream));
-		}
+		if (stream == null || stream.equals(STATE_READING_LIST)) stream = STATE_GOOGLE_READING_LIST;
+		else if (stream.equals(STATE_STARRED)) stream = STATE_GOOGLE_STARRED;
+		buff.append("/").append(Utils.encode(stream));
+
 		buff.append("?client=newsplus&ck=").append(syncTime);
+		
 		if (handler.excludeRead()) {
 			buff.append("&xt=").append(STATE_GOOGLE_READ);
 		}
+		
 		if (continuation != null && continuation.length() > 0) {
 			buff.append("&c=").append(continuation);
 		}
+		
 		if (startTime > 0) {
 			buff.append("&ot=").append(startTime);
 		}
+		
 		int limit = handler.limit();
 		limit = (limit > SYNC_MAX_ITEMS || limit == 0) ? SYNC_MAX_ITEMS : limit;
 		if (limit > 0) {
 			// google only allows max 1000 at once
 			buff.append("&n=").append(limit > SYNC_MAX_ITEMS ? SYNC_MAX_ITEMS : limit);
 		}
+		
 		buff.append("&r=").append(handler.newestFirst() ? "n" : "o");
 
 		return doGetReader(buff.toString());
@@ -607,7 +612,7 @@ public class InoReaderClient extends ReaderExtension {
 					} else if (currName.equals("crawlTimeMsec")) {
 						entry.updatedTime = Long.valueOf(jp.getText()) / 1000;
 					} else if (currName.equals("title")) {
-						entry.title = Utils.stripTags(unEscapeEntities(jp.getText()), true);
+						entry.title = unEscapeEntities(jp.getText());
 					} else if (currName.equals("categories")) {
 						while (jp.nextToken() != JsonToken.END_ARRAY) {
 							String category = jp.getText();
@@ -722,19 +727,21 @@ public class InoReaderClient extends ReaderExtension {
 		StringBuilder buff = new StringBuilder(URL_API_STREAM_ITEM_IDS.length() + 128);
 		buff.append(URL_API_STREAM_ITEM_IDS);
 		buff.append("?output=json"); // xml or json
+		
 		String stream = handler.stream();
-		if (stream != null) {
-			if (stream.equals(STATE_READING_LIST)) stream = STATE_GOOGLE_READING_LIST;
-			else if (stream.equals(STATE_STARRED)) stream = STATE_GOOGLE_STARRED;
-			buff.append("&s=").append(Utils.encode(stream));
-		}
+		if (stream == null || stream.equals(STATE_READING_LIST)) stream = STATE_GOOGLE_READING_LIST;
+		else if (stream.equals(STATE_STARRED)) stream = STATE_GOOGLE_STARRED;
+		buff.append("&s=").append(Utils.encode(stream));
+		
 		if (handler.excludeRead()) {
 			buff.append("&xt=").append(STATE_GOOGLE_READ);
 		}
+		
 		int limit = handler.limit();
 		if (limit > 0) {
 			buff.append("&n=").append(limit);
 		}
+		
 		buff.append("&r=").append(handler.newestFirst() ? "n" : "o");
 
 		return doGetReader(buff.toString());

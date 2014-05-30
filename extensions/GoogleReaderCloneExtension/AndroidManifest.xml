@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.noinnion.android.newsplus.extension.google_reader"
 	android:installLocation="auto" android:versionCode="101"
-	android:versionName="1.0.1">
+	android:versionName="1.0.2beta">
 
-	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="16" />
+	<uses-sdk android:minSdkVersion="9" android:targetSdkVersion="16" />
 
 	<supports-screens android:xlargeScreens="true"
 		android:largeScreens="true" android:normalScreens="true"

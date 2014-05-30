@@ -157,7 +157,7 @@ public class TtRssExtension extends ReaderExtension {
 			HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
 			HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
 		    HttpProtocolParams.setUseExpectContinue(params, true);
-		        
+
 			// ssl
 			KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
 			trustStore.load(null, null);
@@ -170,19 +170,20 @@ public class TtRssExtension extends ReaderExtension {
 			registry.register(new Scheme("https", sf, 443));
 
 			ClientConnectionManager ccm = new ThreadSafeClientConnManager(params, registry);
-			
+
 			return new DefaultHttpClient(ccm, params);
 		} catch (Exception e) {
-			return HttpUtils.createHttpClient();
+			e.printStackTrace();
 		}
+		return HttpUtils.createHttpClient();
 	}
 
 	public InputStream doPostInputStream(JSONObject jo) throws IOException, ReaderException {
 		HttpPost post = new HttpPost(getServer());
 		httpAuthentication(post);
-		
+
 		post.getParams().setParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, Boolean.FALSE);	// 417 - expectation failed
-		
+
 		StringEntity postEntity = new StringEntity(jo.toString(), HTTP.UTF_8);
 		postEntity.setContentType("application/json");
 		post.setEntity(postEntity);
@@ -232,20 +233,20 @@ public class TtRssExtension extends ReaderExtension {
 				String error = resJsonObject.getString("error");
 				if (error != null) handleError(error);
 			}
-			
-			if (resJsonObject.has("content")) {				
+
+			if (resJsonObject.has("content")) {
 				JSONObject contentJo = resJsonObject.getJSONObject("content");
 				if (contentJo.has("status")) {
 					String status = contentJo.getString("status");
 					if (status != null && status.equals("OK")) return true;
 				}
 			}
-			
+
 		}
 
 		return false;
 	}
-	
+
 	public static String unEscapeEntities(String text) {
 //		return StringEscapeUtils.unescapeHtml4(text);
 		if (text == null) return "";
@@ -370,7 +371,7 @@ public class TtRssExtension extends ReaderExtension {
 			throw new ReaderException(error);
 		}
 	}
-	
+
 	@Override
 	public void handleReaderList(ITagListHandler tagHandler, ISubscriptionListHandler subHandler, long syncTime) throws IOException, ReaderException {
 		Reader in = null;
@@ -467,7 +468,7 @@ public class TtRssExtension extends ReaderExtension {
 													sub = new ISubscription();
 													sub.uid = tag.uid;
 													sub.title = tag.label;
-													
+
 													ISubscription temp = feedList.get(String.valueOf(tag.id));
 													if (temp != null) {
 														sub.htmlUrl = temp.htmlUrl;
@@ -733,7 +734,7 @@ public class TtRssExtension extends ReaderExtension {
 		String currName;
 		String mediaUrl = null;
 		String mediaType = null;
-		
+
 		int count = 0;
 		IItem item = null;
 		List<IItem> items = new ArrayList<IItem>();
@@ -761,19 +762,19 @@ public class TtRssExtension extends ReaderExtension {
 						item = new IItem();
 					} else if (jp.getCurrentToken() == JsonToken.END_OBJECT) {
 						if (item != null && item.uid.length() > 0) {
-							
+
 							if (length + item.getLength() > MAX_TRANSACTION_LENGTH) {
 								handler.items(items, STRATEGY_INSERT_DEFAULT);
 								items.clear();
-								length = 0;						
+								length = 0;
 							}
-							
+
 							if (additionalCategory != null) item.addTag(additionalCategory);
 							items.add(item);
 							count++;
 							length += item.getLength();
 						}
-						
+
 						if (items.size() % 200 == 0 || length > MAX_TRANSACTION_LENGTH) {	// avoid TransactionTooLargeException, android only allows 1mb
 							handler.items(items, STRATEGY_INSERT_DEFAULT);
 							items.clear();
@@ -829,11 +830,11 @@ public class TtRssExtension extends ReaderExtension {
 								if (mediaType.startsWith("image")) {
 									item.addImage(mediaUrl, mediaType);
 								} else if (mediaType.startsWith("video")) {
-									item.addVideo(mediaUrl, mediaType);									
+									item.addVideo(mediaUrl, mediaType);
 								} else if (mediaType.startsWith("audio")) {
-									item.addAudio(mediaUrl, mediaType);									
+									item.addAudio(mediaUrl, mediaType);
 								}
-								
+
 								mediaUrl = null;
 								mediaType = null;
 							} else {
@@ -1074,7 +1075,7 @@ public class TtRssExtension extends ReaderExtension {
 						if (tag.endsWith("FEED:-1")) {
 							success = updateArticle(itemUids, 0, true);
 						} else {
-							success = setArticleLabel(itemUids, Integer.valueOf(tag.replace("FEED:", "")), true);					
+							success = setArticleLabel(itemUids, Integer.valueOf(tag.replace("FEED:", "")), true);
 						};
 					}
 				}
@@ -1085,7 +1086,7 @@ public class TtRssExtension extends ReaderExtension {
 						if (tag.endsWith("FEED:-1")) {
 							success = updateArticle(itemUids, 0, false);
 						} else {
-							success = setArticleLabel(itemUids, Integer.valueOf(tag.replace("FEED:", "")), false);					
+							success = setArticleLabel(itemUids, Integer.valueOf(tag.replace("FEED:", "")), false);
 						};
 					}
 				}
@@ -1095,34 +1096,34 @@ public class TtRssExtension extends ReaderExtension {
 				success = false;
 //				if (tags != null && tags.length > 0) {
 //					for (String tag : tags) {
-//						
+//
 //					}
 //				}
 				break;
 		}
-		
+
 		return success;
 	}
-	
+
 	/*
 	 * updateArticle
 	 * article_ids (comma-separated list of integers) - article IDs to operate on
 	 * mode (integer) - type of operation to perform (0 - set to false, 1 - set to true, 2 - toggle)
 	 * field (integer) - field to operate on (0 - starred, 1 - published, 2 - unread, 3 - article note since api level 1)
 	 * data (string) - optional data parameter when setting note field (since api level 1)
-	 *  
+	 *
 	 */
 	public boolean updateArticle(String[] itemUids, int field, boolean mode) throws IOException, ReaderException {
 		try {
 			JSONObject jo = new JSONObject();
 			jo.put("sid", getSessionId());
 			jo.put("op", "updateArticle");
-	
+
 			jo.put("article_ids", StringUtils.implode(itemUids, ","));
-			
+
 			jo.put("mode", mode ? 1 : 0); // set false
 			jo.put("field", field); // starred
-	
+
 			return doRequest(jo);
 
 		} catch (ReaderLoginException e) {
@@ -1133,32 +1134,32 @@ public class TtRssExtension extends ReaderExtension {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				throw new ReaderLoginException(e.getLocalizedMessage());
-			}			
+			}
 		} catch (JSONException e) {
-			throw new ReaderException("connection error", e);			
+			throw new ReaderException("connection error", e);
 		}
-		
+
 		return false;
 	}
-	
+
 	/*
 	 * updateArticle
 	 * article_ids - comma-separated list of article ids
 	 * label_id (int) - label id, as returned in getLabels
 	 * assign (boolean) - assign or remove label
-	 *  
+	 *
 	 */
 	public boolean setArticleLabel(String[] itemUids, int labelId, boolean assign) throws IOException, ReaderException {
 		try {
 			JSONObject jo = new JSONObject();
 			jo.put("sid", getSessionId());
 			jo.put("op", "setArticleLabel");
-	
+
 			jo.put("article_ids", StringUtils.implode(itemUids, ","));
-			
+
 			jo.put("label_id", labelId); // set false
 			jo.put("assign", assign); // starred
-			
+
 			return doRequest(jo);
 
 		} catch (ReaderLoginException e) {
@@ -1169,14 +1170,14 @@ public class TtRssExtension extends ReaderExtension {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				throw new ReaderLoginException(e.getLocalizedMessage());
-			}			
+			}
 		} catch (JSONException e) {
-			throw new ReaderException("connection error", e);			
+			throw new ReaderException("connection error", e);
 		}
 
 		return false;
 	}
-	
+
 	@Override
 	public boolean editSubscription(String uid, String title, String url, String[] tags, int action) throws IOException, ReaderException {
 		switch (action) {
@@ -1245,7 +1246,7 @@ public class TtRssExtension extends ReaderExtension {
 			jo.put("sid", getSessionId());
 			jo.put("op", "unsubscribeFeed");
 			jo.put("feed_id", feedId);
-			
+
 			return doRequest(jo);
 
 		} catch (ReaderLoginException e) {

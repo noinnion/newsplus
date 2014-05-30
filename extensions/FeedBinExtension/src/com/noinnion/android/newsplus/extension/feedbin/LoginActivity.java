@@ -42,7 +42,7 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 
 		mLoginIdText = (TextView) findViewById(R.id.edit_login_id);
 		mPasswordText = (TextView) findViewById(R.id.edit_password);
-		
+
 		String user = Prefs.getUser(c);
 		if (user != null) mLoginIdText.setText(user);
 
@@ -82,7 +82,7 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 		}
 	}
 
-	private void processLogin() {	
+	private void processLogin() {
 		final Context c = getApplicationContext();
 		Prefs.setLoggedIn(c, true);
 		startHome(true);
@@ -90,28 +90,22 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 
 	private class SaveInputLoginTask extends AsyncTask<String, Void, Boolean> {
 
-		protected void onPreExecute()
-		{
+		protected void onPreExecute() {
 			mBusy = ProgressDialog.show(LoginActivity.this, null, getText(R.string.msg_login_running), true, true);
 		}
 
-		protected Boolean doInBackground(String... params)
-		{
+		protected Boolean doInBackground(String... params) {
 			String user = params[0];
 			String password = params[1];
 
 			final Context c = getApplicationContext();
 			Prefs.setUserPasswd(c, user, null);
-			FeedBinClient client=new FeedBinClient(c);
-			try  
-			{
-				if(client.login(user,password,true))
-				{
+			FeedBinClient client = new FeedBinClient(c);
+			try {
+				if (client.login(user, password, true)) {
 					Prefs.setUserPasswd(c, user, password);
 					return true;
-				} 
-				else 
-				{
+				} else {
 					AndroidUtils.showToast(LoginActivity.this, getText(R.string.msg_login_fail));
 				}
 			} catch (IOException e) {
@@ -120,7 +114,7 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 			} catch (ReaderException e) {
 				e.printStackTrace();
 				AndroidUtils.showToast(LoginActivity.this, getText(R.string.msg_login_fail));
-			}catch (Throwable e) {
+			} catch (Throwable e) {
 				e.printStackTrace();
 				AndroidUtils.showToast(LoginActivity.this, e.getLocalizedMessage());
 			}
@@ -131,7 +125,7 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 			final Context c = getApplicationContext();
 			try {
 				if (mBusy != null && mBusy.isShowing()) mBusy.dismiss();
-			} catch (Exception e) { }
+			} catch (Exception e) {}
 			if (result != null) processLogin();
 			else Prefs.setLoggedIn(c, false);
 		}

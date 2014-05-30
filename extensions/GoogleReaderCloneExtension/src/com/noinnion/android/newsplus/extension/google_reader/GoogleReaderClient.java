@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
@@ -532,81 +531,81 @@ public class GoogleReaderClient extends ReaderExtension {
 	}
 
 	// not needed anymore, main app updates subscription newest times from items
-	private Map<String, Long> getUnreadList(long syncTime) {
-		Reader in = null;
-		try {
-			in = readUnreadCount(syncTime);
-			Map<String, Long> unreads = parseUnreadCountList(in);
-			return unreads;
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (in != null) in.close();
-			} catch (IOException e) {}
-		}
-		return null;
-	}
+//	private Map<String, Long> getUnreadList(long syncTime) {
+//		Reader in = null;
+//		try {
+//			in = readUnreadCount(syncTime);
+//			Map<String, Long> unreads = parseUnreadCountList(in);
+//			return unreads;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if (in != null) in.close();
+//			} catch (IOException e) {}
+//		}
+//		return null;
+//	}
 
 	// NOTE: /api/0/unread-count
-	private Reader readUnreadCount(long syncTime) throws IOException, ReaderException {
-		initAuth();
+//	private Reader readUnreadCount(long syncTime) throws IOException, ReaderException {
+//		initAuth();
+//
+//		StringBuilder buff = new StringBuilder(URL_API_UNREAD_COUNT.length() + 48);
+//		buff.append(getApiUrl(URL_API_UNREAD_COUNT));
+//		buff.append("?client=newsplus&output=json&ck=").append(syncTime);
+//
+//		return doGetReader(buff.toString());
+//	}
 
-		StringBuilder buff = new StringBuilder(URL_API_UNREAD_COUNT.length() + 48);
-		buff.append(getApiUrl(URL_API_UNREAD_COUNT));
-		buff.append("?client=newsplus&output=json&ck=").append(syncTime);
-
-		return doGetReader(buff.toString());
-	}
-
-	private Map<String, Long> parseUnreadCountList(Reader in) throws JsonParseException, IOException {
-		JsonFactory f = new JsonFactory();
-		JsonParser jp = f.createParser(in);
-
-		String currName;
-
-		String uid = null;
-		Long timestamp = null;
-		int len;
-		String text = null;
-		Map<String, Long> unreadList = new HashMap<String, Long>();
-
-		jp.nextToken(); // will return JsonToken.START_OBJECT (verify?)
-		while (jp.nextToken() != JsonToken.END_OBJECT) {
-			currName = jp.getCurrentName();
-			jp.nextToken(); // move to value, or START_OBJECT/START_ARRAY
-			if (currName.equals("unreadcounts")) { // contains an object
-				// start items
-				while (jp.nextToken() != JsonToken.END_ARRAY) {
-					if (jp.getCurrentToken() == JsonToken.START_OBJECT) {
-						// do nothing
-					} else if (jp.getCurrentToken() == JsonToken.END_OBJECT) {
-						if (!unreadList.containsKey(uid)) unreadList.put(uid, timestamp);
-					}
-
-					currName = jp.getCurrentName();
-					if (currName == null) continue;
-
-					jp.nextToken();
-					if (currName.equals("id")) {
-						uid = jp.getText();
-					} else if (currName.equals("newestItemTimestampUsec")) {
-						text = jp.getText();
-						len = text.length();
-						if (len > 13) text = jp.getText().substring(0, jp.getText().length() - 6);
-						else if (len > 10) text = jp.getText().substring(0, jp.getText().length() - 3);
-						timestamp = Utils.asLong(text); // millis -> unixtime
-					} else {
-						jp.skipChildren();
-					}
-				}
-			} else {
-				jp.skipChildren();
-			}
-		}
-		
-		return unreadList;
-	}
+//	private Map<String, Long> parseUnreadCountList(Reader in) throws JsonParseException, IOException {
+//		JsonFactory f = new JsonFactory();
+//		JsonParser jp = f.createParser(in);
+//
+//		String currName;
+//
+//		String uid = null;
+//		Long timestamp = null;
+//		int len;
+//		String text = null;
+//		Map<String, Long> unreadList = new HashMap<String, Long>();
+//
+//		jp.nextToken(); // will return JsonToken.START_OBJECT (verify?)
+//		while (jp.nextToken() != JsonToken.END_OBJECT) {
+//			currName = jp.getCurrentName();
+//			jp.nextToken(); // move to value, or START_OBJECT/START_ARRAY
+//			if (currName.equals("unreadcounts")) { // contains an object
+//				// start items
+//				while (jp.nextToken() != JsonToken.END_ARRAY) {
+//					if (jp.getCurrentToken() == JsonToken.START_OBJECT) {
+//						// do nothing
+//					} else if (jp.getCurrentToken() == JsonToken.END_OBJECT) {
+//						if (!unreadList.containsKey(uid)) unreadList.put(uid, timestamp);
+//					}
+//
+//					currName = jp.getCurrentName();
+//					if (currName == null) continue;
+//
+//					jp.nextToken();
+//					if (currName.equals("id")) {
+//						uid = jp.getText();
+//					} else if (currName.equals("newestItemTimestampUsec")) {
+//						text = jp.getText();
+//						len = text.length();
+//						if (len > 13) text = jp.getText().substring(0, jp.getText().length() - 6);
+//						else if (len > 10) text = jp.getText().substring(0, jp.getText().length() - 3);
+//						timestamp = Utils.asLong(text); // millis -> unixtime
+//					} else {
+//						jp.skipChildren();
+//					}
+//				}
+//			} else {
+//				jp.skipChildren();
+//			}
+//		}
+//		
+//		return unreadList;
+//	}
 
 	@Override
 	public void handleItemList(IItemListHandler handler, long syncTime) throws IOException, ReaderException {
@@ -645,11 +644,11 @@ public class GoogleReaderClient extends ReaderExtension {
 		StringBuilder buff = new StringBuilder();
 		buff.append(getApiUrl(URL_API_STREAM_CONTENTS));
 		String stream = handler.stream();
-		if (stream != null) {
-			if (stream.equals(STATE_READING_LIST)) stream = STATE_GOOGLE_READING_LIST;
-			else if (stream.equals(STATE_STARRED)) stream = STATE_GOOGLE_STARRED;			
-			buff.append("/").append(Utils.encode(stream));
-		}
+
+		if (stream == null || stream.equals(STATE_READING_LIST)) stream = STATE_GOOGLE_READING_LIST;
+		else if (stream.equals(STATE_STARRED)) stream = STATE_GOOGLE_STARRED;
+		buff.append("/").append(Utils.encode(stream));
+
 		buff.append("?client=newsplus&ck=").append(syncTime);
 		if (handler.excludeRead()) {
 			buff.append("&xt=").append(STATE_GOOGLE_READ);
@@ -734,7 +733,7 @@ public class GoogleReaderClient extends ReaderExtension {
 					} else if (currName.equals("crawlTimeMsec")) {
 						entry.updatedTime = Long.valueOf(jp.getText()) / 1000;
 					} else if (currName.equals("title")) {
-						entry.title = Utils.stripTags(unEscapeEntities(jp.getText()), true);
+						entry.title = unEscapeEntities(jp.getText());
 					} else if (currName.equals("categories")) {
 						while (jp.nextToken() != JsonToken.END_ARRAY) {
 							String category = jp.getText();
@@ -849,19 +848,21 @@ public class GoogleReaderClient extends ReaderExtension {
 		StringBuilder buff = new StringBuilder();
 		buff.append(getApiUrl(URL_API_STREAM_ITEM_IDS));
 		buff.append("?output=json"); // xml or json
+		
 		String stream = handler.stream();
-		if (stream != null) {
-			if (stream.equals(STATE_READING_LIST)) stream = STATE_GOOGLE_READING_LIST;
-			else if (stream.equals(STATE_STARRED)) stream = STATE_GOOGLE_STARRED;			
-			buff.append("&s=").append(Utils.encode(stream));
-		}
+		if (stream == null || stream.equals(STATE_READING_LIST)) stream = STATE_GOOGLE_READING_LIST;
+		else if (stream.equals(STATE_STARRED)) stream = STATE_GOOGLE_STARRED;
+		buff.append("&s=").append(Utils.encode(stream));
+		
 		if (handler.excludeRead()) {
 			buff.append("&xt=").append(STATE_GOOGLE_READ);
 		}
+		
 		int limit = handler.limit();
 		if (limit > 0) {
 			buff.append("&n=").append(limit);
 		}
+		
 		buff.append("&r=").append(handler.newestFirst() ? "n" : "o");
 
 		return doGetReader(buff.toString());

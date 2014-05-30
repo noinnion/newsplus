@@ -104,11 +104,11 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 	private class LoginTask extends AsyncTask<Void, Void, LoginData> {
 
-		private String	server;
-		private String	username;
-		private String	password;
-		private String	httpUsername;
-		private String	httpPassword;
+		private final String	server;
+		private final String	username;
+		private final String	password;
+		private final String	httpUsername;
+		private final String	httpPassword;
 		private String	error;
 
 		public LoginTask(String name, String pass, String server, String httpUser, String httpPass) {
@@ -151,7 +151,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 				HttpEntity responseEntity = response.getEntity();
 				String content = Utils.convertStreamToString(responseEntity.getContent());
-				
+
 				JSONObject resJsonObject = new JSONObject(content);
 				if (resJsonObject != null) {
 					JSONObject contentObject = resJsonObject.getJSONObject("content");

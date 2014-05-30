@@ -97,18 +97,32 @@ public class FeedBinClient extends ReaderExtension {
 	@Override
 	public boolean disableTag(String uid, String title) throws IOException, ReaderException {
 		try {
-			doDeleteInputStream(Prefs.TAG_DELETE_URL + uid + ".json", null);
-			return true;
-		} catch (Exception e) {}
+			loadUser();
+		} catch (LoginException e) {
+			AndroidUtils.showToast(mContext, "Login Failed!");
+			throw new ReaderException("Login fail");
+		}
+
+		try {
+			return handleResponse(doDeleteInputStream(Prefs.TAG_DELETE_URL + uid + ".json", null));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 
 	@Override
 	public boolean editItemTag(String[] itemUids, String[] subUids, String[] tags, int action) throws IOException, ReaderException {
-		try{loadUser();}catch(LoginException e)
-		{
-			AndroidUtils.showToast(mContext, "Login Failed!");throw new ReaderException("Login fail");
+		try {
+			loadUser();
+		} catch (LoginException e) {
+			AndroidUtils.showToast(mContext, "Login Failed!");
+			throw new ReaderException("Login fail");
 		}
+		
 		if (action == ReaderExtension.ACTION_ITEM_TAG_ADD_LABEL) {
 			for (String tag : tags) {
 				if (tag.equals(STATE_STARRED)) {
@@ -126,7 +140,7 @@ public class FeedBinClient extends ReaderExtension {
 				}
 			}
 		}
-		if (action == ReaderExtension.ACTION_ITEM_TAG_REMOVE_LABEL) {
+		else if (action == ReaderExtension.ACTION_ITEM_TAG_REMOVE_LABEL) {
 			for (String tag : tags) {
 				if (tag.equals(STATE_STARRED)) {
 					JSONObject obj = new JSONObject();
@@ -148,10 +162,11 @@ public class FeedBinClient extends ReaderExtension {
 
 	@Override
 	public boolean editSubscription(String uid, String title, String url, String[] tags, int action) throws IOException, ReaderException {
-		
-		try{loadUser();}catch(LoginException e)
-		{
-			AndroidUtils.showToast(mContext, "Login Failed!");throw new ReaderException("Login fail");
+		try {
+			loadUser();
+		} catch (LoginException e) {
+			AndroidUtils.showToast(mContext, "Login Failed!");
+			throw new ReaderException("Login fail");
 		}
 
 		switch (action) {
@@ -170,29 +185,30 @@ public class FeedBinClient extends ReaderExtension {
 					obj.put("feed_id", uid.split(",")[0]);
 					obj.put("name", title);
 					doPostInputStream(Prefs.TAG_CREATE_URL, obj);
-				} catch (Exception e) {e.printStackTrace();}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				break;
 			case ReaderExtension.ACTION_SUBSCRIPTION_REMOVE_LABEL:
 				Log.w(TAG, "editSubscription.ACTION_SUBSCRIPTION_REMOVE_LABEL not supported");
 				break;
-			case ReaderExtension.ACTION_SUBSCRIPTION_SUBCRIBE://Neue Subcription hinzufügen
-				try
-				{
+			case ReaderExtension.ACTION_SUBSCRIPTION_SUBCRIBE:// Neue Subcription hinzufï¿½gen
+				try {
 					JSONObject obj = new JSONObject();
 					obj.put("feed_url", url);
 					doPostInputStream(Prefs.SUBSCRIPTION_URL, obj);
-				} catch (Exception e) {e.printStackTrace();}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				break;
 			case ReaderExtension.ACTION_SUBSCRIPTION_UNSUBCRIBE:
-				try
-				{
-					HttpResponse response=doDeleteInputStream("https://api.feedbin.me/v2/subscriptions/"+uid.split(",")[1]+".json", null);
-					if(response.getStatusLine().getStatusCode()==204)
-						AndroidUtils.showToast(mContext, "Unsubsibe complete");
-					else
-						AndroidUtils.showToast(mContext, "Unsubsibe failed");
+				try {
+					HttpResponse response = doDeleteInputStream("https://api.feedbin.me/v2/subscriptions/" + uid.split(",")[1] + ".json", null);
+					if (response.getStatusLine().getStatusCode() == 204) AndroidUtils.showToast(mContext, "Unsubsibe complete");
+					else AndroidUtils.showToast(mContext, "Unsubsibe failed");
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-				catch (Exception e) {e.printStackTrace();}
 				Log.w(TAG, "editSubscription.ACTION_SUBSCRIPTION_UNSUBCRIBE not supported");
 				break;
 		}
@@ -200,11 +216,9 @@ public class FeedBinClient extends ReaderExtension {
 	}
 
 	@Override
-	public void handleItemIdList(IItemIdListHandler itemHandler, long sync) throws IOException, ReaderException 
-	{
+	public void handleItemIdList(IItemIdListHandler itemHandler, long sync) throws IOException, ReaderException {
 		try {
-			if (itemHandler.stream().equals(STATE_STARRED)) 
-			{
+			if (itemHandler.stream().equals(STATE_STARRED)) {
 				HttpResponse response = doGetInputStream(Prefs.STARRED_URL);
 				InputStream in = getInputStreamFromResponse(response);
 				String json = getContent(in);
@@ -213,16 +227,13 @@ public class FeedBinClient extends ReaderExtension {
 				for (int i = 0; i < array.length(); i++)
 					list.add(array.getString(i));
 				itemHandler.items(list);
-			}
-			else 
-			{
+			} else {
 				HttpResponse response = doGetInputStream(Prefs.UNREAD_ENTRIES_URL);
 				InputStream in = getInputStreamFromResponse(response);
 				String json = getContent(in);
 				JSONArray array = new JSONArray(json);
 				ArrayList<String> list = new ArrayList<String>();
-				for (int i = 0; i < array.length(); i++)
-				{
+				for (int i = 0; i < array.length(); i++) {
 					list.add(array.getString(i));
 				}
 				itemHandler.items(list);
@@ -235,40 +246,34 @@ public class FeedBinClient extends ReaderExtension {
 	private List<ISubscription>	lastSubscriptionList;
 
 	@Override
-	public void handleItemList(IItemListHandler itemHandler, long syncTime) throws IOException, ReaderException
-	{
+	public void handleItemList(IItemListHandler itemHandler, long syncTime) throws IOException, ReaderException {
 		try {
 			loadUser();
 		} catch (LoginException e1) {
 			e1.printStackTrace();
 		}
 		try {
-			boolean isStarred=itemHandler.stream()!=null&&itemHandler.stream().equals(STATE_STARRED);
+			boolean isStarred = itemHandler.stream() != null && itemHandler.stream().equals(STATE_STARRED);
 			if (itemHandler.startTime() == 0) {
-				if(isStarred)
-					Prefs.removeLastStarredId(mContext);
-				else
-					Prefs.removeLastUnreadId(mContext);
+				if (isStarred) Prefs.removeLastStarredId(mContext);
+				else Prefs.removeLastUnreadId(mContext);
 			}
-			HttpResponse response = isStarred?doGetInputStream(Prefs.STARRED_URL):doGetInputStream(Prefs.UNREAD_ENTRIES_URL);
+			HttpResponse response = isStarred ? doGetInputStream(Prefs.STARRED_URL) : doGetInputStream(Prefs.UNREAD_ENTRIES_URL);
 			InputStream in = getInputStreamFromResponse(response);
 			String json = getContent(in);
 
 			JSONArray array = new JSONArray(json);
-			int lastId = isStarred?Prefs.getLastStarredId(mContext):Prefs.getLastUnreadId(mContext);// speichert die maximale id für das id testen
+			int lastId = isStarred ? Prefs.getLastStarredId(mContext) : Prefs.getLastUnreadId(mContext);// speichert die maximale id fï¿½r das id testen
 			ArrayList<Integer> ids = new ArrayList<Integer>();
-			for (int i = 0; i < array.length(); i++) 
-			{
+			for (int i = 0; i < array.length(); i++) {
 				int val = array.getInt(i);
 				if (lastId >= val) continue;
 				lastId = val;
 				ids.add(val);
 			}
-			if(isStarred)
-				Prefs.setLastStarredId(mContext, lastId);
-			else
-				Prefs.setLastUnreadId(mContext, lastId);
-			loadIntoItemHandler(itemHandler, ids,isStarred);
+			if (isStarred) Prefs.setLastStarredId(mContext, lastId);
+			else Prefs.setLastUnreadId(mContext, lastId);
+			loadIntoItemHandler(itemHandler, ids, isStarred);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -276,52 +281,47 @@ public class FeedBinClient extends ReaderExtension {
 		Prefs.setLastUpdate(mContext, System.currentTimeMillis());
 	}
 
-	private void loadIntoItemHandler(IItemListHandler handler, ArrayList<Integer> ids,boolean isStarred) throws Exception 
-	{
+	private void loadIntoItemHandler(IItemListHandler handler, ArrayList<Integer> ids, boolean isStarred) throws Exception {
 		int counter = 0;
 		StringBuffer sb = new StringBuffer();
 		ArrayList<IItem> itemlist = new ArrayList<IItem>();
 		int entryLength = 0;
-		for (int i = ids.size() - 1; i >= 0; i--) 
-		{
+		for (int i = ids.size() - 1; i >= 0; i--) {
 			if (counter == 0) sb.append(ids.get(i));
 			else sb.append("," + ids.get(i));
 			counter++;
-			if (counter == 100) 
-			{
+			if (counter == 100) {
 				counter = 0;
 				HttpResponse response = doGetInputStream(Prefs.ENTRIES_URL + sb.toString());
 				InputStream in = getInputStreamFromResponse(response);
 				JSONArray itemArray = new JSONArray(getContent(in));
-				entryLength = addItemToItemHandlerList(itemArray, itemlist, handler, entryLength,isStarred);
+				entryLength = addItemToItemHandlerList(itemArray, itemlist, handler, entryLength, isStarred);
 				sb = new StringBuffer();
 			}
 		}
 		HttpResponse response = doGetInputStream(Prefs.ENTRIES_URL + sb.toString());
 		InputStream in = getInputStreamFromResponse(response);
 		JSONArray itemArray = new JSONArray(getContent(in));
-		entryLength = addItemToItemHandlerList(itemArray, itemlist, handler, entryLength,isStarred);
-		// letzten einträge, die kleiner als MAX_TRANSACTION_LENGTH sind
+		entryLength = addItemToItemHandlerList(itemArray, itemlist, handler, entryLength, isStarred);
+		// letzten eintrï¿½ge, die kleiner als MAX_TRANSACTION_LENGTH sind
 		handler.items(itemlist, entryLength);
 	}
 
 	/**
-	 * fügt die Items des Array zu der ItemHandler list hinzu
+	 * fï¿½gt die Items des Array zu der ItemHandler list hinzu
 	 * 
 	 * @param array
 	 * @param handler
 	 * @throws Exception
 	 */
-	private int addItemToItemHandlerList(JSONArray array, ArrayList<IItem> tempsavelist, IItemListHandler handler, int entryLength,boolean isStarred) throws Exception {
+	private int addItemToItemHandlerList(JSONArray array, ArrayList<IItem> tempsavelist, IItemListHandler handler, int entryLength, boolean isStarred) throws Exception {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-		for (int i = 0; i < array.length(); i++)
-		{
+		for (int i = 0; i < array.length(); i++) {
 			JSONObject obj = array.getJSONObject(i);
 			IItem item = new IItem();
 			setItemSubId(item, obj.getString("feed_id"));
 			item.id = obj.getLong("id");
-			if(isStarred)
-				item.addTag(FeedBinClient.STATE_STARRED);
+			if (isStarred) item.addTag(FeedBinClient.STATE_STARRED);
 			if (!obj.isNull("author")) item.author = obj.getString("author");
 			if (!obj.isNull("url")) item.link = obj.getString("url");
 			if (!obj.isNull("content")) item.content = obj.getString("content");
@@ -344,11 +344,9 @@ public class FeedBinClient extends ReaderExtension {
 
 	}
 
-	/** weisst dem item die subUid zu, indem die SubscriptionList mit der feedid überprüft wird */
-	private void setItemSubId(IItem item, String feedid) 
-	{
-		if(lastSubscriptionList==null||lastSubscriptionList.size()==0)
-			return;
+	/** weisst dem item die subUid zu, indem die SubscriptionList mit der feedid ï¿½berprï¿½ft wird */
+	private void setItemSubId(IItem item, String feedid) {
+		if (lastSubscriptionList == null || lastSubscriptionList.size() == 0) return;
 		for (ISubscription sub : lastSubscriptionList) {
 			if (sub.uid.startsWith(feedid + ",")) {
 				item.subUid = sub.uid;
@@ -358,7 +356,7 @@ public class FeedBinClient extends ReaderExtension {
 	}
 
 	/**
-	 * liefert den Tag zurück wenn schon vorhanden oder null wenn nicht
+	 * liefert den Tag zurï¿½ck wenn schon vorhanden oder null wenn nicht
 	 * 
 	 * @param list
 	 * @param tag
@@ -373,14 +371,16 @@ public class FeedBinClient extends ReaderExtension {
 
 	@Override
 	public void handleReaderList(ITagListHandler tagHandler, ISubscriptionListHandler subscriptionHandler, long sync) throws IOException, ReaderException {
-		
-		try{loadUser();}catch(LoginException e)
-		{
-			AndroidUtils.showToast(mContext, "Login Failed!");throw new ReaderException("Login fail");
+
+		try {
+			loadUser();
+		} catch (LoginException e) {
+			AndroidUtils.showToast(mContext, "Login Failed!");
+			throw new ReaderException("Login fail");
 		}
 		Map<String, String> map = new HashMap<String, String>();
 
-		// Alle Tags hinzufügen
+		// Alle Tags hinzufï¿½gen
 		List<ITag> tagList = new ArrayList<ITag>();
 		try {
 			JSONArray tags = getAllTags();
@@ -415,7 +415,7 @@ public class FeedBinClient extends ReaderExtension {
 		} catch (RemoteException e1) {
 			e1.printStackTrace();
 		}
-		// Alle Subscritpions hinzufügen
+		// Alle Subscritpions hinzufï¿½gen
 		try {
 			JSONArray subs = getAllSubscriptions();
 			lastSubscriptionList = new ArrayList<ISubscription>();
@@ -444,31 +444,25 @@ public class FeedBinClient extends ReaderExtension {
 	}
 
 	@Override
-	public boolean markAsRead(String[] uids, String[] arg1) throws IOException, ReaderException {
-
-		return false;
-	}
-
-	@Override
-	public boolean markAsUnread(String[] itemUids, String[] subUids, boolean keepUnread) throws IOException, ReaderException {
-		
+	public boolean markAsRead(String[] itemUids, String[] subUids) throws IOException, ReaderException {
 		String url = Prefs.UNREAD_ENTRIES_URL;
-		try{loadUser();}catch(LoginException e)
-		{
-			AndroidUtils.showToast(mContext, "Login Failed!");throw new ReaderException("Login fail");
+		try {
+			loadUser();
+		} catch (LoginException e) {
+			AndroidUtils.showToast(mContext, "Login Failed!");
+			throw new ReaderException("Login fail");
 		}
 
 		try {
-
 			JSONArray array = new JSONArray();
 			int counter = 0;// maximal 1000 pro request
 			for (String s : itemUids) {
 				counter++;
 				array.put(s);
-				if (counter < 1000) {
+				if (counter >= 1000) {
 					JSONObject jo = new JSONObject();
 					jo.put("unread_entries", array);
-					doRequest(url, jo);
+					handleResponse(doDeleteInputStream(url, jo));
 					counter = 0;
 					array = new JSONArray();
 				}
@@ -477,7 +471,49 @@ public class FeedBinClient extends ReaderExtension {
 			JSONObject jo = new JSONObject();
 			jo.put("unread_entries", array);
 
-			return doRequest(url, jo);
+			Log.e("Test", "jo: " + jo);
+			
+			return handleResponse(doDeleteInputStream(url, jo));
+		} catch (ReaderLoginException e) {
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean markAsUnread(String[] itemUids, String[] subUids, boolean keepUnread) throws IOException, ReaderException {
+
+		String url = Prefs.UNREAD_ENTRIES_URL;
+		try {
+			loadUser();
+		} catch (LoginException e) {
+			AndroidUtils.showToast(mContext, "Login Failed!");
+			throw new ReaderException("Login fail");
+		}
+
+		try {
+			JSONArray array = new JSONArray();
+			int counter = 0;// maximal 1000 pro request
+			for (String s : itemUids) {
+				counter++;
+				array.put(s);
+				if (counter >= 1000) {
+					JSONObject jo = new JSONObject();
+					jo.put("unread_entries", array);
+					handleResponse(doPostInputStream(url, jo));
+					counter = 0;
+					array = new JSONArray();
+				}
+			}
+
+			JSONObject jo = new JSONObject();
+			jo.put("unread_entries", array);
+
+			return handleResponse(doPostInputStream(url, jo));
 
 		} catch (ReaderLoginException e) {
 
@@ -502,40 +538,42 @@ public class FeedBinClient extends ReaderExtension {
 		}
 	}
 
-	public boolean doRequest(String url, JSONObject jo) throws IOException, JSONException, ReaderException {
-		String json = Utils.convertStreamToString(getInputStreamFromResponse(doPostInputStream(url, jo)));
+	public boolean handleResponse(HttpResponse res) throws IOException, ReaderException {
+		String json = Utils.convertStreamToString(getInputStreamFromResponse(res));
 
-		JSONObject resJsonObject = new JSONObject(json);
-		if (resJsonObject != null) {
-			if (resJsonObject.has("error")) {
-				String error = resJsonObject.getString("error");
-				if (error != null) handleError(error);
-			}
-
-			if (resJsonObject.has("content")) {
-				JSONObject contentJo = resJsonObject.getJSONObject("content");
-				if (contentJo.has("status")) {
-					String status = contentJo.getString("status");
-					if (status != null && status.equals("OK")) return true;
+		try {
+			JSONObject resJsonObject = new JSONObject(json);
+			if (resJsonObject != null) {
+				if (resJsonObject.has("error")) {
+					String error = resJsonObject.getString("error");
+					if (error != null) handleError(error);
 				}
+	
+				if (resJsonObject.has("content")) {
+					JSONObject contentJo = resJsonObject.getJSONObject("content");
+					if (contentJo.has("status")) {
+						String status = contentJo.getString("status");
+						if (status != null && status.equals("OK")) return true;
+					}
+				}
+	
 			}
-
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
-
-		return false;
+		
+		return true;
 	}
 
 	private Context getContext() {
 		return mContext == null ? getApplicationContext() : mContext;
 	}
 
-	public void loadUser() throws LoginException, IOException, ReaderException 
-	{
-		if(mContext!=null&&user!=null&&password!=null)
-			return;
-		mContext=getApplicationContext();
-		user=Prefs.getUser(mContext);
-		password=Prefs.getPassword(mContext);
+	public void loadUser() throws LoginException, IOException, ReaderException {
+		if (mContext != null && user != null && password != null) return;
+		mContext = getApplicationContext();
+		user = Prefs.getUser(mContext);
+		password = Prefs.getPassword(mContext);
 	}
 
 	public DefaultHttpClient getClient() {
@@ -677,20 +715,16 @@ public class FeedBinClient extends ReaderExtension {
 		};
 	}
 
-	public boolean login(String user, String password,boolean show) throws IOException,ReaderException, JSONException 
-	{
+	public boolean login(String user, String password, boolean show) throws IOException, ReaderException, JSONException {
 		this.user = user;
 		this.password = password;
-		
+
 		HttpResponse response = doPostInputStream(Prefs.getAuthURL(), null);
-		if(response.getStatusLine().getStatusCode()==LOGIN_OK)
-		{
-			if(show)
-				AndroidUtils.showToast(getContext(), "Login OK");
+		if (response.getStatusLine().getStatusCode() == LOGIN_OK) {
+			if (show) AndroidUtils.showToast(getContext(), "Login OK");
 			return true;
 		}
-		if(show)
-			AndroidUtils.showToast(getContext(), "Login fail");
+		if (show) AndroidUtils.showToast(getContext(), "Login fail");
 		return false;
 	}
 
