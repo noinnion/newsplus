@@ -23,6 +23,7 @@ You need to install News+ first to use the extensions. You can find the extensio
 * SubReader: [Download](http://subreader.com/static/files/SubReaderExtension.apk)
 * Reedah: [Download](http://www.reedah.com/ReedahExtension.apk)
 * Pocket+: [Play Store](https://play.google.com/store/apps/details?id=com.asafge.pocketplus)
+* Readability: [Play Store](<a href="https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus.extension.readability">)
 
 We are trying to publish more :)
 
