@@ -13,6 +13,7 @@ You need to install News+ first to use the extensions. You can find the extensio
 ### Extensions
 
 * Feedly: [Play Store](https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus.extension.feedly)
+* The Old Reader: [Play Store](https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus.extension.theoldreader)
 * InoReader: [Play Store](https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus.extension.inoreader)
 * BazQux: [Play Store](https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus.extension.bazqux)
 * Google Reader Clone (api clone): [Play Store](https://play.google.com/store/apps/details?id=com.noinnion.android.newsplus.extension.google_reader)
