@@ -1,6 +1,6 @@
 News+
 -----------
-Since Google has decided to shutdown Google Reader, lots of new and innovative RSS services have arisen to light. Many of those services appeared as worthy replacements, and even an upgrade. We couldn’t choose just one or two, and we also had to make some decisions about how our work will continue. We decided not to pick! We created a new app that is the successor of gReader, taking it’s features and functionality but supports as many reading services as possible: News+.
+Since Google has decided to shutdown Google Reader, lots of new and innovative RSS services have arisen to light. Many of those services appeared as worthy replacements, and even an upgrade. We couldn’t choose just one or two, and we also had to make some decisions about how our work will continue. We decided not to pick! We created a new app that is the successor of gReader, taking its features and functionality but supports as many reading services as possible: News+.
 
 ### Usage
 
