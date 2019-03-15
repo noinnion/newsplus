@@ -51,7 +51,7 @@ public class InoReaderClient extends ReaderExtension {
 	public static final String	TAG								= "InoReaderClient";
 
 	public static final String	URL_LOGIN						= "https://inoreader.com/accounts/ClientLogin";
-	public static final String	URL_BASE_						= "http://inoreader.com/reader";
+	public static final String	URL_BASE_						= "https://inoreader.com/reader";
 	public static final String	URL_API_						= URL_BASE_ + "/api/0";
 	public static final String	URL_ATOM_						= URL_BASE_ + "/atom";
 	public static final String	URL_API_TOKEN					= URL_API_ + "/token";
@@ -79,6 +79,9 @@ public class InoReaderClient extends ReaderExtension {
 	public static final String	STATE_GOOGLE_STARRED			= "user/-/state/com.google/starred";
 	public static final String	STATE_GOOGLE_ITEMRECS			= "user/-/state/com.google/itemrecs";
 	public static final String	STATE_GOOGLE_LABEL				= "user/-/label/";
+	
+	public static final String AUTH_APP_ID                    = "***"; // get from the developer tab, new app
+	public static final String AUTH_APP_KEY                   = "***";
 
 	private static final int	SYNC_MAX_ITEMS					= 1000;											// 1000
 
@@ -145,6 +148,8 @@ public class InoReaderClient extends ReaderExtension {
 		// gzip
 		post.setHeader("User-agent", "gzip");
 		post.setHeader("Accept-Encoding", "gzip");
+		post.setHeader("AppId", AUTH_APP_ID);
+		post.setHeader("AppKey", AUTH_APP_KEY);
 
 		HttpResponse res = getClient().execute(post);
 		int resStatus = res.getStatusLine().getStatusCode();
@@ -193,6 +198,8 @@ public class InoReaderClient extends ReaderExtension {
 		// gzip
 		get.setHeader("User-agent", "gzip");
 		get.setHeader("Accept-Encoding", "gzip");
+		get.setHeader("AppId", AUTH_APP_ID);
+		get.setHeader("AppKey", AUTH_APP_KEY);
 
 		HttpResponse res = getClient().execute(get);
 		int resStatus = res.getStatusLine().getStatusCode();
